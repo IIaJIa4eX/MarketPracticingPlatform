@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using MarketPracticingPlatform.Authentication_token;
 
 namespace MarketPracticingPlatform
 {
@@ -24,9 +27,22 @@ namespace MarketPracticingPlatform
 
         public IConfiguration Configuration { get; }
 
+
+        readonly string MyAllowSpecificOrigins = "_AllowToRequest";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:5000", "https://localhost:5001");
+                });
+            });
+
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -34,7 +50,29 @@ namespace MarketPracticingPlatform
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSingleton<DataBaseConnection>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    
+                    ValidateIssuer = true,
+                   
+                    ValidIssuer = AuthToken.ISSUER,
+         
+                    ValidateAudience = true,
+                  
+                    ValidAudience = AuthToken.AUDIENCE,
+                  
+                    ValidateLifetime = true,
+              
+                    IssuerSigningKey = AuthToken.GetSymmetricSecurityKey(),
+                 
+                    ValidateIssuerSigningKey = true,
+                };
+            });
+
+                services.AddSingleton<DataBaseConnection>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -52,9 +90,12 @@ namespace MarketPracticingPlatform
                 app.UseHsts();
             }
 
+
+            app.UseCors(MyAllowSpecificOrigins);
             loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

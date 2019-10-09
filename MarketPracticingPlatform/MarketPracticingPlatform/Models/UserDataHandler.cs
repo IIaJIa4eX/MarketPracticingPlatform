@@ -16,6 +16,5 @@ namespace MarketPracticingPlatform.Models
         public string Password { get; set; }
 
         public string Number { get; set; }
-
     }
 }

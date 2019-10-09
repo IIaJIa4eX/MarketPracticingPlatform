@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MarketPracticingPlatform.Models;
 
 namespace MarketPracticingPlatform.DataBaseModels
 {
@@ -19,7 +20,6 @@ namespace MarketPracticingPlatform.DataBaseModels
         public string Number { get; set; }
 
         public int BonusScore { get; set; }
-
 
     }
 }

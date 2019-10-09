@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div style="margin:0 auto; width:1000px;">
+
+    <form id="Registrationform" asp-controller="Registration" asp-action="UserCreation" method="post">
+
+        <div id="errorview"></div>
+
+        <div class="form-row">
+
+            <div class="form-group col-md-6">
+
+                <label for="exampleInputPassword1">Имя</label>
+
+                <input name="Name" type="text" class="form-control" placeholder="Имя">
+
+            </div>
+
+        </div>
+
+            <div class="form-group col-md-6">
+
+                <label for="exampleInputEmail1">Email адрес</label>
+
+                <input name="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+            </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group col-md-6">
+
+                <label for="exampleInputPassword1">Пароль</label>
+
+                <input name="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль">
+
+            </div>
+
+            <div class="form-group col-md-6">
+
+                <label for="exampleInputPhone">Мобильный телефон</label>
+
+                <input name="Number" type="tel" class="form-control" id="exampleInputPhone" placeholder="телефон">
+
+            </div>
+
+        </div>
+        <div style="text-align:center;">
+
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+
+        </div>
+
+    </form>
+
+</div>
+
