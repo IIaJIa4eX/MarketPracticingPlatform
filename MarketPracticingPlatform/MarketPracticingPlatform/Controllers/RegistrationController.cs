@@ -24,6 +24,9 @@ namespace MarketPracticingPlatform.Controllers
 
         public IActionResult Index()
         {
+
+
+
             return View();
         }
 
@@ -31,7 +34,7 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost("UserCreation")]
         public IActionResult UserCreation(UserDataHandler udh)
         {
-
+           
 
             if (udh.Email == "" || udh.Email == null)
             {
@@ -61,6 +64,7 @@ namespace MarketPracticingPlatform.Controllers
             us.Password = udh.Password;
             us.Name = udh.Name;
             us.Number = udh.Number;
+
             db.Users.Add(us);
             db.SaveChanges();
 

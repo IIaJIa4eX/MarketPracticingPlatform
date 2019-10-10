@@ -13,9 +13,11 @@ using System.Security.Claims;
 using MarketPracticingPlatform.Authentication_token;
 using MarketPracticingPlatform.DBConnection;
 using MarketPracticingPlatform.DataBaseModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MarketPracticingPlatform.Controllers
 {
+    [Route("Home")]
     public class HomeController : Controller
     {
 
@@ -31,21 +33,32 @@ namespace MarketPracticingPlatform.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
 
-            return View();
+        [Authorize]
+        [Route("getlogin")]
+        public IActionResult GetLogin()
+        {
+            
+            return Ok($"Ваш логин: {User.Identity.Name}");
+        }
+
+        [Authorize(Roles = "IIaJIa4eX")]
+        [Route("getrole")]
+        public IActionResult GetRole()
+        {
+            return Ok("Ваша роль: администратор");
         }
 
 
         [HttpPost]
+        [Route("Token")]
         public async Task Token()
         {
-            var useremail = Request.Form["email"];
+            var useremail = Request.Form["username"];
             var password = Request.Form["password"];
 
             var identity = GetIdentity(useremail, password);
@@ -72,7 +85,11 @@ namespace MarketPracticingPlatform.Controllers
                 access_token = encodedJwt,
                 username = identity.Name
             };
+            UserDataHandler udh = new UserDataHandler();
 
+            udh.Email = identity.Name;
+            udh.Token = encodedJwt;
+            
             // сериализация ответа
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));

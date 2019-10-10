@@ -14,9 +14,9 @@ var tokenKey = "accessToken";
  
             $.ajax({
                 type: 'POST',
-                url: '/token',
+                url: '/Home/Token',
                 data: loginData
-            }).success(function (data) {
+            }).done(function (data) {
                 $('.userName').text(data.username);
                 $('.userInfo').css('display', 'block');
                 $('.loginForm').css('display', 'none');
@@ -35,39 +35,3 @@ var tokenKey = "accessToken";
             sessionStorage.removeItem(tokenKey);
         });
  
-        $('#getDataByLogin').click(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '/api/values/getlogin',
-                beforeSend: function (xhr) {
- 
-                    var token = sessionStorage.getItem(tokenKey);
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                },
-                success: function (data) {
-                    alert(data);
-                },
-                fail: function (data) {
-                    console.log(data);
-                }
-            });
-        });
-        $('#getDataByRole').click(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '/api/values/getrole',
-                beforeSend: function (xhr) {
- 
-                    var token = sessionStorage.getItem(tokenKey);
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                },
-                success: function (data) {
-                    alert(data);
-                },
-                fail: function (data) {
-                    console.log(data);
-                }
-            });
-        });

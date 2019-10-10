@@ -15,6 +15,7 @@ using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MarketPracticingPlatform.Authentication_token;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MarketPracticingPlatform
 {
@@ -72,7 +73,13 @@ namespace MarketPracticingPlatform
                 };
             });
 
-                services.AddSingleton<DataBaseConnection>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new PathString("/Home/Login");
+                });
+
+            services.AddSingleton<DataBaseConnection>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
