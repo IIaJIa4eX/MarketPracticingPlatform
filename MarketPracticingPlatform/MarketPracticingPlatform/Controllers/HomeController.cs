@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MarketPracticingPlatform.Controllers
 {
     [Route("Home")]
-    public class HomeController : Controller
+    public class HomeController :  Controller
     {
 
 
@@ -29,7 +29,6 @@ namespace MarketPracticingPlatform.Controllers
         {
             this.db = db;
         }
-
 
         public IActionResult Index()
         {
@@ -45,14 +44,6 @@ namespace MarketPracticingPlatform.Controllers
             
             return Ok($"Ваш логин: {User.Identity.Name}");
         }
-
-        [Authorize(Roles = "IIaJIa4eX")]
-        [Route("getrole")]
-        public IActionResult GetRole()
-        {
-            return Ok("Ваша роль: администратор");
-        }
-
 
         [HttpPost]
         [Route("Token")]
@@ -85,6 +76,7 @@ namespace MarketPracticingPlatform.Controllers
                 access_token = encodedJwt,
                 username = identity.Name
             };
+
             UserDataHandler udh = new UserDataHandler();
 
             udh.Email = identity.Name;

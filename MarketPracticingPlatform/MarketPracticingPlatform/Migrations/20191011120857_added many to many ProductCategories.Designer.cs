@@ -2,14 +2,16 @@
 using MarketPracticingPlatform.DBConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MarketPracticingPlatform.Migrations
 {
     [DbContext(typeof(DataBaseConnection))]
-    partial class DataBaseConnectionModelSnapshot : ModelSnapshot
+    [Migration("20191011120857_added many to many ProductCategories")]
+    partial class addedmanytomanyProductCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,13 +40,9 @@ namespace MarketPracticingPlatform.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Manufacturer");
-
                     b.Property<string>("Name");
 
                     b.Property<int>("Price");
-
-                    b.Property<bool>("SoldOut");
 
                     b.HasKey("ProductId");
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MarketPracticingPlatform.DataBaseModels;
 using MarketPracticingPlatform.DBConnection;
 using MarketPracticingPlatform.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,6 @@ namespace MarketPracticingPlatform.Controllers
         {
             this.db = db;
         }
-
 
         public IActionResult Index()
         {
