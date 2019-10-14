@@ -1,0 +1,52 @@
+﻿
+@model IEnumerable<MarketPracticingPlatform.DataBaseModels.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<body>
+
+    <div class="AllProducts">
+        <div class="ProductsSearch">
+            <form method="post" asp-controller="MarketSearch" asp-action="SearchByCategory">
+
+                <input type="text" name="category" /> Поиск по категории
+                <input type="submit" value="Найти" />
+            </form>
+        </div>
+        @if (@Model == null)
+        {
+
+        }
+        else
+        {
+        <div class="AllProducts">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var element in @Model)
+                    {
+                    <tr>
+                        <th scope="row">@element.ProductId</th>
+                        <td><a href="">@element.Name</a></td>
+                        <td>@element.Description</td>
+                        <td>@element.Price</td>
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
+    </div>
+</body>

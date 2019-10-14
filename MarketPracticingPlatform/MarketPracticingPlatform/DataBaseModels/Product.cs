@@ -17,11 +17,12 @@ namespace MarketPracticingPlatform.DataBaseModels
 
         public int Price { get; set; }
 
-        public bool SoldOut { get; set; }
+        public int SoldOut { get; set; }
 
         public string Manufacturer { get; set; } 
 
         public List<ProductCategory> ProductCategories { get; set; }
+
 
         public Product()
         {

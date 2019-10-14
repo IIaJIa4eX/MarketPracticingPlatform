@@ -21,6 +21,7 @@ namespace MarketPracticingPlatform.DataBaseModels
         public Category()
         {
             ProductCategories = new List<ProductCategory>();
+
         }
 
     }

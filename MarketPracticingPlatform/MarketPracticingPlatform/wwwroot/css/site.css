@@ -35,3 +35,16 @@ body {
         display: none;
     }
 }
+
+
+.ProductsSearch {
+    width: 700px;
+    height: 80px;
+    border: 1px solid;
+    margin: 1px auto;
+}
+
+.AllProducts {
+    margin: 0 auto;
+    width: 1200px;
+}

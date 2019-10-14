@@ -22,6 +22,7 @@ namespace MarketPracticingPlatform.DBConnection
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(t => new { t.ProductId, t.CategoryId });
 
