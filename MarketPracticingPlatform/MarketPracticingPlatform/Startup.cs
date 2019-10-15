@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MarketPracticingPlatform.Authentication_token;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MarketPracticingPlatform.CookieHandler;
 
 namespace MarketPracticingPlatform
 {
@@ -74,12 +75,13 @@ namespace MarketPracticingPlatform
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
+                .AddCookie(options =>
                 {
-                    options.LoginPath = new PathString("/Home/Login");
+                    options.LoginPath = new PathString("/Registration/Index");
                 });
 
             services.AddSingleton<DataBaseConnection>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -96,6 +98,8 @@ namespace MarketPracticingPlatform
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+
 
 
             app.UseCors(MyAllowSpecificOrigins);

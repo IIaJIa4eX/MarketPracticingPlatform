@@ -14,6 +14,7 @@ using MarketPracticingPlatform.Authentication_token;
 using MarketPracticingPlatform.DBConnection;
 using MarketPracticingPlatform.DataBaseModels;
 using Microsoft.AspNetCore.Authorization;
+using MarketPracticingPlatform.CookieHandler;
 
 namespace MarketPracticingPlatform.Controllers
 {
@@ -24,26 +25,21 @@ namespace MarketPracticingPlatform.Controllers
 
         DataBaseConnection db;
 
-
         public HomeController(DataBaseConnection db)
         {
             this.db = db;
+            
         }
 
         public IActionResult Index()
         {
 
+
             return View();
+
         }
 
 
-        [Authorize]
-        [Route("getlogin")]
-        public IActionResult GetLogin()
-        {
-            
-            return Ok($"Ваш логин: {User.Identity.Name}");
-        }
 
         [HttpPost]
         [Route("Token")]
@@ -61,7 +57,7 @@ namespace MarketPracticingPlatform.Controllers
             }
 
             var now = DateTime.UtcNow;
-            // создаем JWT-токен
+
             var jwt = new JwtSecurityToken(
                     issuer: AuthToken.ISSUER,
                     audience: AuthToken.AUDIENCE,
@@ -71,18 +67,18 @@ namespace MarketPracticingPlatform.Controllers
                     signingCredentials: new SigningCredentials(AuthToken.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
+
+            var option = new CookieOptions();
+            option.Expires = DateTime.Now.AddMinutes(5);
+            Response.Cookies.Append("Token", encodedJwt, option);
+
             var response = new
             {
                 access_token = encodedJwt,
                 username = identity.Name
             };
 
-            UserDataHandler udh = new UserDataHandler();
 
-            udh.Email = identity.Name;
-            udh.Token = encodedJwt;
-            
-            // сериализация ответа
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
@@ -106,7 +102,6 @@ namespace MarketPracticingPlatform.Controllers
                 return claimsIdentity;
             }
 
-            // если пользователя не найдено
             return null;
         }
     }

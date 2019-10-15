@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MarketPracticingPlatform.DataBaseModels;
 using MarketPracticingPlatform.DBConnection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPracticingPlatform.Controllers
@@ -19,10 +20,14 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-
+     
         public IActionResult Index()
         {
-            return View();
+            if (Request.Cookies.ContainsKey("Token"))
+            {
+                return View();
+            }
+            return RedirectToAction("Index","Registration");
         }
 
         [HttpPost]
@@ -34,11 +39,11 @@ namespace MarketPracticingPlatform.Controllers
                 Category cat = db.Categories.Where(f => f.Name == category).FirstOrDefault();
                 if (cat != null)
                 {
-                    var prss = db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId);
+                    var prdcat = db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId);
                     Product temp = new Product();
                     List<Product> prd = new List<Product>();
 
-                    foreach (var item in prss)
+                    foreach (var item in prdcat)
                     {
                         temp = db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault();
                         prd.Add(temp);
