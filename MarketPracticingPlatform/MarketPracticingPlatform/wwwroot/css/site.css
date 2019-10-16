@@ -48,3 +48,21 @@ body {
     margin: 0 auto;
     width: 1200px;
 }
+.central {
+    width: 800px;
+    height: 700px;
+    margin: 1px auto;
+    position: relative;
+}
+.ProductCreation{
+    width: 400px;
+    height: 700px;
+    position: absolute;
+    left: 0px;
+}
+.CategoryCreation {
+    width: 400px;
+    height: 700px;
+    position: absolute;
+    left: 400px;
+}

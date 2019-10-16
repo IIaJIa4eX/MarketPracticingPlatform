@@ -42,7 +42,7 @@ namespace MarketPracticingPlatform.DBConnection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         {
-            optionsBuilder.UseMySQL("Server=localhost;Database=productmarket;Uid=root;Pwd=;CharSet=utf8;");
+            optionsBuilder.UseMySQL("Server=localhost;Database=productsmarket;Uid=root;Pwd=;CharSet=utf8;");
 
         }
 

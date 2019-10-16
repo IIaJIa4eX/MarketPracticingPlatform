@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketPracticingPlatform.Migrations
 {
     [DbContext(typeof(DataBaseConnection))]
-    [Migration("20191011120857_added many to many ProductCategories")]
-    partial class addedmanytomanyProductCategories
+    [Migration("20191016095908_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,9 +40,13 @@ namespace MarketPracticingPlatform.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Manufacturer");
+
                     b.Property<string>("Name");
 
                     b.Property<int>("Price");
+
+                    b.Property<int>("SoldOut");
 
                     b.HasKey("ProductId");
 
