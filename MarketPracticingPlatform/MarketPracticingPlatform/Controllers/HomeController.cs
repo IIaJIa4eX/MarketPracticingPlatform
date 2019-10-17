@@ -70,6 +70,7 @@ namespace MarketPracticingPlatform.Controllers
 
             var option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(5);
+            option.SameSite = SameSiteMode.Strict;
             Response.Cookies.Append("Token", encodedJwt, option);
 
             var response = new

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MarketPracticingPlatform.DataBaseModels;
 using MarketPracticingPlatform.DBConnection;
 using MarketPracticingPlatform.Models;
+using MarketPracticingPlatform.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPracticingPlatform.Controllers
@@ -13,6 +14,7 @@ namespace MarketPracticingPlatform.Controllers
     {
 
         DataBaseConnection db;
+       
 
         public MarketController(DataBaseConnection db)
         {
@@ -29,12 +31,12 @@ namespace MarketPracticingPlatform.Controllers
             }
             return RedirectToAction("Index", "Registration");
         }
-     
+
 
         [HttpPost]
-        public IActionResult ProductCreation(ProductDataHandler pdh)
+        public IActionResult ProductCreation(ProductDTO pdh)
         {
-
+            ParentCategorySearch pcs = new ParentCategorySearch(db);
 
             Product prod = new Product();
             prod.Name = pdh.Name;
@@ -45,22 +47,71 @@ namespace MarketPracticingPlatform.Controllers
             db.Products.Add(prod);
             db.SaveChanges();
 
+            
             Category cat = db.Categories.Where(f => f.Name == pdh.Category).FirstOrDefault();
 
-            ProductCategory prct = new ProductCategory();
+            List<int> catids = pcs.GetCategoriesID(cat.CategoryId);//CategoryID(cat.CategoryId);
 
-            prct.CategoryId = cat.CategoryId;
-            prct.ProductId = prod.ProductId;
+            if (catids.Count == 0)
+            {
+                ProductCategory prdct = new ProductCategory();
 
-            db.ProductCategories.Add(prct);
-            db.SaveChanges();
+                prdct.CategoryId = cat.CategoryId;
+                prdct.ProductId = prod.ProductId;
 
+                db.ProductCategories.AddRange(prdct);
+
+                db.SaveChanges();
+            }
+            else
+            {
+
+                var prct = new List<ProductCategory>();
+
+                prct.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
+
+                foreach (var id in catids)
+                {
+
+                    prct.Add(new ProductCategory { CategoryId = id, ProductId = prod.ProductId });
+
+                }
+
+                db.ProductCategories.AddRange(prct);
+
+                db.SaveChanges();
+            }
 
             return View("Index");
         }
 
+        List<int> arr = new List<int>();
+
+
+        List<int> CategoryID(int id)
+        {
+            Category cat = new Category(); 
+
+            if (id != 0)
+            {
+                cat = db.Categories.Where(f => f.CategoryId == id).FirstOrDefault();
+
+                if (cat.ParentCategoryId != 0)
+                {
+                    arr.Add(cat.ParentCategoryId);
+
+                    CategoryID(cat.ParentCategoryId);
+                }
+
+                return arr;
+            }
+
+            return arr;
+        }
+
+
         [HttpPost]
-        public IActionResult CategoryCreation(CategoryDataHandler cdh)
+        public IActionResult CategoryCreation(CategoryDTO cdh)
         {
             Category parentCat = db.Categories.Where(f => f.Name == cdh.ParentCategoryName).FirstOrDefault();
 

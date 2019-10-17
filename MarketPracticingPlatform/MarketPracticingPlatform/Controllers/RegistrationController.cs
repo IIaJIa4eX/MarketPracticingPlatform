@@ -32,7 +32,7 @@ namespace MarketPracticingPlatform.Controllers
 
 
         [HttpPost("UserCreation")]
-        public IActionResult UserCreation(UserDataHandler udh)
+        public IActionResult UserCreation(UserDTO udh)
         {
            
 

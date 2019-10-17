@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Models
 {
-    public class CategoryDataHandler
+    public class CategoryDTO
     {
         public int CategoryId { get; set; }
 
