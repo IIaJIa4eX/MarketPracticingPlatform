@@ -33,10 +33,60 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
+        
+        //public IActionResult ProductCreation(ProductDTO pdh)
+        //{
+        //    ParentCategorySearch pcs = new ParentCategorySearch(db);
+
+        //    Product prod = new Product();
+        //    prod.Name = pdh.Name;
+        //    prod.Description = pdh.Description;
+        //    prod.Price = pdh.Price;
+        //    prod.Manufacturer = pdh.Manufacturer;
+
+        //    db.Products.Add(prod);
+        //    db.SaveChanges();
+
+
+        //    Category cat = db.Categories.Where(f => f.Name == pdh.Category).FirstOrDefault();
+
+        //    List<int> catids = pcs.GetCategoriesIDs(cat.CategoryId);
+
+        //    if (catids.Count == 0)
+        //    {
+        //        ProductCategory prdct = new ProductCategory();
+
+        //        prdct.CategoryId = cat.CategoryId;
+        //        prdct.ProductId = prod.ProductId;
+
+        //        db.ProductCategories.AddRange(prdct);
+
+        //        db.SaveChanges();
+        //    }
+        //    else
+        //    {
+
+        //        var prct = new List<ProductCategory>();
+
+        //        prct.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
+
+        //        foreach (var id in catids)
+        //        {
+
+        //            prct.Add(new ProductCategory { CategoryId = id, ProductId = prod.ProductId });
+
+        //        }
+
+        //        db.ProductCategories.AddRange(prct);
+
+        //        db.SaveChanges();
+        //    }
+
+        //    return View("Index");
+        //}
         [HttpPost]
         public IActionResult ProductCreation(ProductDTO pdh)
         {
-            ParentCategorySearch pcs = new ParentCategorySearch(db);
 
             Product prod = new Product();
             prod.Name = pdh.Name;
@@ -47,45 +97,46 @@ namespace MarketPracticingPlatform.Controllers
             db.Products.Add(prod);
             db.SaveChanges();
 
-            
+
             Category cat = db.Categories.Where(f => f.Name == pdh.Category).FirstOrDefault();
+            int parentid = cat.CategoryId;
+            ProductCategory prdct = new ProductCategory();
+            Category cattmp = new Category();
 
-            List<int> catids = pcs.GetCategoriesID(cat.CategoryId);//CategoryID(cat.CategoryId);
 
-            if (catids.Count == 0)
+            if (cat.ParentCategoryId == 0)
             {
-                ProductCategory prdct = new ProductCategory();
-
                 prdct.CategoryId = cat.CategoryId;
                 prdct.ProductId = prod.ProductId;
 
-                db.ProductCategories.AddRange(prdct);
-
+                db.ProductCategories.Add(prdct);
                 db.SaveChanges();
             }
             else
             {
-
-                var prct = new List<ProductCategory>();
-
-                prct.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
-
-                foreach (var id in catids)
+                while (parentid != 0)
                 {
+                    cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();                  
 
-                    prct.Add(new ProductCategory { CategoryId = id, ProductId = prod.ProductId });
+                    prdct.CategoryId = cattmp.CategoryId;
+                    prdct.ProductId = prod.ProductId;
+
+                    parentid = cattmp.ParentCategoryId;
+
+                    db.ProductCategories.Add(prdct);
+
+                    db.SaveChanges();                  
 
                 }
-
-                db.ProductCategories.AddRange(prct);
-
-                db.SaveChanges();
             }
+
 
             return View("Index");
         }
 
-       
+
+
+
 
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)
