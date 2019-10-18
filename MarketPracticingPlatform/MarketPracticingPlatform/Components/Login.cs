@@ -14,9 +14,9 @@ namespace MarketPracticingPlatform.Components
         {
             if (Request.Cookies.ContainsKey("Token"))
             {
-                return View("LoggedIn");
+                return await Task.FromResult(View("LoggedIn"));
             }
-            return View("Authorization");
+            return await Task.FromResult(View("Authorization"));
         }
     }
 }
