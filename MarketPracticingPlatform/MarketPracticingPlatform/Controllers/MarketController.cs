@@ -85,30 +85,7 @@ namespace MarketPracticingPlatform.Controllers
             return View("Index");
         }
 
-        List<int> arr = new List<int>();
-
-
-        List<int> CategoryID(int id)
-        {
-            Category cat = new Category(); 
-
-            if (id != 0)
-            {
-                cat = db.Categories.Where(f => f.CategoryId == id).FirstOrDefault();
-
-                if (cat.ParentCategoryId != 0)
-                {
-                    arr.Add(cat.ParentCategoryId);
-
-                    CategoryID(cat.ParentCategoryId);
-                }
-
-                return arr;
-            }
-
-            return arr;
-        }
-
+       
 
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)
