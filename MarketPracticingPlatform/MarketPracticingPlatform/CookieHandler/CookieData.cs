@@ -10,6 +10,7 @@ namespace MarketPracticingPlatform.CookieHandler
 {
     public class CookieData : Controller
     {
+
         public string Get(string key)
         {
             return Request.Cookies[key];

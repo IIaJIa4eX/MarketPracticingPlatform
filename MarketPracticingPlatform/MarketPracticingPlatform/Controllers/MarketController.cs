@@ -84,6 +84,7 @@ namespace MarketPracticingPlatform.Controllers
 
         //    return View("Index");
         //}
+
         [HttpPost]
         public IActionResult ProductCreation(ProductDTO pdh)
         {
