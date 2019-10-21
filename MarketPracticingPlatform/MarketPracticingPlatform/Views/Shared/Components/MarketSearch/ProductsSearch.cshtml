@@ -1,20 +1,7 @@
 ﻿@model IEnumerable<MarketPracticingPlatform.DataBaseModels.Product>
 
-@{
- 
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    
 
-}
 
-<div class="AllProducts">
-    <div class="ProductsSearch">
-        <form method="post" asp-controller="MarketSearch" asp-action="SearchByCategory">
-
-            <input type="text" name="category" /> Поиск по категории
-            <input type="submit" value="Найти" />
-        </form>
-    </div>
     @ViewData["Message"]
     @if (@Model == null)
     {
@@ -48,5 +35,5 @@
             </table>
         </div>
     }
-</div>
+
 

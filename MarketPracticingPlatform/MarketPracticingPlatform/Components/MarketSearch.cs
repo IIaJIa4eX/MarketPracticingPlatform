@@ -19,8 +19,18 @@ namespace MarketPracticingPlatform.Components
         }
 
 
-        public async Task<IViewComponentResult> InvokeAsync(string categoryname)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
+
+            string categoryname = null;
+
+            if (Request.Method == "POST")
+            {
+
+                categoryname = Request.Form["CategoryForSearch"];
+
+
+            }
 
             if (!string.IsNullOrWhiteSpace(categoryname))
             {

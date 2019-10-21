@@ -5,6 +5,20 @@
 
 <body>
 
-@await Component.InvokeAsync("MarketSearch")
+    <div class="AllProducts">
+        <div class="ProductsSearch">
+            <form method="post">
+
+                <input type="text" name="CategoryForSearch" /> Поиск по категории
+                <input type="submit" value="Найти" />
+            </form>
+        </div>
+
+        @await Component.InvokeAsync("MarketSearch")
+
+
+    </div>
+
+
 
 </body>
