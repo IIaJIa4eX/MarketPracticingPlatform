@@ -1,0 +1,28 @@
+﻿@model MarketPracticingPlatform.DataBaseModels.Product;
+
+@{
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>ProductInformation</title>
+</head>
+<body>
+
+    <div>
+        <label>Название продукта</label>
+        <h1>@Model.Name</h1>
+        <label>Описание</label>
+        <h1>@Model.Description</h1>
+        <label>Цена</label>
+        <h1>@Model.Price</h1>
+        <label>Производитель</label>
+        <h1>@Model.Manufacturer</h1>
+    </div>
+</body>
+</html>

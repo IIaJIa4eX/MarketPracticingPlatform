@@ -21,7 +21,7 @@ namespace MarketPracticingPlatform.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            
+           
             return await Task.FromResult(View("Registr"));
         }
 

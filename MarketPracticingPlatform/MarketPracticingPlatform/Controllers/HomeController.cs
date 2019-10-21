@@ -47,7 +47,6 @@ namespace MarketPracticingPlatform.Controllers
         {
             var useremail = Request.Form["username"];
             var password = Request.Form["password"];
-
             var identity = GetIdentity(useremail, password);
             if (identity == null)
             {
@@ -69,8 +68,9 @@ namespace MarketPracticingPlatform.Controllers
 
 
             var option = new CookieOptions();
-            option.Expires = DateTime.Now.AddMinutes(5);
+            option.Expires = DateTime.Now.AddHours(24);
             option.SameSite = SameSiteMode.Strict;
+            option.HttpOnly = true;
             Response.Cookies.Append("Token", encodedJwt, option);
 
             var response = new

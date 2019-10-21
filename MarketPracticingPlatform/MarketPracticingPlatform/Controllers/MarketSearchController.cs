@@ -30,12 +30,16 @@ namespace MarketPracticingPlatform.Controllers
             return RedirectToAction("Index","Registration");
         }
 
-        [HttpPost]
-        public IActionResult SearchByCategory(string category)
+        //[HttpGet]
+        public IActionResult ShowProductInfo(int ProductId)
         {
+            if (Request.Cookies.ContainsKey("Token"))
+            {
+                ViewBag.Productid = ProductId;
+                return View("ProductInfo");
+            }
 
-
-            return ViewComponent("MarketSearch", new { categoryname = category });
+            return RedirectToAction("Index", "Registration");
 
 
         }

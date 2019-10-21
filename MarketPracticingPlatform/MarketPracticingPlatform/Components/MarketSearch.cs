@@ -26,9 +26,7 @@ namespace MarketPracticingPlatform.Components
 
             if (Request.Method == "POST")
             {
-
                 categoryname = Request.Form["CategoryForSearch"];
-
 
             }
 
