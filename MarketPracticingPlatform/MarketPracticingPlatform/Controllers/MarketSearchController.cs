@@ -34,32 +34,10 @@ namespace MarketPracticingPlatform.Controllers
         public IActionResult SearchByCategory(string category)
         {
 
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                Category cat = db.Categories.Where(f => f.Name == category).FirstOrDefault();
-                if (cat != null)
-                {
-                    var prdcat = db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId);
-                    Product temp = new Product();
-                    List<Product> prd = new List<Product>();
 
-                    foreach (var item in prdcat)
-                    {
-                        temp = db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault();
-                        prd.Add(temp);
-                    }
-
-                    return View("Index", prd);
-
-                }
+            return ViewComponent("MarketSearch", new { categoryname = category });
 
 
-                return View("Index");
-
-            }
-
-
-            return View("Index");
         }
     }
 }
