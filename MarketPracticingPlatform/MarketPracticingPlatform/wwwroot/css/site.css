@@ -58,11 +58,31 @@ body {
     width: 400px;
     height: 700px;
     position: absolute;
-    left: 0px;
+    left: 0;
 }
+
 .CategoryCreation {
     width: 400px;
     height: 700px;
     position: absolute;
     left: 400px;
+}
+
+.ProductInformationBlock{
+    width: 700px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.RelativeProducts {
+    width: 1000px;
+    height: 400px;
+    margin: 1px auto;
+}
+
+.MiniProductInfo{
+    width:200px;
+    height:100px;
+    float:left;
+    border: 1px solid black
 }

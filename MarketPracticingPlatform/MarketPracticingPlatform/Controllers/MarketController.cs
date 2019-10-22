@@ -88,18 +88,20 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult ProductCreation(ProductDTO pdh)
         {
+            Category cat = db.Categories.Where(f => f.Name == pdh.Category).FirstOrDefault();
+
 
             Product prod = new Product();
             prod.Name = pdh.Name;
             prod.Description = pdh.Description;
             prod.Price = pdh.Price;
             prod.Manufacturer = pdh.Manufacturer;
+            prod.CategoryId = cat.CategoryId;
 
             db.Products.Add(prod);
             db.SaveChanges();
 
-
-            Category cat = db.Categories.Where(f => f.Name == pdh.Category).FirstOrDefault();
+           
             int parentid = cat.CategoryId;
             ProductCategory prdct = new ProductCategory();
             Category cattmp = new Category();

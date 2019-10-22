@@ -7,6 +7,10 @@
 
 
 <body>
-@await Component.InvokeAsync("ProductInfo", @ViewBag.Productid)
+
+    @await Component.InvokeAsync("ProductInfo", @ViewBag.Productid)
+  
+    @await Component.InvokeAsync("RelativeProducts", @ViewBag.Productid)
+
 </body>
 
