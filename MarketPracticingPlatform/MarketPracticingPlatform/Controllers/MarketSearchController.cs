@@ -30,12 +30,12 @@ namespace MarketPracticingPlatform.Controllers
             return RedirectToAction("Index","Registration");
         }
 
-        //[HttpGet]
-        public IActionResult ShowProductInfo(int ProductId)
+        //[HttpGet("ShowProductInfo/{id}")]
+        public IActionResult ShowProductInfo(int id)
         {
             if (Request.Cookies.ContainsKey("Token"))
             {
-                ViewBag.Productid = ProductId;
+                ViewBag.Productid = id;
                 return View("ProductInfo");
             }
 
