@@ -24,10 +24,17 @@
                     @foreach (var element in @Model)
                     {
                         <tr>
+                            
                             <th scope="row">@element.ProductId</th>
-                            <td><a href="~/MarketSearch/ShowProductInfo/@element.ProductId">@element.Name</a></td>
+                            <td><a href="/MarketSearch/ShowProductInfo/@element.ProductId">@element.Name</a></td>
                             <td>@element.Description</td>
                             <td>@element.Price</td>
+                            <td>
+                                <form method="post" action="/Market/ShowProductEdit">
+                                <input hidden type="text" name="ProductId" value="@element.ProductId">
+                                <input type="submit" value="Редактировать">
+                                </form>
+                            </td>
                         </tr>
 
                     }

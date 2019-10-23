@@ -2,15 +2,14 @@
 @{
     ViewData["Title"] = "ProductInfo";
 
-    //Layout = "~/Views/MarketSearch/Index.cshtml";
+    Layout = null;
 }
 
 
 <body>
 
     @await Component.InvokeAsync("ProductInfo", @ViewBag.Productid)
-  
-    @await Component.InvokeAsync("RelativeProducts", @ViewBag.Productid)
+ 
 
 </body>
 

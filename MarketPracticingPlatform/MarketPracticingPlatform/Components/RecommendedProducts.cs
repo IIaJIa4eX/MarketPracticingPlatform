@@ -24,7 +24,7 @@ namespace MarketPracticingPlatform.Components
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
 
-            var
+           
 
             return await Task.FromResult(View("RecommendedProducts"));
         }

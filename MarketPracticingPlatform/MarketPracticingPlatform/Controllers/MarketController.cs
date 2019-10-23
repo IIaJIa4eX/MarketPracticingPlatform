@@ -166,5 +166,40 @@ namespace MarketPracticingPlatform.Controllers
             return View("Index");
         }
 
+        [HttpPost]
+        public IActionResult EditProduct(ProductDTO prdDTO)
+        {
+            Product prd = new Product();
+            prd.Name = prdDTO.Name;
+            prd.Description = prdDTO.Description;
+            prd.Manufacturer = prdDTO.Manufacturer;
+            prd.Price = prdDTO.Price;
+
+            prd.CategoryId = db.Categories.Where(f => f.Name == prdDTO.Category).Select(x => x.CategoryId).FirstOrDefault();
+
+
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ShowProductEdit(ProductDTO pdh)
+        {
+
+            if (pdh.ProductId != 0)
+            {
+                if (Request.Cookies.ContainsKey("Token"))
+                {
+                    ViewBag.Productid = pdh.ProductId;
+                    return View("ProductEditInformation");
+                }
+
+                return RedirectToAction("Index", "Registration");
+            }
+
+            return View("Index");
+        }
+
     }
 }

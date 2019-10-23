@@ -19,6 +19,8 @@ namespace MarketPracticingPlatform.Models
 
         public int SoldOut { get; set; }
 
+        public string Subproducts { get; set; }
+
         public string Manufacturer { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace MarketPracticingPlatform.Components
                 return await Task.FromResult(View("ProductInformation", prd));
             }
 
+            
 
             return await Task.FromResult(View("ProductError"));
         }
