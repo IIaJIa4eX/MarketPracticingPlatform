@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketPracticingPlatform.Migrations
 {
     [DbContext(typeof(DataBaseConnection))]
-    [Migration("20191023072322_MainSub_Products_entity_added")]
-    partial class MainSub_Products_entity_added
+    [Migration("20191024093030_added_new_entity_mainsubs")]
+    partial class added_new_entity_mainsubs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,12 +35,14 @@ namespace MarketPracticingPlatform.Migrations
 
             modelBuilder.Entity("MarketPracticingPlatform.DataBaseModels.MainSub_Products", b =>
                 {
-                    b.Property<int>("MainProductId")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MainProductId");
 
                     b.Property<int>("SubProductID");
 
-                    b.HasKey("MainProductId");
+                    b.HasKey("id");
 
                     b.ToTable("MainSubProducts");
                 });

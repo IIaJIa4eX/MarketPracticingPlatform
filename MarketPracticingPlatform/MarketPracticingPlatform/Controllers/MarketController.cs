@@ -167,21 +167,56 @@ namespace MarketPracticingPlatform.Controllers
         }
 
         [HttpPost]
+        //[HttpDelete("{id}")]
         public IActionResult EditProduct(ProductDTO prdDTO)
         {
-            Product prd = new Product();
+            Product prd = db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
+
+            prd.ProductId = prdDTO.ProductId;
             prd.Name = prdDTO.Name;
             prd.Description = prdDTO.Description;
             prd.Manufacturer = prdDTO.Manufacturer;
             prd.Price = prdDTO.Price;
 
+            string[] ss = prdDTO.Subproducts.Trim().Split(",");
+
             prd.CategoryId = db.Categories.Where(f => f.Name == prdDTO.Category).Select(x => x.CategoryId).FirstOrDefault();
+            db.Update(prd);
+            db.SaveChanges();
 
+            var msp = db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).Select(x => x.SubProductID.ToString()).ToArray();
 
+            if (msp.Count() != 0)
+            {
 
+                if (ss.SequenceEqual(msp))
+                {
+                    return RedirectToAction("Index","MarketSearch");
+                }
+                else
+                {
+                    List<MainSub_Products> mnsp = db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).ToList();
+                    db.MainSubProducts.RemoveRange(mnsp);
+                    db.SaveChanges();
 
-            return View();
+                }
+              
+            }
+
+            List<MainSub_Products> mnsbp = new List<MainSub_Products>();
+            foreach (var id in ss)
+            {
+                mnsbp.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
+
+            }
+
+            db.MainSubProducts.AddRange(mnsbp);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "MarketSearch"); ;
         }
+
+
 
         [HttpPost]
         public IActionResult ShowProductEdit(ProductDTO pdh)

@@ -8,10 +8,11 @@ namespace MarketPracticingPlatform.DataBaseModels
 {
     public class MainSub_Products
     {
-        [Key]
+
+        public int id { get; set;}
+
         public int MainProductId { get; set; }
 
         public int SubProductID { get; set; }
-
     }
 }

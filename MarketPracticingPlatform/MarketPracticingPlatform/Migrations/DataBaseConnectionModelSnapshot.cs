@@ -33,12 +33,14 @@ namespace MarketPracticingPlatform.Migrations
 
             modelBuilder.Entity("MarketPracticingPlatform.DataBaseModels.MainSub_Products", b =>
                 {
-                    b.Property<int>("MainProductId")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MainProductId");
 
                     b.Property<int>("SubProductID");
 
-                    b.HasKey("MainProductId");
+                    b.HasKey("id");
 
                     b.ToTable("MainSubProducts");
                 });

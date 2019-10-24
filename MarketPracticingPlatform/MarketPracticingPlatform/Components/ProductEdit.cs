@@ -31,6 +31,7 @@ namespace MarketPracticingPlatform.Components
            
 
             ProductDTO prdDTO = new ProductDTO();
+            prdDTO.ProductId = prd.ProductId;
             prdDTO.Name = prd.Name;
             prdDTO.Description = prd.Description;
             prdDTO.Price = prd.Price;
@@ -53,9 +54,12 @@ namespace MarketPracticingPlatform.Components
 
                 prdDTO.Subproducts = subproducts.Substring(0, subproducts.Length - 1);
             }
+            else
+            {
 
-            prdDTO.Subproducts = subproducts;
+                prdDTO.Subproducts = subproducts;
 
+            }
             return await Task.FromResult(View("ProductEditInformation",prdDTO));
 
         }

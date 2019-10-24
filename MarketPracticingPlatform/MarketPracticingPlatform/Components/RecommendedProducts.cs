@@ -1,4 +1,5 @@
-﻿using MarketPracticingPlatform.DBConnection;
+﻿using MarketPracticingPlatform.DataBaseModels;
+using MarketPracticingPlatform.DBConnection;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,21 @@ namespace MarketPracticingPlatform.Components
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
 
-           
+            var additionalproducts = db.MainSubProducts.Where(f => f.MainProductId == id).Take(5);
 
-            return await Task.FromResult(View("RecommendedProducts"));
+            var prd = new List<Product>();
+
+            foreach(var item in additionalproducts)
+            {
+                Product prtmp = db.Products.Where(f => f.ProductId == item.SubProductID).FirstOrDefault();
+                if (prtmp != null)
+                {
+                    prd.Add(prtmp);
+                }
+            }
+
+            return await Task.FromResult(View("RecommendedProducts", prd));
+
         }
         
 

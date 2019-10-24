@@ -11,6 +11,12 @@
     <Compile Remove="Migrations\20191023071637_MainSub_Products_entity_added.Designer.cs" />
     <Compile Remove="Migrations\20191023072116_AutoIncrement_chanched.cs" />
     <Compile Remove="Migrations\20191023072116_AutoIncrement_chanched.Designer.cs" />
+    <Compile Remove="Migrations\20191023072322_MainSub_Products_entity_added.cs" />
+    <Compile Remove="Migrations\20191023072322_MainSub_Products_entity_added.Designer.cs" />
+    <Compile Remove="Migrations\20191024090823_deleted_primarykey_added_unique_id.cs" />
+    <Compile Remove="Migrations\20191024090823_deleted_primarykey_added_unique_id.Designer.cs" />
+    <Compile Remove="Migrations\20191024091544_deleted_primary_key_mainsubs_and_added_to_id.cs" />
+    <Compile Remove="Migrations\20191024091544_deleted_primary_key_mainsubs_and_added_to_id.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

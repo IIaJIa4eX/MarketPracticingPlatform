@@ -2,14 +2,13 @@
 @{
     ViewData["Title"] = "ProductInfo";
 
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <body>
 
-    @await Component.InvokeAsync("ProductInfo", @ViewBag.Productid)
- 
+    @await Component.InvokeAsync("ProductInfo", @ViewBag.Productid) 
 
 </body>
 

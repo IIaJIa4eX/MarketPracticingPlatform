@@ -21,9 +21,13 @@
             <label>Айди дополнительных продуктов к этому продукту</label>
             <input name="Subproducts" type="text" value="@Model.Subproducts" /> <br />
             <small class="form-text text-muted">При редактировании вводить через запятую без пробелов (1,2,3)</small> <br /><br />
-            <input hidden type="text" name="ProductId" value="@Model.ProductId"/>
-            <input type="submit" value="Редактировать" />
+            <input name="ProductId" hidden type="text"  value="@Model.ProductId" />
+            <input type="submit" value="Редактировать" />           
         </form>
+        @*<form method="delete" asp-controller="Market" asp-action="EditProduct">
+            <input hidden type="text" name="id" value="@Model.ProductId" />
+            <input type="submit" value="удалить" />
+        </form>*@
 
     </div>
 </body>

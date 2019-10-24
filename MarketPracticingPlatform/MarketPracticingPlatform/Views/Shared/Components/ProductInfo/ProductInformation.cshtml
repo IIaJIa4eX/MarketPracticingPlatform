@@ -21,5 +21,11 @@
         <label>Производитель</label>
         <h1>@Model.Manufacturer</h1>
     </div>
+
+
+    @await Component.InvokeAsync("RelativeProducts", @Model.ProductId)
+
+    @await Component.InvokeAsync("RecommendedProducts", @Model.ProductId)
+
 </body>
 </html>
