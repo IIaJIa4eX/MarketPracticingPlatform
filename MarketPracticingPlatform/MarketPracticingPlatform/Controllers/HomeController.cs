@@ -31,6 +31,7 @@ namespace MarketPracticingPlatform.Controllers
             
         }
 
+
         public IActionResult Index()
         {
 
@@ -68,10 +69,13 @@ namespace MarketPracticingPlatform.Controllers
 
 
             var option = new CookieOptions();
-            option.Expires = DateTime.Now.AddHours(24);
+            //option.Expires = DateTime.Now.AddHours(24);
             option.SameSite = SameSiteMode.Strict;
             option.HttpOnly = true;
+            option.Secure = true;
+            option.IsEssential = true;
             Response.Cookies.Append("Token", encodedJwt, option);
+            Response.Cookies.Append("Username", useremail, option);
 
             var response = new
             {
@@ -105,6 +109,17 @@ namespace MarketPracticingPlatform.Controllers
 
             return null;
         }
+
+        [Route("LogOff")]
+        public IActionResult LogOff()
+        {
+            Response.Cookies.Delete("Token");
+
+            Response.Cookies.Delete("Username");
+
+            return RedirectToAction("Index");
+        }
+
     }
 
 

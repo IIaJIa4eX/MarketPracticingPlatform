@@ -20,7 +20,7 @@ var tokenKey = "accessToken";
                 $('.userName').text(data.username);
                 $('.userInfo').css('display', 'block');
                 $('.loginForm').css('display', 'none');
-                document.cookie = "username = " + data.username;
+               // document.cookie = "username = " + data.username;
                 console.log(data.access_token);
             }).fail(function (data) {
                 console.log(data);

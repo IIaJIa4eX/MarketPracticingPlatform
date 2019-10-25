@@ -30,18 +30,19 @@ namespace MarketPracticingPlatform
         public IConfiguration Configuration { get; }
 
 
-        readonly string MyAllowSpecificOrigins = "_AllowToRequest";
+        //readonly string MyAllowSpecificOrigins = "_AllowToRequest";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddCors(options =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
+                options.AddDefaultPolicy(
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:5000", "https://localhost:5001");
+                    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
+
             });
 
 
@@ -102,7 +103,8 @@ namespace MarketPracticingPlatform
 
 
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors();
+
             loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPracticingPlatform.Controllers
 {
+    [Route("[controller]/[action]")]
     public class MarketController : Controller
     {
 
         DataBaseConnection db;
-       
+
 
         public MarketController(DataBaseConnection db)
         {
@@ -33,7 +34,7 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-        
+
         //public IActionResult ProductCreation(ProductDTO pdh)
         //{
         //    ParentCategorySearch pcs = new ParentCategorySearch(db);
@@ -101,7 +102,7 @@ namespace MarketPracticingPlatform.Controllers
             db.Products.Add(prod);
             db.SaveChanges();
 
-           
+
             int parentid = cat.CategoryId;
             ProductCategory prdct = new ProductCategory();
             Category cattmp = new Category();
@@ -119,7 +120,7 @@ namespace MarketPracticingPlatform.Controllers
             {
                 while (parentid != 0)
                 {
-                    cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();                  
+                    cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
 
                     prdct.CategoryId = cattmp.CategoryId;
                     prdct.ProductId = prod.ProductId;
@@ -128,7 +129,7 @@ namespace MarketPracticingPlatform.Controllers
 
                     db.ProductCategories.Add(prdct);
 
-                    db.SaveChanges();                  
+                    db.SaveChanges();
 
                 }
             }
@@ -167,7 +168,6 @@ namespace MarketPracticingPlatform.Controllers
         }
 
         [HttpPost]
-        //[HttpDelete("{id}")]
         public IActionResult EditProduct(ProductDTO prdDTO)
         {
             Product prd = db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
@@ -191,7 +191,7 @@ namespace MarketPracticingPlatform.Controllers
 
                 if (ss.SequenceEqual(msp))
                 {
-                    return RedirectToAction("Index","MarketSearch");
+                    return RedirectToAction("Index", "MarketSearch");
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace MarketPracticingPlatform.Controllers
                     db.SaveChanges();
 
                 }
-              
+
             }
 
             List<MainSub_Products> mnsbp = new List<MainSub_Products>();
@@ -234,6 +234,19 @@ namespace MarketPracticingPlatform.Controllers
             }
 
             return View("Index");
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteProduct(int ProductId)
+        {
+            Product prd = db.Products.Where(f => f.ProductId == ProductId).FirstOrDefault();
+
+            db.Products.Remove(prd);
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index","MarketSearch");
         }
 
     }
