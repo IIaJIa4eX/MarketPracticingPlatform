@@ -15,7 +15,6 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Название</th>
-                        <th scope="col">Описание</th>
                         <th scope="col">Цена</th>
                     </tr>
                 </thead>
@@ -26,8 +25,7 @@
                     <tr>
 
                         <th scope="row">@element.ProductId</th>
-                        <td><a  target="_blank" href="/MarketSearch/ShowProductInfo/@element.ProductId">@element.Name</a></td>
-                        <td>@element.Description</td>
+                        <td><a  target="_blank" href="/MarketSearch/ShowProductInfo/@element.ProductId">@element.Name</a></td>                       
                         <td>@element.Price</td>
                         <td>
                             <form target="_blank" method="post" action="/Market/ShowProductEdit">

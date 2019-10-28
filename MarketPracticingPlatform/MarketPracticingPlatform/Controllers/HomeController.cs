@@ -43,17 +43,24 @@ namespace MarketPracticingPlatform.Controllers
 
 
         [HttpPost]
-        [Route("Token")]
-        public async Task Token()
+        [Route("UserAuthentication")]
+        public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
         {
-            var useremail = Request.Form["username"];
-            var password = Request.Form["password"];
-            var identity = GetIdentity(useremail, password);
+           
+
+            if (string.IsNullOrWhiteSpace(userDTO.Email) || string.IsNullOrWhiteSpace(userDTO.Password))
+            {
+
+                return await Task.FromResult(new UserAuthenticationDTO { Success = false, Error = "Все поля должны быть заполнены" });
+            }
+
+            var identity = GetIdentity(userDTO.Email, userDTO.Password);
+
+
             if (identity == null)
             {
-                Response.StatusCode = 400;
-                await Response.WriteAsync("Invalid username or password.");
-                return;
+                
+                return await Task.FromResult(new UserAuthenticationDTO { Success = false, Error = "Вы неправильно ввели имя пользователя или пароль" });
             }
 
             var now = DateTime.UtcNow;
@@ -75,17 +82,11 @@ namespace MarketPracticingPlatform.Controllers
             option.Secure = true;
             option.IsEssential = true;
             Response.Cookies.Append("Token", encodedJwt, option);
-            Response.Cookies.Append("Username", useremail, option);
-
-            var response = new
-            {
-                access_token = encodedJwt,
-                username = identity.Name
-            };
-
-
+            Response.Cookies.Append("Username", userDTO.Email, option);
+        
+            
             Response.ContentType = "application/json";
-            await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            return await Task.FromResult(new UserAuthenticationDTO { Success = true});
         }
 
         private ClaimsIdentity GetIdentity(string email, string password)

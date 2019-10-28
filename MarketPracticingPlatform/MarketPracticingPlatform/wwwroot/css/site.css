@@ -98,3 +98,10 @@ body {
     height: 900px;
     margin: 0 auto;
 }
+
+.LoginForm {
+    margin: 0 auto;
+    width: 200px;
+    height: 400px;
+    text-align: center;
+}

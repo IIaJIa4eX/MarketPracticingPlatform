@@ -3,68 +3,28 @@
 
 // Write your JavaScript code.
 
-var tokenKey = "accessToken";
-        $('#submitLogin').click(function (e) {
-            e.preventDefault();
-            var loginData = {
-                grant_type: 'password',
-                username: $('#emailLogin').val(),
-                password: $('#passwordLogin').val()
-            };
- 
-            $.ajax({
-                type: 'POST',
-                url: '/Home/Token',
-                data: loginData
-            }).done(function (data) {
-                $('.userName').text(data.username);
-                $('.userInfo').css('display', 'block');
-                $('.loginForm').css('display', 'none');
-               // document.cookie = "username = " + data.username;
-                console.log(data.access_token);
-            }).fail(function (data) {
-                console.log(data);
-            });
-        });
- 
-        $('#logOut').click(function (e) {
-            e.preventDefault();
-            $('.loginForm').css('display', 'block');
-            $('.userInfo').css('display', 'none');
-            sessionStorage.removeItem(tokenKey);
-        });
+function SubmitAuthentication() {
 
+    $.post("/Home/UserAuthentication", $("#PostForm").serialize(), function (data) {
+        if (data.success === true) {
 
-$('#getDataByRole').click(function (e) {
-    e.preventDefault();
-    $.ajax({
-        type: 'GET',
-        url: '/api/values/getrole',
-        beforeSend: function (xhr) {
+            document.location.href = "/Home/";
 
-            var token = sessionStorage.getItem(tokenKey);
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-        },
-        success: function (data) {
-            alert(data);
-        },
-        fail: function (data) {
-            console.log(data);
+        } else {
+            document.getElementById("ErrorDisplay").innerHTML = data.error;
+           // $("#ErrorDisplay").html(data.error);
         }
+        
     });
+
+}
+
+$("input").click(function () {
+    $(this).parent().children("small").slideDown();
+}).blur(function () {
+    $(this).parent().children("small").slideUp();
 });
 
-function SentToken() {
-    var x = document.cookie;
-    var token = x.Token;
-    $.ajax({
-        type: 'GET',
-        url: '/MarketSearch/Index',
-        beforeSend: function (xhr) {         
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-        },
-        fail: function (data) {
-            console.log(data);
-        }
-    });
-}
+
+
+

@@ -5,14 +5,28 @@
 
 
 <body>
-    <div class="loginForm" style="width: 300px; height:400px; margin: 0 auto">
-        <h3>Вход на сайт</h3>
-        <label>Введите email</label><br />
-        <input type="email" id="emailLogin" /> <br /><br />
-        <label>Введите пароль</label><br />
-        <input type="password" id="passwordLogin" /><br /><br />
-        <input type="submit" id="submitLogin" value="Логин" />
-    </div>
+        <div class="LoginForm">
+            <h3>Вход на сайт</h3>
+            <div id="ErrorDisplay"></div>
+            <form id="PostForm">
+                <div class="form-group" >
+                    <label>Введите email</label><br />
+                    <input name="Email" type="email" id="emailLogin" /> <br /><br />
+                    <small hidden id="EmailInput" class="form-text text-muted">Введите правильный email: abc@xyz.com.</small>
+                </div>
+                <div class="form-group">
+                    <label>Введите пароль</label><br />
+                    <input name="Password" type="password" id="passwordLogin" /><br /><br />
+                    <small hidden id="PasswordInput" class="form-text text-muted">Убедитесь в том, что  не использован Caps Lock</small>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" onclick="SubmitAuthentication();">Войти</button>
+                </div>
+                <div>
+                    <p>У вас нет аккаунта? Тогда <a href="/Registration/Index">Зарегистрируйтесь</a> </p>
+                </div>
+            </form>
+        </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>

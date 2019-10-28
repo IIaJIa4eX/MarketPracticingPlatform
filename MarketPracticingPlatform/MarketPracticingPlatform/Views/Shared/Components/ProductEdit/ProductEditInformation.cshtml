@@ -13,22 +13,19 @@
             <label>Категория</label><br />
             <input type="text" name="Category" value="@Model.Category" /><br /><br />
             <label>Описание</label><br />
-            <textarea name="Description">@Model.Description</textarea> <br /><br />
+            <textarea rows="5" cols="150" name="Description">@Model.Description</textarea> <br /><br />
             <label>Цена</label><br />
             <input name="Price" type="text" value="@Model.Price" /> <br /><br />
             <label>Производитель</label><br />
             <input type="text" name="Manufacturer" value="@Model.Manufacturer" /> <br /><br />
-            <label>Айди дополнительных продуктов к этому продукту</label>
-            <input name="Subproducts" type="text" value="@Model.Subproducts" /> <br />
-            <small class="form-text text-muted">При редактировании вводить через запятую без пробелов (1,2,3)</small> <br /><br />
-            <input name="ProductId" hidden type="text"  value="@Model.ProductId" />
-            <input type="submit" value="Редактировать" />           
+            <div>
+                <label>Айди дополнительных продуктов к этому продукту</label>
+                <input name="Subproducts" type="text" value="@Model.Subproducts" /> <br />
+                <small hidden class="form-text text-muted">При редактировании вводить через запятую без пробелов (1,2,3)</small> <br /><br />
+            </div>
+            <input name="ProductId" hidden type="text" value="@Model.ProductId" />
+            <input type="submit" value="Редактировать" />
         </form>
-        @*<form method="delete" asp-controller="Market" asp-action="EditProduct">
-            <input hidden type="text" name="id" value="@Model.ProductId" />
-            <input type="submit" value="удалить" />
-        </form>*@
-
     </div>
 </body>
     </html>
