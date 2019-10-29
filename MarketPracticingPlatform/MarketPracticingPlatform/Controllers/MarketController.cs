@@ -6,6 +6,7 @@ using MarketPracticingPlatform.DataBaseModels;
 using MarketPracticingPlatform.DBConnection;
 using MarketPracticingPlatform.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPracticingPlatform.Controllers
 {
@@ -50,42 +51,64 @@ namespace MarketPracticingPlatform.Controllers
             db.SaveChanges();
 
 
-            int parentid = cat.CategoryId;
+           // int parentid = cat.CategoryId;
             ProductCategory prdct = new ProductCategory();
             Category cattmp = new Category();
 
 
-            if (cat.ParentCategoryId == 0)
+            //if (cat.ParentCategoryId == 0)
+            //{
+            //    prdct.CategoryId = cat.CategoryId;
+            //    prdct.ProductId = prod.ProductId;
+
+            //    db.ProductCategories.Add(prdct);
+            //    db.SaveChanges();
+            //}
+            //else
+            //{
+            //    while (parentid != 0)
+            //    {
+            //        cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
+
+            //        prdct.CategoryId = cattmp.CategoryId;
+            //        prdct.ProductId = prod.ProductId;
+
+            //        parentid = cattmp.ParentCategoryId;
+
+            //        db.ProductCategories.Add(prdct);
+
+            //        db.SaveChanges();
+
+            //    }
+            //}
+            int parentid = ParentCategorySearch(cat.ParentCategoryId);
+            if (parentid == 0)
             {
                 prdct.CategoryId = cat.CategoryId;
-                prdct.ProductId = prod.ProductId;
-
-                db.ProductCategories.Add(prdct);
-                db.SaveChanges();
-            }
-            else
-            {
-                while (parentid != 0)
-                {
-                    cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
-
-                    prdct.CategoryId = cattmp.CategoryId;
                     prdct.ProductId = prod.ProductId;
 
-                    parentid = cattmp.ParentCategoryId;
-
                     db.ProductCategories.Add(prdct);
-
                     db.SaveChanges();
-
-                }
             }
+
 
 
             return View("Index");
         }
 
+        public int ParentCategorySearch(int id)
+        {
 
+            Category prid = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = {id}").FirstOrDefault();
+
+            if(prid.ParentCategoryId != 0)
+            {
+                 
+                 return ParentCategorySearch(prid.ParentCategoryId);
+            }
+
+            return 0;
+        }
 
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)

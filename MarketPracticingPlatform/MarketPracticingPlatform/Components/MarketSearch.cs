@@ -36,13 +36,12 @@ namespace MarketPracticingPlatform.Components
                 if (cat != null)
                 {
                     var prdcat = db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId);
-                    Product temp = new Product();
+                    
                     List<Product> prd = new List<Product>();
 
                     foreach (var item in prdcat)
                     {
-                        temp = db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault();
-                        prd.Add(temp);
+                        prd.Add(db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault());
                     }
 
 

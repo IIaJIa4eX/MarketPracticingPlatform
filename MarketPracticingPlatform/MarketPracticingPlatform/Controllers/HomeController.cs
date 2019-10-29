@@ -15,6 +15,7 @@ using MarketPracticingPlatform.DBConnection;
 using MarketPracticingPlatform.DataBaseModels;
 using Microsoft.AspNetCore.Authorization;
 using MarketPracticingPlatform.CookieHandler;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPracticingPlatform.Controllers
 {
@@ -35,11 +36,9 @@ namespace MarketPracticingPlatform.Controllers
         public IActionResult Index()
         {
 
-
             return View();
 
         }
-
 
 
         [HttpPost]
@@ -53,6 +52,7 @@ namespace MarketPracticingPlatform.Controllers
 
                 return await Task.FromResult(new UserAuthenticationDTO { Success = false, Error = "Все поля должны быть заполнены" });
             }
+
 
             var identity = GetIdentity(userDTO.Email, userDTO.Password);
 
