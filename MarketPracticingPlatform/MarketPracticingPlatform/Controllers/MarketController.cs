@@ -81,33 +81,54 @@ namespace MarketPracticingPlatform.Controllers
 
             //    }
             //}
-            int parentid = ParentCategorySearch(cat.ParentCategoryId);
-            if (parentid == 0)
+            bool parentid = ParentCategorySearch(cat.ParentCategoryId, prod.ProductId);
+
+            if (parentid == false)
             {
                 prdct.CategoryId = cat.CategoryId;
-                    prdct.ProductId = prod.ProductId;
+                prdct.ProductId = prod.ProductId;
 
-                    db.ProductCategories.Add(prdct);
-                    db.SaveChanges();
+                db.ProductCategories.Add(prdct);
+                db.SaveChanges();
+
+
+                return View("Index");
             }
 
+                prdct.CategoryId = cat.CategoryId;
+                prdct.ProductId = prod.ProductId;
+
+                db.ProductCategories.Add(prdct);
+                db.SaveChanges();
 
 
             return View("Index");
         }
 
-        public int ParentCategorySearch(int id)
+        public bool ParentCategorySearch(int parentid, int prodid)
         {
 
-            Category prid = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = {id}").FirstOrDefault();
+            Category prid = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({parentid})").FirstOrDefault();
 
-            if(prid.ParentCategoryId != 0)
+         
+            if(parentid == 0 &&  prid == null)           
+                return true;
+
+            if (prid == null)
+                return false;
+
+
+            ProductCategory prdct = new ProductCategory
             {
-                 
-                 return ParentCategorySearch(prid.ParentCategoryId);
-            }
+                ProductId = prodid,
+                CategoryId = prid.CategoryId
+            };
 
-            return 0;
+            db.ProductCategories.Add(prdct);
+
+            db.SaveChanges();
+
+            return ParentCategorySearch(prid.ParentCategoryId,prodid);
         }
 
         [HttpPost]

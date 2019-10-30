@@ -19,7 +19,6 @@ namespace MarketPracticingPlatform.DBConnection
 
         public DbSet<MainSub_Products> MainSubProducts { get; set; }
 
-        public List<Product> Prodictss;
 
 
 
