@@ -30,7 +30,6 @@ namespace MarketPracticingPlatform.Controllers
             return RedirectToAction("Index","Registration");
         }
 
-        //[HttpGet("ShowProductInfo/{id}")]
         public IActionResult ShowProductInfo(int id)
         {
             if (Request.Cookies.ContainsKey("Token"))

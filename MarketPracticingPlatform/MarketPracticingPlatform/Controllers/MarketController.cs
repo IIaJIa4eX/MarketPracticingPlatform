@@ -81,20 +81,21 @@ namespace MarketPracticingPlatform.Controllers
 
             //    }
             //}
-            bool parentid = ParentCategorySearch(cat.ParentCategoryId, prod.ProductId);
+            // bool parentid = ParentCategorySearch(cat.ParentCategoryId, prod.ProductId);
 
-            if (parentid == false)
-            {
-                prdct.CategoryId = cat.CategoryId;
-                prdct.ProductId = prod.ProductId;
+            //if (parentid == false)
+            //{
+            //    prdct.CategoryId = cat.CategoryId;
+            //    prdct.ProductId = prod.ProductId;
 
-                db.ProductCategories.Add(prdct);
-                db.SaveChanges();
+            //    db.ProductCategories.Add(prdct);
+            //    db.SaveChanges();
 
 
-                return View("Index");
-            }
+            //    return View("Index");
+            //}
 
+                Traverse(cat.ParentCategoryId, prod.ProductId);
                 prdct.CategoryId = cat.CategoryId;
                 prdct.ProductId = prod.ProductId;
 
@@ -118,18 +119,45 @@ namespace MarketPracticingPlatform.Controllers
                 return false;
 
 
-            ProductCategory prdct = new ProductCategory
+            db.ProductCategories.Add(new ProductCategory
             {
                 ProductId = prodid,
                 CategoryId = prid.CategoryId
-            };
-
-            db.ProductCategories.Add(prdct);
+            });
 
             db.SaveChanges();
 
             return ParentCategorySearch(prid.ParentCategoryId,prodid);
         }
+
+        public void Traverse(int id, int productid)
+        {
+            var cat = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({id})").FirstOrDefault();
+
+            while (cat != null)
+            {           
+
+                db.ProductCategories.Add(new ProductCategory
+                {
+                    ProductId = productid,
+                    CategoryId = cat.CategoryId
+                });
+
+                db.SaveChanges();
+
+                int nextid = cat.ParentCategoryId;
+
+                if (nextid != 0)
+                {
+                   cat = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({nextid})").FirstOrDefault();
+                }
+                else
+                {
+                    cat = null;
+                }
+            }
+        }
+
 
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)

@@ -68,7 +68,7 @@ namespace MarketPracticingPlatform.Controllers
             db.Users.Add(us);
             db.SaveChanges();
             
-            return View("Index");
+            return RedirectToAction("Index", "Home");
         }
 
 
