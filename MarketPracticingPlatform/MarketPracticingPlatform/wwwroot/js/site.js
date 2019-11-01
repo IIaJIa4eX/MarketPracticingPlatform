@@ -15,6 +15,11 @@ function SubmitAuthentication() {
            // $("#ErrorDisplay").html(data.error);
         }
         
+    }).fail(function (data) {
+
+        if (data.status === 500) {
+            document.getElementById("ErrorDisplay").innerHTML = "Не удалось подключиться к серверу";
+        }
     });
 
 }

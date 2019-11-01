@@ -110,8 +110,8 @@ namespace MarketPracticingPlatform.Controllers
         {
 
             Category prid = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({parentid})").FirstOrDefault();
-
-         
+            
+           
             if(parentid == 0 &&  prid == null)           
                 return true;
 
@@ -132,8 +132,9 @@ namespace MarketPracticingPlatform.Controllers
 
         public void Traverse(int id, int productid)
         {
-            var cat = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({id})").FirstOrDefault();
+            var cat = db.Categories.Where(x => x.CategoryId == id).FirstOrDefault();
 
+            
             while (cat != null)
             {           
 
@@ -149,7 +150,7 @@ namespace MarketPracticingPlatform.Controllers
 
                 if (nextid != 0)
                 {
-                   cat = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({nextid})").FirstOrDefault();
+                   cat = db.Categories.Where(x => x.CategoryId == nextid).FirstOrDefault();
                 }
                 else
                 {
@@ -157,7 +158,6 @@ namespace MarketPracticingPlatform.Controllers
                 }
             }
         }
-
 
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)

@@ -1,5 +1,6 @@
 ﻿using MarketPracticingPlatform.DataBaseModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,10 @@ namespace MarketPracticingPlatform.DBConnection
 
 
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Category>(CategoryConfigure);
 
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(t => new { t.ProductId, t.CategoryId });
@@ -37,9 +39,14 @@ namespace MarketPracticingPlatform.DBConnection
                 .HasOne(sc => sc.Category)
                 .WithMany(c => c.ProductCategories)
                 .HasForeignKey(sc => sc.CategoryId);
+
+
         }
 
-
+        public void CategoryConfigure(EntityTypeBuilder<Category> builder)
+        {
+            builder.Property(p => p.ParentCategoryId).HasDefaultValue(null);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 

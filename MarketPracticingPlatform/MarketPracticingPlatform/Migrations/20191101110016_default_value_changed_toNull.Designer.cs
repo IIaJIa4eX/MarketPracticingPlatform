@@ -3,14 +3,16 @@ using System;
 using MarketPracticingPlatform.DBConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MarketPracticingPlatform.Migrations
 {
     [DbContext(typeof(DataBaseConnection))]
-    partial class DataBaseConnectionModelSnapshot : ModelSnapshot
+    [Migration("20191101110016_default_value_changed_toNull")]
+    partial class default_value_changed_toNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
