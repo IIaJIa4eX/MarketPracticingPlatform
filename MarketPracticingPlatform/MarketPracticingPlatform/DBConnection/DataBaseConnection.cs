@@ -25,7 +25,9 @@ namespace MarketPracticingPlatform.DBConnection
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Category>(CategoryConfigure);
+            modelBuilder.Entity<Category>()
+            .Property(b => b.ParentCategoryId)
+            .HasDefaultValue(null);
 
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(t => new { t.ProductId, t.CategoryId });
@@ -40,13 +42,11 @@ namespace MarketPracticingPlatform.DBConnection
                 .WithMany(c => c.ProductCategories)
                 .HasForeignKey(sc => sc.CategoryId);
 
+            
+
 
         }
 
-        public void CategoryConfigure(EntityTypeBuilder<Category> builder)
-        {
-            builder.Property(p => p.ParentCategoryId).HasDefaultValue(null);
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 

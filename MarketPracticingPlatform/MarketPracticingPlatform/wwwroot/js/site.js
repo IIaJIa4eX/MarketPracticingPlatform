@@ -12,7 +12,6 @@ function SubmitAuthentication() {
 
         } else {
             document.getElementById("ErrorDisplay").innerHTML = data.error;
-           // $("#ErrorDisplay").html(data.error);
         }
         
     }).fail(function (data) {
