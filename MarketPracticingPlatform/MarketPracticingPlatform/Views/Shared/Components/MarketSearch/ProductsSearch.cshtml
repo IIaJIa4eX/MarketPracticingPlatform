@@ -9,42 +9,49 @@
     }
     else
     {
-        <div class="AllProducts">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Цена</th>
-                    </tr>
-                </thead>
-                <tbody>
+<div class="AllProducts">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+            </tr>
+        </thead>
+        <tbody>
 
-                    @foreach (var element in @Model)
-                    {
-                    <tr>
+            @foreach (var element in @Model)
+            {
+                <tr>
 
-                        <th scope="row">@element.ProductId</th>
-                        <td><a  target="_blank" href="/MarketSearch/ShowProductInfo/@element.ProductId">@element.Name</a></td>                       
-                        <td>@element.Price</td>
-                        <td>
-                            <form target="_blank" method="post" action="/Market/ShowProductEdit">
-                                <input hidden type="text" name="ProductId" value="@element.ProductId">
-                                <input  type="submit" value="Редактировать">
-                            </form>
-                        </td>
-                        <td>
-                            <form  method="post" asp-action="DeleteProduct" asp-controller="Market">
-                                <input name="ProductId" hidden type="text"  value="@element.ProductId">
-                                <input type="submit" value="Удалить">
-                            </form>
-                        </td>
-                    </tr>
+                    <th scope="row">@element.ProductId</th>
+                    <td><a target="_blank" href="/MarketSearch/ShowProductInfo/@element.ProductId">@element.Name</a></td>
+                    <td>@element.Price</td>
+                    <td>
+                        <form target="_blank" method="post" action="/Market/ShowProductEdit">
+                            <input hidden type="text" name="ProductId" value="@element.ProductId">
+                            <input type="submit" value="Редактировать">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" asp-action="DeleteProduct" asp-controller="Market">
+                            <input name="ProductId" hidden type="text" value="@element.ProductId">
+                            <input type="submit" value="Удалить">
+                        </form>
+                    </td>
+                </tr>
 
-                    }
-                </tbody>
-            </table>
-        </div>
+            }
+        </tbody>
+    </table>
+    <ul class="pagination" .active .pagination>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+    </ul>
+</div>
     }
 
 

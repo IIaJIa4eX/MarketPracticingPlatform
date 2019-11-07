@@ -25,16 +25,21 @@
     <Compile Remove="Migrations\20191106121201_changed-name-to-CategoryName.Designer.cs" />
     <Compile Remove="Migrations\20191106122003_changed_name_to_CategoryName.cs" />
     <Compile Remove="Migrations\20191106122003_changed_name_to_CategoryName.Designer.cs" />
+    <Compile Remove="Migrations\20191107065851_defaultvalue_tonull.cs" />
+    <Compile Remove="Migrations\20191107065851_defaultvalue_tonull.Designer.cs" />
+    <Compile Remove="Migrations\20191107072138_changed_default_tonull.cs" />
+    <Compile Remove="Migrations\20191107072138_changed_default_tonull.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
-    <PackageReference Include="MySql.Data" Version="8.0.17" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
-    <PackageReference Include="Serilog" Version="2.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.18" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.18" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="vue" Version="2.6.10" />
   </ItemGroup>

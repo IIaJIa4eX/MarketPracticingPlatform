@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketPracticingPlatform.Migrations
 {
     [DbContext(typeof(DataBaseConnection))]
-    [Migration("20191107065851_defaultvalue_tonull")]
-    partial class defaultvalue_tonull
+    [Migration("20191107073335_changed_default_to_null")]
+    partial class changed_default_to_null
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace MarketPracticingPlatform.DataBaseModels
 
         public string Description { get; set; }
 
+        [DefaultValue(null)]
         public int ParentCategoryId { get; set; }
 
 

@@ -2,7 +2,7 @@
 
 namespace MarketPracticingPlatform.Migrations
 {
-    public partial class defaultvalue_tonull : Migration
+    public partial class changed_default_to_null : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

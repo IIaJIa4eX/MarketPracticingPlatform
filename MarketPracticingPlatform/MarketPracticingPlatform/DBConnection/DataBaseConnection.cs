@@ -28,22 +28,22 @@ namespace MarketPracticingPlatform.DBConnection
             modelBuilder.Entity<Category>()
             .Property(b => b.ParentCategoryId)
             .HasDefaultValue(null);
+          
 
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(t => new { t.ProductId, t.CategoryId });
+
 
             modelBuilder.Entity<ProductCategory>()
                 .HasOne(sc => sc.Product)
                 .WithMany(s => s.ProductCategories)
                 .HasForeignKey(sc => sc.ProductId);
 
+
             modelBuilder.Entity<ProductCategory>()
                 .HasOne(sc => sc.Category)
                 .WithMany(c => c.ProductCategories)
                 .HasForeignKey(sc => sc.CategoryId);
-
-            
-
 
         }
 
