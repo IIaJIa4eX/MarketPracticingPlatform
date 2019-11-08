@@ -37,7 +37,7 @@ namespace MarketPracticingPlatform.Components
             prdDTO.Price = prd.Price;
             prdDTO.Manufacturer = prd.Manufacturer;
 
-            prdDTO.Category = db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault();
+            prdDTO.CategoryName = db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault();
 
             var subprods = db.MainSubProducts.Where(f => f.MainProductId == productid);
 

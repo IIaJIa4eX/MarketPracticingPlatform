@@ -37,7 +37,7 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult ProductCreation(ProductDTO pdh)
         {
-            Category cat = db.Categories.Where(f => f.Name == pdh.Category).FirstOrDefault();
+            Category cat = db.Categories.Where(f => f.Name == pdh.CategoryName).FirstOrDefault();
 
 
             Product prod = new Product();
@@ -51,113 +51,37 @@ namespace MarketPracticingPlatform.Controllers
             db.SaveChanges();
 
 
-           // int parentid = cat.CategoryId;
-            ProductCategory prdct = new ProductCategory();
-            Category cattmp = new Category();
+            int parentid = cat.ParentCategoryId;
 
+            if (cat.ParentCategoryId == 0)
+            {
 
-            //if (cat.ParentCategoryId == 0)
-            //{
-            //    prdct.CategoryId = cat.CategoryId;
-            //    prdct.ProductId = prod.ProductId;
+                db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
 
-            //    db.ProductCategories.Add(prdct);
-            //    db.SaveChanges();
-            //}
-            //else
-            //{
-            //    while (parentid != 0)
-            //    {
-            //        cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
+            }
+            else
+            {
+                Category cattmp = new Category();
 
-            //        prdct.CategoryId = cattmp.CategoryId;
-            //        prdct.ProductId = prod.ProductId;
+                while (parentid != 0)
+                {
+                    cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
 
-            //        parentid = cattmp.ParentCategoryId;
+                    db.ProductCategories.Add(new ProductCategory { CategoryId = cattmp.CategoryId, ProductId = prod.ProductId });
 
-            //        db.ProductCategories.Add(prdct);
+                    parentid = cattmp.ParentCategoryId;                                 
+                }
 
-            //        db.SaveChanges();
+                db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
 
-            //    }
-            //}
-            // bool parentid = ParentCategorySearch(cat.ParentCategoryId, prod.ProductId);
+            }
 
-            //if (parentid == false)
-            //{
-            //    prdct.CategoryId = cat.CategoryId;
-            //    prdct.ProductId = prod.ProductId;
-
-            //    db.ProductCategories.Add(prdct);
-            //    db.SaveChanges();
-
-
-            //    return View("Index");
-            //}
-
-                Traverse(cat.ParentCategoryId, prod.ProductId);
-                prdct.CategoryId = cat.CategoryId;
-                prdct.ProductId = prod.ProductId;
-
-                db.ProductCategories.Add(prdct);
-                db.SaveChanges();
-
+            db.SaveChanges();
 
             return View("Index");
         }
 
-        public bool ParentCategorySearch(int parentid, int prodid)
-        {
-
-            Category prid = db.Categories.FromSql($"SELECT * FROM Categories WHERE CategoryId = ({parentid})").FirstOrDefault();
-            
-           
-            if(parentid == 0 &&  prid == null)           
-                return true;
-
-            if (prid == null)
-                return false;
-
-
-            db.ProductCategories.Add(new ProductCategory
-            {
-                ProductId = prodid,
-                CategoryId = prid.CategoryId
-            });
-
-            db.SaveChanges();
-
-            return ParentCategorySearch(prid.ParentCategoryId,prodid);
-        }
-
-        public void Traverse(int id, int productid)
-        {
-            var cat = db.Categories.Where(x => x.CategoryId == id).FirstOrDefault();
-
-            
-            while (cat != null)
-            {           
-
-                db.ProductCategories.Add(new ProductCategory
-                {
-                    ProductId = productid,
-                    CategoryId = cat.CategoryId
-                });
-
-                db.SaveChanges();
-
-                int nextid = cat.ParentCategoryId;
-
-                if (nextid != 0)
-                {
-                   cat = db.Categories.Where(x => x.CategoryId == nextid).FirstOrDefault();
-                }
-                else
-                {
-                    cat = null;
-                }
-            }
-        }
+       
 
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)
@@ -202,8 +126,8 @@ namespace MarketPracticingPlatform.Controllers
                 ss = prdDTO.Subproducts.Trim().Split(",");
             }
 
-            prd.CategoryId = db.Categories.Where(f => f.Name == prdDTO.Category).Select(x => x.CategoryId).FirstOrDefault();
-            db.Update(prd);
+            prd.CategoryId = db.Categories.Where(f => f.Name == prdDTO.CategoryName).Select(x => x.CategoryId).FirstOrDefault();
+
             db.SaveChanges();
 
             var msp = db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).Select(x => x.SubProductID.ToString()).ToArray();
@@ -217,22 +141,21 @@ namespace MarketPracticingPlatform.Controllers
                 }
                 else
                 {
-                    List<MainSub_Products> mnsp = db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).ToList();
-                    db.MainSubProducts.RemoveRange(mnsp);
-                    db.SaveChanges();
+
+                    string query = "DELETE FROM `mainsubproducts` WHERE `MainProductId` = {0}";
+                    db.Database.ExecuteSqlCommand(query, prd.ProductId);
 
                 }
 
             }
 
-            List<MainSub_Products> mnsbp = new List<MainSub_Products>();
             foreach (var id in ss)
             {
-                mnsbp.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
+
+                db.MainSubProducts.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
 
             }
 
-            db.MainSubProducts.AddRange(mnsbp);
             db.SaveChanges();
 
             return RedirectToAction("Index", "MarketSearch"); ;

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,14 @@ namespace MarketPracticingPlatform.DBConnection
 {
     public class DataBaseConnection : DbContext
     {
+
+
+        public DataBaseConnection(DbContextOptions<DataBaseConnection> option) : base(option)
+        {
+           
+        }
+
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Product> Products { get; set; }
@@ -51,8 +60,8 @@ namespace MarketPracticingPlatform.DBConnection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         {
-            optionsBuilder.UseMySQL("Server=localhost;Database=productsmarket;Uid=root;Pwd=;CharSet=utf8;");
-
+     
+            
         }
 
     }

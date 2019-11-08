@@ -23,11 +23,17 @@ namespace MarketPracticingPlatform.Controllers
      
         public IActionResult Index()
         {
-            if (Request.Cookies.ContainsKey("Token"))
+            if (!Request.Cookies.ContainsKey("Token"))
             {
-                return View();
+
+                return RedirectToAction("Index", "Registration");
+                
             }
-            return RedirectToAction("Index","Registration");
+
+           // Category cats = db.Categories;
+
+            return View();
+
         }
 
         public IActionResult ShowProductInfo(int id)

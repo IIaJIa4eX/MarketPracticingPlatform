@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using MarketPracticingPlatform.Authentication_token;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MarketPracticingPlatform.CookieHandler;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPracticingPlatform
 {
@@ -34,6 +35,14 @@ namespace MarketPracticingPlatform
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<DataBaseConnection>(options =>
+            
+            
+            options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")
+            
+            ));
+
 
             services.AddCors(options =>
             {
@@ -81,7 +90,7 @@ namespace MarketPracticingPlatform
                     options.LoginPath = new PathString("/Registration/Index");
                 });
 
-            services.AddSingleton<DataBaseConnection>();
+           // services.AddScoped<DataBaseConnection>();
             
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
