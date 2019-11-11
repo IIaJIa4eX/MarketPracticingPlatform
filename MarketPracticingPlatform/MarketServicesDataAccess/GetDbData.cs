@@ -1,9 +1,7 @@
 ﻿using DbCotext.DataBaseConnection;
 using MarketServicesDataAccess.Models;
-using Microsoft.AspNetCore.Http;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,11 +13,11 @@ namespace MarketServicesDataAccess
     public class GetDbData
     {
 
-        DBConnection db;
+        DBConnection _db;
 
-        GetDbData(DBConnection connect, HttpContext request)
+        GetDbData(DBConnection db)
         {
-            db = connect;
+            _db = db;
         }
 
 
@@ -50,7 +48,7 @@ namespace MarketServicesDataAccess
         private ClaimsIdentity GetIdentity(string email, string password)
         {
 
-            var user = db.Users.Where(f => f.Email == email && f.Password == password).FirstOrDefault();
+            var user = _db.Users.Where(f => f.Email == email && f.Password == password).FirstOrDefault();
 
             if (user != null)
             {
