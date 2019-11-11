@@ -32,10 +32,10 @@ namespace MarketPracticingPlatform.Components
 
             ProductDTO prdDTO = new ProductDTO();
             prdDTO.ProductId = prd.ProductId;
-            prdDTO.Name = prd.Name;
-            prdDTO.Description = prd.Description;
-            prdDTO.Price = prd.Price;
-            prdDTO.Manufacturer = prd.Manufacturer;
+            prdDTO.ProductName = prd.Name;
+            prdDTO.ProductDescription = prd.Description;
+            prdDTO.ProductPrice = prd.Price;
+            prdDTO.ProductManufacturerName = prd.Manufacturer;
 
             prdDTO.CategoryName = db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault();
 

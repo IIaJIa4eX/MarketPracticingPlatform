@@ -50,7 +50,7 @@ namespace MarketPracticingPlatform.Controllers
             if (string.IsNullOrWhiteSpace(userDTO.Email) || string.IsNullOrWhiteSpace(userDTO.Password))
             {
 
-                return await Task.FromResult(new UserAuthenticationDTO { Success = false, Error = "Все поля должны быть заполнены" });
+                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Все поля должны быть заполнены" });
             }
 
 
@@ -60,7 +60,7 @@ namespace MarketPracticingPlatform.Controllers
             if (identity == null)
             {
                 
-                return await Task.FromResult(new UserAuthenticationDTO { Success = false, Error = "Вы неправильно ввели имя пользователя или пароль" });
+                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Вы неправильно ввели имя пользователя или пароль" });
             }
 
             var now = DateTime.UtcNow;
@@ -86,7 +86,7 @@ namespace MarketPracticingPlatform.Controllers
         
             
             Response.ContentType = "application/json";
-            return await Task.FromResult(new UserAuthenticationDTO { Success = true});
+            return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = true});
         }
 
         private ClaimsIdentity GetIdentity(string email, string password)

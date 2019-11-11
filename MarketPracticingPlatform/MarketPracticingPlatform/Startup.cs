@@ -18,6 +18,7 @@ using MarketPracticingPlatform.Authentication_token;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MarketPracticingPlatform.CookieHandler;
 using Microsoft.EntityFrameworkCore;
+using MarketServicesDataAccess;
 
 namespace MarketPracticingPlatform
 {
@@ -90,8 +91,10 @@ namespace MarketPracticingPlatform
                     options.LoginPath = new PathString("/Registration/Index");
                 });
 
-           // services.AddScoped<DataBaseConnection>();
             
+
+            services.AddScoped<GetDbData>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -17,6 +17,5 @@ namespace MarketPracticingPlatform.Models
 
         public string Number { get; set; }
 
-        public string Token { get; set; }
     }
 }

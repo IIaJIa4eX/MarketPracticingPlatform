@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MarketPracticingPlatform.Models
+namespace MarketServicesDataAccess.Models
 {
     public class UserAuthenticationDTO
     {
@@ -15,6 +15,8 @@ namespace MarketPracticingPlatform.Models
         public string ErrorMessage { get; set; }
 
         public bool IsSuccess { get; set; }
+
+        public ClaimsIdentity UserIdentity { get; set; }
 
     }
 }

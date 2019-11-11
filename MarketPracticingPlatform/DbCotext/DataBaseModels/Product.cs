@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DbCotext.DataBaseModels
 {
-    public class Category
+    public class Product
     {
-
-        public int CategoryId { get; set; }
+        
+        public int ProductId { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public int ParentCategoryId { get; set; }
+        public int Price { get; set; }
 
+        public int SoldOut { get; set; }
 
+        public string Manufacturer { get; set; } 
+
+        public int CategoryId { get; set; }
 
         public List<ProductCategory> ProductCategories { get; set; }
 
-        public Category()
+
+        public Product()
         {
             ProductCategories = new List<ProductCategory>();
-
         }
+
 
     }
 }

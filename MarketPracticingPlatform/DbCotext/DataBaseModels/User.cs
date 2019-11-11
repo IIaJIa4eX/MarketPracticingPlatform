@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MarketPracticingPlatform.DataBaseModels
+namespace DbCotext.DataBaseModels
 {
     public class User
     {

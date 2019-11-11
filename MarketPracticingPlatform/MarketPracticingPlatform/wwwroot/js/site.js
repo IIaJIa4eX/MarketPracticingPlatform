@@ -6,12 +6,13 @@
 function SubmitAuthentication() {
 
     $.post("/Home/UserAuthentication", $("#PostForm").serialize(), function (data) {
-        if (data.success === true) {
+        if (data.isSuccess === true) {
 
-            document.location.href = "/Home/";
+            document.location.href = "/Home";
 
         } else {
-            document.getElementById("ErrorDisplay").innerHTML = data.error;
+
+            document.getElementById("ErrorDisplay").innerHTML = data.errorMessage;
         }
         
     }).fail(function (data) {

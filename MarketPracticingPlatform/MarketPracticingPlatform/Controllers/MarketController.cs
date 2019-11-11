@@ -41,10 +41,10 @@ namespace MarketPracticingPlatform.Controllers
 
 
             Product prod = new Product();
-            prod.Name = pdh.Name;
-            prod.Description = pdh.Description;
-            prod.Price = pdh.Price;
-            prod.Manufacturer = pdh.Manufacturer;
+            prod.Name = pdh.ProductName;
+            prod.Description = pdh.ProductDescription;
+            prod.Price = pdh.ProductPrice;
+            prod.Manufacturer = pdh.ProductManufacturerName;
             prod.CategoryId = cat.CategoryId;
 
             db.Products.Add(prod);
@@ -114,10 +114,10 @@ namespace MarketPracticingPlatform.Controllers
             Product prd = db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
 
             prd.ProductId = prdDTO.ProductId;
-            prd.Name = prdDTO.Name;
-            prd.Description = prdDTO.Description;
-            prd.Manufacturer = prdDTO.Manufacturer;
-            prd.Price = prdDTO.Price;
+            prd.Name = prdDTO.ProductName;
+            prd.Description = prdDTO.ProductDescription;
+            prd.Manufacturer = prdDTO.ProductManufacturerName;
+            prd.Price = prdDTO.ProductPrice;
 
             string[] ss = new string[] { };
 
