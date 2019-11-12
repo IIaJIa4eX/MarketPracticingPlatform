@@ -1,8 +1,5 @@
-﻿using MarketPracticingPlatform.DataBaseModels;
-using MarketPracticingPlatform.DBConnection;
+﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,9 +8,9 @@ namespace MarketPracticingPlatform.Components
     public class ProductInfoViewComponent : ViewComponent
     {
 
-        DataBaseConnection db;
+        Data.DataBaseConnection.DBConnection db;
 
-        public ProductInfoViewComponent(DataBaseConnection db)
+        public ProductInfoViewComponent(Data.DataBaseConnection.DBConnection db)
         {
             this.db = db;
         }
@@ -29,12 +26,8 @@ namespace MarketPracticingPlatform.Components
                 return await Task.FromResult(View("ProductInformation", prd));
             }
 
-            
-
             return await Task.FromResult(View("ProductError"));
         }
-
-
 
     }
 }

@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MarketPracticingPlatform.DataBaseModels;
-using MarketPracticingPlatform.DBConnection;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPracticingPlatform.Controllers
 {
     public class MarketSearchController : Controller
     {
-        DataBaseConnection db;
+        readonly Data.DataBaseConnection.DBConnection _db;
 
 
-        public MarketSearchController(DataBaseConnection db)
+        public MarketSearchController(Data.DataBaseConnection.DBConnection db)
         {
-            this.db = db;
+            this._db = db;
         }
 
 

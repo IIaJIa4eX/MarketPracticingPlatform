@@ -1,19 +1,14 @@
-﻿using MarketPracticingPlatform.DBConnection;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Components
 {
     public class RegistrationViewComponent : ViewComponent
     {
+        readonly Data.DataBaseConnection.DBConnection db;
 
-        DataBaseConnection db;
 
-
-        public RegistrationViewComponent(DataBaseConnection db)
+        public RegistrationViewComponent(Data.DataBaseConnection.DBConnection db)
         {
             this.db = db;
         }

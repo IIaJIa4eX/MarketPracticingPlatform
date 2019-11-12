@@ -7,28 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20191023071007_MainSub_Produts_entity.cs" />
-    <Compile Remove="Migrations\20191023071007_MainSub_Produts_entity.Designer.cs" />
-    <Compile Remove="Migrations\20191023071637_MainSub_Products_entity_added.cs" />
-    <Compile Remove="Migrations\20191023071637_MainSub_Products_entity_added.Designer.cs" />
-    <Compile Remove="Migrations\20191023072116_AutoIncrement_chanched.cs" />
-    <Compile Remove="Migrations\20191023072116_AutoIncrement_chanched.Designer.cs" />
-    <Compile Remove="Migrations\20191023072322_MainSub_Products_entity_added.cs" />
-    <Compile Remove="Migrations\20191023072322_MainSub_Products_entity_added.Designer.cs" />
-    <Compile Remove="Migrations\20191024090823_deleted_primarykey_added_unique_id.cs" />
-    <Compile Remove="Migrations\20191024090823_deleted_primarykey_added_unique_id.Designer.cs" />
-    <Compile Remove="Migrations\20191024091544_deleted_primary_key_mainsubs_and_added_to_id.cs" />
-    <Compile Remove="Migrations\20191024091544_deleted_primary_key_mainsubs_and_added_to_id.Designer.cs" />
-    <Compile Remove="Migrations\20191101110016_default_value_changed_toNull.cs" />
-    <Compile Remove="Migrations\20191101110016_default_value_changed_toNull.Designer.cs" />
-    <Compile Remove="Migrations\20191106121201_changed-name-to-CategoryName.cs" />
-    <Compile Remove="Migrations\20191106121201_changed-name-to-CategoryName.Designer.cs" />
-    <Compile Remove="Migrations\20191106122003_changed_name_to_CategoryName.cs" />
-    <Compile Remove="Migrations\20191106122003_changed_name_to_CategoryName.Designer.cs" />
-    <Compile Remove="Migrations\20191107065851_defaultvalue_tonull.cs" />
-    <Compile Remove="Migrations\20191107065851_defaultvalue_tonull.Designer.cs" />
-    <Compile Remove="Migrations\20191107072138_changed_default_tonull.cs" />
-    <Compile Remove="Migrations\20191107072138_changed_default_tonull.Designer.cs" />
+    <Compile Remove="Utilities\**" />
+    <Content Remove="Utilities\**" />
+    <EmbeddedResource Remove="Utilities\**" />
+    <None Remove="Utilities\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,10 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\DbCotext\MarketPracticingPlatform.Data.csproj" />
     <ProjectReference Include="..\MarketServicesDataAccess\MarketPracticingPlatform.Sevice.csproj" />
   </ItemGroup>
 

@@ -1,16 +1,10 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Data.DataBaseConnection
 {
-    
-        public class DBConnection : DbContext
+
+    public class DBConnection : DbContext
         {
 
 

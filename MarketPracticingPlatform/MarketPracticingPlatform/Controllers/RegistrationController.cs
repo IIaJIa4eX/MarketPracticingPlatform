@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MarketPracticingPlatform.DataBaseModels;
-using MarketPracticingPlatform.DBConnection;
+﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace MarketPracticingPlatform.Controllers
 {
     public class RegistrationController : Controller
     {
 
-        DataBaseConnection db;
+        Data.DataBaseConnection.DBConnection _db;
 
 
-        public RegistrationController(DataBaseConnection db)
+        public RegistrationController(Data.DataBaseConnection.DBConnection db)
         {
-            this.db = db;
+            this._db = db;
         }
 
         public IActionResult Index()
@@ -50,7 +44,7 @@ namespace MarketPracticingPlatform.Controllers
 
             }
 
-            var emlcheck = db.Users.Where(f => f.Email == udh.Email).FirstOrDefault();
+            var emlcheck = _db.Users.Where(f => f.Email == udh.Email).FirstOrDefault();
 
             if (emlcheck != null)
             {
@@ -59,14 +53,16 @@ namespace MarketPracticingPlatform.Controllers
 
             }
 
-            User us = new User();
-            us.Email = udh.Email;
-            us.Password = udh.Password;
-            us.Name = udh.Name;
-            us.Number = udh.Number;
+            User us = new User
+            {
+                Email = udh.Email,
+                Password = udh.Password,
+                Name = udh.Name,
+                Number = udh.Number
+            };
 
-            db.Users.Add(us);
-            db.SaveChanges();
+            _db.Users.Add(us);
+            _db.SaveChanges();
             
             return RedirectToAction("Index", "Home");
         }

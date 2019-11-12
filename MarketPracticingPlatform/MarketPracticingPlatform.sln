@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPracticingPlatform", "MarketPracticingPlatform\MarketPracticingPlatform.csproj", "{69AC3BA7-3B91-4FF4-A665-5F4AD3017F72}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5FAD1F2E-DE64-4CE9-92BE-CA2DF6F9AC00} = {5FAD1F2E-DE64-4CE9-92BE-CA2DF6F9AC00}
+		{BF2A297F-EC8D-41B6-A26D-9D04662B451A} = {BF2A297F-EC8D-41B6-A26D-9D04662B451A}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPracticingPlatform.Data", "DbCotext\MarketPracticingPlatform.Data.csproj", "{BF2A297F-EC8D-41B6-A26D-9D04662B451A}"

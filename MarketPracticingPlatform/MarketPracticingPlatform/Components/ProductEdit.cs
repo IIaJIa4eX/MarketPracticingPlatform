@@ -1,9 +1,5 @@
-﻿using MarketPracticingPlatform.DataBaseModels;
-using MarketPracticingPlatform.DBConnection;
-using MarketPracticingPlatform.Sevice.ModelsDTO;
+﻿using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,35 +7,37 @@ namespace MarketPracticingPlatform.Components
 {
     public class ProductEditViewComponent : ViewComponent
     {
-        DataBaseConnection db;
+        Data.DataBaseConnection.DBConnection _db;
 
-        public ProductEditViewComponent(DataBaseConnection db)
+        public ProductEditViewComponent(Data.DataBaseConnection.DBConnection db)
         {
-            this.db = db;
+            this._db = db;
         }
 
 
         public async Task<IViewComponentResult> InvokeAsync(int productid)
         {
-            Product prd = db.Products.Where(f => f.ProductId == productid).FirstOrDefault();
+            var prd = _db.Products.Where(f => f.ProductId == productid).FirstOrDefault();
 
             if(prd == null)
             {
                 ViewBag.ErrorMessage = $"Продукта с id {productid} не существует";
                 return await Task.FromResult(View("EditError"));
             }
-           
 
-            ProductDTO prdDTO = new ProductDTO();
-            prdDTO.ProductId = prd.ProductId;
-            prdDTO.ProductName = prd.Name;
-            prdDTO.ProductDescription = prd.Description;
-            prdDTO.ProductPrice = prd.Price;
-            prdDTO.ProductManufacturerName = prd.Manufacturer;
 
-            prdDTO.CategoryName = db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault();
+            ProductDTO prdDTO = new ProductDTO
+            {
+                ProductId = prd.ProductId,
+                ProductName = prd.Name,
+                ProductDescription = prd.Description,
+                ProductPrice = prd.Price,
+                ProductManufacturerName = prd.Manufacturer,
 
-            var subprods = db.MainSubProducts.Where(f => f.MainProductId == productid);
+                CategoryName = _db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault()
+            };
+
+            var subprods = _db.MainSubProducts.Where(f => f.MainProductId == productid);
 
             string subproducts = "";
 

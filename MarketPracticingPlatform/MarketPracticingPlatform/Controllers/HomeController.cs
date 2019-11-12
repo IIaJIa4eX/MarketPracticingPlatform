@@ -1,34 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using System.Security.Claims;
-using MarketPracticingPlatform.Authentication_token;
-using MarketPracticingPlatform.DBConnection;
-using MarketPracticingPlatform.DataBaseModels;
-using Microsoft.AspNetCore.Authorization;
-using MarketPracticingPlatform.CookieHandler;
-using Microsoft.EntityFrameworkCore;
-using MarketPracticingPlatform.Sevice.ModelsDTO;
+﻿using MarketPracticingPlatform.Authentication_token;
 using MarketPracticingPlatform.Services;
+using MarketPracticingPlatform.Sevice.ModelsDTO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Controllers
 {
     [Route("Home")]
     public class HomeController : Controller
     {
-
-
-        MarketPracticingPlatform.Data.DataBaseConnection.DBConnection _db;
+        readonly Data.DataBaseConnection.DBConnection _db;
         IUserDataService _GetUserServices;
 
-        public HomeController(IUserDataService GetUserServices, MarketPracticingPlatform.Data.DataBaseConnection.DBConnection db)
+        public HomeController(IUserDataService GetUserServices, Data.DataBaseConnection.DBConnection db)
         {
 
             _db = db;
@@ -64,12 +52,14 @@ namespace MarketPracticingPlatform.Controllers
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
 
-                var option = new CookieOptions();
-                //option.Expires = DateTime.Now.AddHours(24);
-                option.SameSite = SameSiteMode.Strict;
-                option.HttpOnly = true;
-                option.Secure = true;
-                option.IsEssential = true;
+                var option = new CookieOptions
+                {
+                    //option.Expires = DateTime.Now.AddHours(24);
+                    SameSite = SameSiteMode.Strict,
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true
+                };
                 Response.Cookies.Append("Token", encodedJwt, option);
                 Response.Cookies.Append("Username", userDTO.Email, option);
 

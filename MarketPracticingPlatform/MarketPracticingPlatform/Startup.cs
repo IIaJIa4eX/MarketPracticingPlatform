@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MarketPracticingPlatform.DBConnection;
+﻿using MarketPracticingPlatform.Authentication_token;
+using MarketPracticingPlatform.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Serilog;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using MarketPracticingPlatform.Authentication_token;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using MarketPracticingPlatform.CookieHandler;
-using Microsoft.EntityFrameworkCore;
-using MarketPracticingPlatform.Sevice;
-using MarketPracticingPlatform.Services;
+using Serilog;
 
 namespace MarketPracticingPlatform
 {
@@ -39,7 +31,7 @@ namespace MarketPracticingPlatform
         {
 
             services.AddSingleton<IUserDataService, DBConnectService>();
-            services.AddDbContext<MarketPracticingPlatform.Data.DataBaseConnection.DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
+            services.AddDbContext<Data.DataBaseConnection.DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
 
             //services.AddDbContext<DataBaseConnection>(options =>
 

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MarketPracticingPlatform.DataBaseModels;
-using MarketPracticingPlatform.DBConnection;
+﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace MarketPracticingPlatform.Controllers
 {
@@ -14,12 +11,12 @@ namespace MarketPracticingPlatform.Controllers
     public class MarketController : Controller
     {
 
-        DataBaseConnection db;
+        Data.DataBaseConnection.DBConnection _db;
 
 
-        public MarketController(DataBaseConnection db)
+        public MarketController(Data.DataBaseConnection.DBConnection db)
         {
-            this.db = db;
+            this._db = db;
 
         }
 
@@ -37,18 +34,20 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult ProductCreation(ProductDTO pdh)
         {
-            Category cat = db.Categories.Where(f => f.Name == pdh.CategoryName).FirstOrDefault();
+            var cat = _db.Categories.Where(f => f.Name == pdh.CategoryName).FirstOrDefault();
 
 
-            Product prod = new Product();
-            prod.Name = pdh.ProductName;
-            prod.Description = pdh.ProductDescription;
-            prod.Price = pdh.ProductPrice;
-            prod.Manufacturer = pdh.ProductManufacturerName;
-            prod.CategoryId = cat.CategoryId;
+            Product prod = new Product
+            {
+                Name = pdh.ProductName,
+                Description = pdh.ProductDescription,
+                Price = pdh.ProductPrice,
+                Manufacturer = pdh.ProductManufacturerName,
+                CategoryId = cat.CategoryId
+            };
 
-            db.Products.Add(prod);
-            db.SaveChanges();
+            _db.Products.Add(prod);
+            _db.SaveChanges();
 
 
             int parentid = cat.ParentCategoryId;
@@ -56,7 +55,7 @@ namespace MarketPracticingPlatform.Controllers
             if (cat.ParentCategoryId == 0)
             {
 
-                db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
+                _db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
 
             }
             else
@@ -65,18 +64,18 @@ namespace MarketPracticingPlatform.Controllers
 
                 while (parentid != 0)
                 {
-                    cattmp = db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
+                    cattmp = _db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
 
-                    db.ProductCategories.Add(new ProductCategory { CategoryId = cattmp.CategoryId, ProductId = prod.ProductId });
+                    _db.ProductCategories.Add(new ProductCategory { CategoryId = cattmp.CategoryId, ProductId = prod.ProductId });
 
                     parentid = cattmp.ParentCategoryId;                                 
                 }
 
-                db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
+                _db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
 
             }
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
             return View("Index");
         }
@@ -86,12 +85,13 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)
         {
-            Category parentCat = db.Categories.Where(f => f.Name == cdh.ParentCategoryName).FirstOrDefault();
+            Category parentCat = _db.Categories.Where(f => f.Name == cdh.ParentCategoryName).FirstOrDefault();
 
-            Category cat = new Category();
-
-            cat.Name = cdh.Name;
-            cat.Description = cdh.Description;
+            Category cat = new Category
+            {
+                Name = cdh.Name,
+                Description = cdh.Description
+            };
 
             if (parentCat == null)
             {
@@ -102,8 +102,8 @@ namespace MarketPracticingPlatform.Controllers
                 cat.ParentCategoryId = parentCat.CategoryId;
             }
 
-            db.Categories.Add(cat);
-            db.SaveChanges();
+            _db.Categories.Add(cat);
+            _db.SaveChanges();
 
             return View("Index");
         }
@@ -111,7 +111,7 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductDTO prdDTO)
         {
-            Product prd = db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
+            Product prd = _db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
 
             prd.ProductId = prdDTO.ProductId;
             prd.Name = prdDTO.ProductName;
@@ -126,11 +126,11 @@ namespace MarketPracticingPlatform.Controllers
                 ss = prdDTO.Subproducts.Trim().Split(",");
             }
 
-            prd.CategoryId = db.Categories.Where(f => f.Name == prdDTO.CategoryName).Select(x => x.CategoryId).FirstOrDefault();
+            prd.CategoryId = _db.Categories.Where(f => f.Name == prdDTO.CategoryName).Select(x => x.CategoryId).FirstOrDefault();
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
-            var msp = db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).Select(x => x.SubProductID.ToString()).ToArray();
+            var msp = _db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).Select(x => x.SubProductID.ToString()).ToArray();
 
             if (msp.Count() != 0)
             {
@@ -143,7 +143,7 @@ namespace MarketPracticingPlatform.Controllers
                 {
 
                     string query = "DELETE FROM `mainsubproducts` WHERE `MainProductId` = {0}";
-                    db.Database.ExecuteSqlCommand(query, prd.ProductId);
+                    _db.Database.ExecuteSqlCommand(query, prd.ProductId);
 
                 }
 
@@ -152,11 +152,11 @@ namespace MarketPracticingPlatform.Controllers
             foreach (var id in ss)
             {
 
-                db.MainSubProducts.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
+                _db.MainSubProducts.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
 
             }
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
             return RedirectToAction("Index", "MarketSearch"); ;
         }
@@ -185,11 +185,11 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult DeleteProduct(int ProductId)
         {
-            Product prd = db.Products.Where(f => f.ProductId == ProductId).FirstOrDefault();
+            Product prd = _db.Products.Where(f => f.ProductId == ProductId).FirstOrDefault();
 
-            db.Products.Remove(prd);
+            _db.Products.Remove(prd);
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
             return RedirectToAction("Index","MarketSearch");
         }

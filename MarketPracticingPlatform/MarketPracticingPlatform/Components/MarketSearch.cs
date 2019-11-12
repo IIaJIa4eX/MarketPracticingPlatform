@@ -1,7 +1,5 @@
-﻿using MarketPracticingPlatform.DataBaseModels;
-using MarketPracticingPlatform.DBConnection;
+﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,11 +9,11 @@ namespace MarketPracticingPlatform.Components
     public class MarketSearchViewComponent : ViewComponent
     {
 
-        DataBaseConnection db;
+        Data.DataBaseConnection.DBConnection _db;
 
-        public MarketSearchViewComponent(DataBaseConnection db)
+        public MarketSearchViewComponent(Data.DataBaseConnection.DBConnection db)
         {
-            this.db = db;
+            this._db = db;
         }
 
 
@@ -32,16 +30,16 @@ namespace MarketPracticingPlatform.Components
 
             if (!string.IsNullOrWhiteSpace(categoryname))
             {
-                Category cat = db.Categories.Where(f => f.Name == categoryname).FirstOrDefault();
+                var cat = _db.Categories.Where(f => f.Name == categoryname).FirstOrDefault();
                 if (cat != null)
                 {
-                    var prdcat = db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId);
+                    var prdcat = _db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId).ToList();
                     
                     List<Product> prd = new List<Product>();
 
                     foreach (var item in prdcat)
                     {
-                        prd.Add(db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault());
+                        //prd.Add(db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault());
                     }
 
 
