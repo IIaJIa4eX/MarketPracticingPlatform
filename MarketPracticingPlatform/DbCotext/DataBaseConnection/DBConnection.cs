@@ -1,4 +1,4 @@
-﻿using DbCotext.DataBaseModels;
+﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -7,17 +7,21 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DbCotext.DataBaseConnection
+namespace MarketPracticingPlatform.Data.DataBaseConnection
 {
     
         public class DBConnection : DbContext
         {
 
-            
 
 
+        public DBConnection(DbContextOptions<DBConnection> option) : base(option)
+        {
 
-            public DbSet<User> Users { get; set; }
+        }
+
+
+        public DbSet<User> Users { get; set; }
 
             public DbSet<Product> Products { get; set; }
 
@@ -62,7 +66,7 @@ namespace DbCotext.DataBaseConnection
 
             {
 
-                 optionsBuilder.UseMySQL("Server=localhost;Database=productsmarket;Uid=root;Pwd=;CharSet=utf8;");
+                // optionsBuilder.UseMySQL("Server=localhost;Database=productsmarket;Uid=root;Pwd=;CharSet=utf8;");
 
             }
 

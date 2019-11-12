@@ -25,18 +25,20 @@ namespace MarketPracticingPlatform.Controllers
     {
 
 
-        //DataBaseConnection db;
+        MarketPracticingPlatform.Data.DataBaseConnection.DBConnection _db;
         IUserDataService _GetUserServices;
 
-        public HomeController(IUserDataService GetUserServices)
+        public HomeController(IUserDataService GetUserServices, MarketPracticingPlatform.Data.DataBaseConnection.DBConnection db)
         {
+
+            _db = db;
             _GetUserServices = GetUserServices;
         }
 
 
         public IActionResult Index()
         {
-
+            
             return View();
 
         }
@@ -47,7 +49,7 @@ namespace MarketPracticingPlatform.Controllers
         [Route("UserAuthentication")]
         public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
         {
-            UserAuthenticationDTO tmp = _GetUserServices.UserAuthentication(userDTO);
+            UserAuthenticationDTO tmp = _GetUserServices.UserAuthentication(userDTO, _db);
 
             if(tmp.UserIdentity != null)
             {
@@ -73,7 +75,7 @@ namespace MarketPracticingPlatform.Controllers
 
 
                 Response.ContentType = "application/json";
-                return await Task.FromResult(tmp);
+                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = tmp.IsSuccess, UserIdentity = null });
             }
 
             return await Task.FromResult(tmp);

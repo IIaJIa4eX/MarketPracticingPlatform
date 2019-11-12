@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DbCotext.DataBaseModels
+namespace MarketPracticingPlatform.Data.DataBaseModels
 {
     public class ProductCategory
     {

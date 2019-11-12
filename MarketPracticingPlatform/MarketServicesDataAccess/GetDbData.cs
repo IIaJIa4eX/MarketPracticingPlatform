@@ -1,4 +1,5 @@
-﻿using DbCotext.DataBaseConnection;
+﻿
+using MarketPracticingPlatform.Data.DataBaseConnection;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

@@ -39,7 +39,7 @@ namespace MarketPracticingPlatform
         {
 
             services.AddSingleton<IUserDataService, DBConnectService>();
-            services.AddDbContext<DataBaseConnection>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<MarketPracticingPlatform.Data.DataBaseConnection.DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
 
             //services.AddDbContext<DataBaseConnection>(options =>
 

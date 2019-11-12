@@ -1,6 +1,7 @@
 ﻿using MarketPracticingPlatform.Sevice;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace MarketPracticingPlatform.Services
 
 
 
-    public UserAuthenticationDTO UserAuthentication(UserDTO userDTO)
+    public UserAuthenticationDTO UserAuthentication(UserDTO userDTO, MarketPracticingPlatform.Data.DataBaseConnection.DBConnection db)
     {
-            GetDbData _getdata = new GetDbData();
+            GetDbData _getdata = new GetDbData(db);
             UserAuthenticationDTO tmp = _getdata.GetAuthenticationData(userDTO);
 
         return tmp;
