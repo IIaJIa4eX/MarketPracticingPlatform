@@ -10,16 +10,11 @@ namespace MarketPracticingPlatform.Controllers
     [Route("[controller]/[action]")]
     public class MarketController : Controller
     {
-
-        Data.DataBaseConnection.DBConnection _db;
-
-
-        public MarketController(Data.DataBaseConnection.DBConnection db)
+        //IProductService _prod; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        public MarketController(/*IProductService prod*/) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         {
-            this._db = db;
-
+            //_prod = prod;
         }
-
 
         public IActionResult Index()
         {
@@ -30,52 +25,55 @@ namespace MarketPracticingPlatform.Controllers
             return RedirectToAction("Index", "Registration");
         }
 
-
         [HttpPost]
         public IActionResult ProductCreation(ProductDTO pdh)
         {
-            var cat = _db.Categories.Where(f => f.Name == pdh.CategoryName).FirstOrDefault();
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //_prod.CreateProduct(pdh);
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            //var cat = _db.Categories.Where(f => f.Name == pdh.CategoryName).FirstOrDefault();
 
 
-            Product prod = new Product
-            {
-                Name = pdh.ProductName,
-                Description = pdh.ProductDescription,
-                Price = pdh.ProductPrice,
-                Manufacturer = pdh.ProductManufacturerName,
-                CategoryId = cat.CategoryId
-            };
+            //Product prod = new Product
+            //{
+            //    Name = pdh.ProductName,
+            //    Description = pdh.ProductDescription,
+            //    Price = pdh.ProductPrice,
+            //    Manufacturer = pdh.ProductManufacturerName,
+            //    CategoryId = cat.CategoryId
+            //};
 
-            _db.Products.Add(prod);
-            _db.SaveChanges();
+            //_db.Products.Add(prod);
+            //_db.SaveChanges();
 
 
-            int parentid = cat.ParentCategoryId;
+            //int parentid = cat.ParentCategoryId;
 
-            if (cat.ParentCategoryId == 0)
-            {
+            //if (cat.ParentCategoryId == 0)
+            //{
 
-                _db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
+            //    _db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
 
-            }
-            else
-            {
-                Category cattmp = new Category();
+            //}
+            //else
+            //{
+            //    Category cattmp = new Category();
 
-                while (parentid != 0)
-                {
-                    cattmp = _db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
+            //    while (parentid != 0)
+            //    {
+            //        cattmp = _db.Categories.Where(f => f.CategoryId == parentid).FirstOrDefault();
 
-                    _db.ProductCategories.Add(new ProductCategory { CategoryId = cattmp.CategoryId, ProductId = prod.ProductId });
+            //        _db.ProductCategories.Add(new ProductCategory { CategoryId = cattmp.CategoryId, ProductId = prod.ProductId });
 
-                    parentid = cattmp.ParentCategoryId;                                 
-                }
+            //        parentid = cattmp.ParentCategoryId;                                 
+            //    }
 
-                _db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
+            //    _db.ProductCategories.Add(new ProductCategory { CategoryId = cat.CategoryId, ProductId = prod.ProductId });
 
-            }
+            //}
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
             return View("Index");
         }
@@ -85,25 +83,25 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult CategoryCreation(CategoryDTO cdh)
         {
-            Category parentCat = _db.Categories.Where(f => f.Name == cdh.ParentCategoryName).FirstOrDefault();
+            //Category parentCat = _db.Categories.Where(f => f.Name == cdh.ParentCategoryName).FirstOrDefault();
 
-            Category cat = new Category
-            {
-                Name = cdh.Name,
-                Description = cdh.Description
-            };
+            //Category cat = new Category
+            //{
+            //    Name = cdh.Name,
+            //    Description = cdh.Description
+            //};
 
-            if (parentCat == null)
-            {
-                cat.ParentCategoryId = 0;
-            }
-            else
-            {
-                cat.ParentCategoryId = parentCat.CategoryId;
-            }
+            //if (parentCat == null)
+            //{
+            //    cat.ParentCategoryId = 0;
+            //}
+            //else
+            //{
+            //    cat.ParentCategoryId = parentCat.CategoryId;
+            //}
 
-            _db.Categories.Add(cat);
-            _db.SaveChanges();
+            //_db.Categories.Add(cat);
+            //_db.SaveChanges();
 
             return View("Index");
         }
@@ -111,52 +109,52 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductDTO prdDTO)
         {
-            Product prd = _db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
+            //Product prd = _db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
 
-            prd.ProductId = prdDTO.ProductId;
-            prd.Name = prdDTO.ProductName;
-            prd.Description = prdDTO.ProductDescription;
-            prd.Manufacturer = prdDTO.ProductManufacturerName;
-            prd.Price = prdDTO.ProductPrice;
+            //prd.ProductId = prdDTO.ProductId;
+            //prd.Name = prdDTO.ProductName;
+            //prd.Description = prdDTO.ProductDescription;
+            //prd.Manufacturer = prdDTO.ProductManufacturerName;
+            //prd.Price = prdDTO.ProductPrice;
 
-            string[] ss = new string[] { };
+            //string[] ss = new string[] { };
 
-            if (!string.IsNullOrWhiteSpace(prdDTO.Subproducts))
-            {
-                ss = prdDTO.Subproducts.Trim().Split(",");
-            }
+            //if (!string.IsNullOrWhiteSpace(prdDTO.Subproducts))
+            //{
+            //    ss = prdDTO.Subproducts.Trim().Split(",");
+            //}
 
-            prd.CategoryId = _db.Categories.Where(f => f.Name == prdDTO.CategoryName).Select(x => x.CategoryId).FirstOrDefault();
+            //prd.CategoryId = _db.Categories.Where(f => f.Name == prdDTO.CategoryName).Select(x => x.CategoryId).FirstOrDefault();
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
-            var msp = _db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).Select(x => x.SubProductID.ToString()).ToArray();
+            //var msp = _db.MainSubProducts.Where(f => f.MainProductId == prd.ProductId).Select(x => x.SubProductID.ToString()).ToArray();
 
-            if (msp.Count() != 0)
-            {
+            //if (msp.Count() != 0)
+            //{
 
-                if (ss.SequenceEqual(msp))
-                {
-                    return RedirectToAction("Index", "MarketSearch");
-                }
-                else
-                {
+            //    if (ss.SequenceEqual(msp))
+            //    {
+            //        return RedirectToAction("Index", "MarketSearch");
+            //    }
+            //    else
+            //    {
 
-                    string query = "DELETE FROM `mainsubproducts` WHERE `MainProductId` = {0}";
-                    _db.Database.ExecuteSqlCommand(query, prd.ProductId);
+            //        string query = "DELETE FROM `mainsubproducts` WHERE `MainProductId` = {0}";
+            //        _db.Database.ExecuteSqlCommand(query, prd.ProductId);
 
-                }
+            //    }
 
-            }
+            //}
 
-            foreach (var id in ss)
-            {
+            //foreach (var id in ss)
+            //{
 
-                _db.MainSubProducts.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
+            //    _db.MainSubProducts.Add(new MainSub_Products { MainProductId = prd.ProductId, SubProductID = Int32.Parse(id) });
 
-            }
+            //}
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
             return RedirectToAction("Index", "MarketSearch"); ;
         }
@@ -185,11 +183,11 @@ namespace MarketPracticingPlatform.Controllers
         [HttpPost]
         public IActionResult DeleteProduct(int ProductId)
         {
-            Product prd = _db.Products.Where(f => f.ProductId == ProductId).FirstOrDefault();
+            //Product prd = _db.Products.Where(f => f.ProductId == ProductId).FirstOrDefault();
 
-            _db.Products.Remove(prd);
+            //_db.Products.Remove(prd);
 
-            _db.SaveChanges();
+            //_db.SaveChanges();
 
             return RedirectToAction("Index","MarketSearch");
         }

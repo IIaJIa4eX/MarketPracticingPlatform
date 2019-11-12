@@ -5,7 +5,7 @@ namespace MarketPracticingPlatform.Services
     public interface IUserDataService
     {
 
-        UserAuthenticationDTO UserAuthentication(UserDTO userDTO, Data.DataBaseConnection.DBConnection db);
+        UserAuthenticationDTO GetUserAuthentication(UserDTO userDTO);
         //IActionResult UserCreation();
 
     }

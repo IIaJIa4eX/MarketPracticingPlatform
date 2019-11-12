@@ -1,4 +1,5 @@
-﻿using MarketPracticingPlatform.Sevice;
+﻿using MarketPracticingPlatform.Data.DataBaseConnection;
+using MarketPracticingPlatform.Sevice;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
 
 namespace MarketPracticingPlatform.Services
@@ -12,17 +13,18 @@ namespace MarketPracticingPlatform.Services
         //}
 
         //GetDbData _getdata;
+        DBConnection _db;
 
-        //public DBConnectService(GetDbData getdata)
-        //{
-        //    _getdata = getdata;
-        //}
+        public DBConnectService(DBConnection db)
+        {
+            _db = db;
+        }
 
 
 
-    public UserAuthenticationDTO UserAuthentication(UserDTO userDTO, Data.DataBaseConnection.DBConnection db)
+        public UserAuthenticationDTO GetUserAuthentication(UserDTO userDTO)
     {
-            GetDbData _getdata = new GetDbData(db);
+            GetDbData _getdata = new GetDbData(_db);
             UserAuthenticationDTO tmp = _getdata.GetAuthenticationData(userDTO);
 
         return tmp;

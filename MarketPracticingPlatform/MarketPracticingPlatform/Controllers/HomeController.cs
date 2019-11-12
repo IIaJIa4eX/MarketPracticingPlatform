@@ -13,31 +13,24 @@ namespace MarketPracticingPlatform.Controllers
     [Route("Home")]
     public class HomeController : Controller
     {
-        readonly Data.DataBaseConnection.DBConnection _db;
         IUserDataService _GetUserServices;
 
-        public HomeController(IUserDataService GetUserServices, Data.DataBaseConnection.DBConnection db)
+        public HomeController(IUserDataService GetUserServices)
         {
-
-            _db = db;
             _GetUserServices = GetUserServices;
         }
 
 
         public IActionResult Index()
         {
-            
             return View();
-
         }
-       
-
 
         [HttpPost]
         [Route("UserAuthentication")]
         public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
         {
-            UserAuthenticationDTO tmp = _GetUserServices.UserAuthentication(userDTO, _db);
+            UserAuthenticationDTO tmp = _GetUserServices.GetUserAuthentication(userDTO);
 
             if(tmp.UserIdentity != null)
             {
