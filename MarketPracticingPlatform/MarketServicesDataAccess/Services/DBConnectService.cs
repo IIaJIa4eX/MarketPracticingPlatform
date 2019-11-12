@@ -13,7 +13,7 @@ namespace MarketPracticingPlatform.Services
         //}
 
         //GetDbData _getdata;
-        DBConnection _db;
+        readonly DBConnection _db;
 
         public DBConnectService(DBConnection db)
         {

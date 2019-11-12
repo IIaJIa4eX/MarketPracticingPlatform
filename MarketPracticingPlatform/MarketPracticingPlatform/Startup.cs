@@ -1,4 +1,5 @@
 ﻿using MarketPracticingPlatform.Authentication_token;
+using MarketPracticingPlatform.Data.DataBaseConnection;
 using MarketPracticingPlatform.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,7 +32,7 @@ namespace MarketPracticingPlatform
         {
 
             services.AddSingleton<IUserDataService, DBConnectService>();
-            services.AddDbContext<Data.DataBaseConnection.DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
+            services.AddDbContext<DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
 
             //services.AddDbContext<DataBaseConnection>(options =>
 
