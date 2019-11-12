@@ -1,7 +1,9 @@
 ﻿using DbCotext.DataBaseModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +15,6 @@ namespace DbCotext.DataBaseConnection
 
             
 
-            public DBConnection(DbContextOptions<DBConnection> option) : base(option)
-            {
-
-            }
 
 
             public DbSet<User> Users { get; set; }
@@ -64,6 +62,7 @@ namespace DbCotext.DataBaseConnection
 
             {
 
+                 optionsBuilder.UseMySQL("Server=localhost;Database=productsmarket;Uid=root;Pwd=;CharSet=utf8;");
 
             }
 

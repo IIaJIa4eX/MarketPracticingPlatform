@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MarketPracticingPlatform.Models;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
@@ -16,20 +15,22 @@ using MarketPracticingPlatform.DataBaseModels;
 using Microsoft.AspNetCore.Authorization;
 using MarketPracticingPlatform.CookieHandler;
 using Microsoft.EntityFrameworkCore;
+using MarketPracticingPlatform.Sevice.ModelsDTO;
+using MarketPracticingPlatform.Services;
 
 namespace MarketPracticingPlatform.Controllers
 {
     [Route("Home")]
-    public class HomeController :  Controller
+    public class HomeController : Controller
     {
 
 
-        DataBaseConnection db;
+        //DataBaseConnection db;
+        IUserDataService _GetUserServices;
 
-        public HomeController(DataBaseConnection db)
+        public HomeController(IUserDataService GetUserServices)
         {
-            this.db = db;
-            
+            _GetUserServices = GetUserServices;
         }
 
 
@@ -39,77 +40,117 @@ namespace MarketPracticingPlatform.Controllers
             return View();
 
         }
+       
 
 
         [HttpPost]
         [Route("UserAuthentication")]
         public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
         {
-           
+            UserAuthenticationDTO tmp = _GetUserServices.UserAuthentication(userDTO);
 
-            if (string.IsNullOrWhiteSpace(userDTO.Email) || string.IsNullOrWhiteSpace(userDTO.Password))
+            if(tmp.UserIdentity != null)
             {
+                var now = DateTime.UtcNow;
+                var jwt = new JwtSecurityToken(
+                        issuer: AuthToken.ISSUER,
+                        audience: AuthToken.AUDIENCE,
+                        notBefore: now,
+                        claims: tmp.UserIdentity.Claims,
+                        expires: now.Add(TimeSpan.FromMinutes(AuthToken.LIFETIME)),
+                        signingCredentials: new SigningCredentials(AuthToken.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Все поля должны быть заполнены" });
+
+                var option = new CookieOptions();
+                //option.Expires = DateTime.Now.AddHours(24);
+                option.SameSite = SameSiteMode.Strict;
+                option.HttpOnly = true;
+                option.Secure = true;
+                option.IsEssential = true;
+                Response.Cookies.Append("Token", encodedJwt, option);
+                Response.Cookies.Append("Username", userDTO.Email, option);
+
+
+                Response.ContentType = "application/json";
+                return await Task.FromResult(tmp);
             }
 
+            return await Task.FromResult(tmp);
 
-            var identity = GetIdentity(userDTO.Email, userDTO.Password);
-
-
-            if (identity == null)
-            {
-                
-                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Вы неправильно ввели имя пользователя или пароль" });
-            }
-
-            var now = DateTime.UtcNow;
-
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthToken.ISSUER,
-                    audience: AuthToken.AUDIENCE,
-                    notBefore: now,
-                    claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthToken.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthToken.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-
-            var option = new CookieOptions();
-            //option.Expires = DateTime.Now.AddHours(24);
-            option.SameSite = SameSiteMode.Strict;
-            option.HttpOnly = true;
-            option.Secure = true;
-            option.IsEssential = true;
-            Response.Cookies.Append("Token", encodedJwt, option);
-            Response.Cookies.Append("Username", userDTO.Email, option);
-        
-            
-            Response.ContentType = "application/json";
-            return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = true});
         }
 
-        private ClaimsIdentity GetIdentity(string email, string password)
-        {
 
-            User user = db.Users.Where(f => f.Email == email && f.Password == password).FirstOrDefault();
+        //[HttpPost]
+        //[Route("UserAuthentication")]
+        //public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
+        //{
 
-            if (user != null)
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Name)
 
-                };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
-            }
+        //    if (string.IsNullOrWhiteSpace(userDTO.Email) || string.IsNullOrWhiteSpace(userDTO.Password))
+        //    {
 
-            return null;
-        }
+        //        return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Все поля должны быть заполнены" });
+        //    }
+
+
+        //    var identity = GetIdentity(userDTO.Email, userDTO.Password);
+
+
+        //    if (identity == null)
+        //    {
+
+        //        return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Вы неправильно ввели имя пользователя или пароль" });
+        //    }
+
+        //    var now = DateTime.UtcNow;
+
+        //    var jwt = new JwtSecurityToken(
+        //            issuer: AuthToken.ISSUER,
+        //            audience: AuthToken.AUDIENCE,
+        //            notBefore: now,
+        //            claims: identity.Claims,
+        //            expires: now.Add(TimeSpan.FromMinutes(AuthToken.LIFETIME)),
+        //            signingCredentials: new SigningCredentials(AuthToken.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+        //    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+
+        //    var option = new CookieOptions();
+        //    //option.Expires = DateTime.Now.AddHours(24);
+        //    option.SameSite = SameSiteMode.Strict;
+        //    option.HttpOnly = true;
+        //    option.Secure = true;
+        //    option.IsEssential = true;
+        //    Response.Cookies.Append("Token", encodedJwt, option);
+        //    Response.Cookies.Append("Username", userDTO.Email, option);
+
+
+        //    Response.ContentType = "application/json";
+        //    return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = true});
+        //}
+
+        //private ClaimsIdentity GetIdentity(string email, string password)
+        //{
+
+        //    User user = db.Users.Where(f => f.Email == email && f.Password == password).FirstOrDefault();
+
+        //    if (user != null)
+        //    {
+        //        var claims = new List<Claim>
+        //        {
+        //            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+        //            new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Name)
+
+        //        };
+        //        ClaimsIdentity claimsIdentity =
+        //        new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+        //            ClaimsIdentity.DefaultRoleClaimType);
+        //        return claimsIdentity;
+        //    }
+
+        //    return null;
+        //}
+
 
         [Route("LogOff")]
         public IActionResult LogOff()

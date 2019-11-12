@@ -9,12 +9,12 @@ namespace MarketPracticingPlatform.Components
 {
     public class UserStatusViewComponent : ViewComponent
     {
-        DataBaseConnection db;
+        //DataBaseConnection db;
 
-        public UserStatusViewComponent(DataBaseConnection db)
-        {
-            this.db = db;
-        }
+        //public UserStatusViewComponent(DataBaseConnection db)
+        //{
+        //    this.db = db;
+        //}
 
 
 

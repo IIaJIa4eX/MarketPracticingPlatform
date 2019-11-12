@@ -1,6 +1,6 @@
 ﻿using MarketPracticingPlatform.DataBaseModels;
 using MarketPracticingPlatform.DBConnection;
-using MarketPracticingPlatform.Models;
+using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

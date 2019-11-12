@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MarketPracticingPlatform.DataBaseModels;
 using MarketPracticingPlatform.DBConnection;
-using MarketPracticingPlatform.Models;
+using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -45,8 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Utilities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarketServicesDataAccess\MarketPracticingPlatform.Sevice.csproj" />
   </ItemGroup>
 
 </Project>

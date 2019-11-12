@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace MarketServicesDataAccess.Models
+namespace MarketPracticingPlatform.Sevice.ModelsDTO
 {
     public class UserAuthenticationDTO
     {
@@ -14,9 +15,9 @@ namespace MarketServicesDataAccess.Models
 
         public string ErrorMessage { get; set; }
 
-        public bool IsSuccess { get; set; }
+        public bool IsSuccess { get; set; } = false;
 
-        public ClaimsIdentity UserIdentity { get; set; }
+        public ClaimsIdentity UserIdentity { get; set; } = null;
 
     }
 }

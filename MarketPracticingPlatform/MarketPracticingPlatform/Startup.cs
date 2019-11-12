@@ -18,7 +18,8 @@ using MarketPracticingPlatform.Authentication_token;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MarketPracticingPlatform.CookieHandler;
 using Microsoft.EntityFrameworkCore;
-using MarketServicesDataAccess;
+using MarketPracticingPlatform.Sevice;
+using MarketPracticingPlatform.Services;
 
 namespace MarketPracticingPlatform
 {
@@ -37,12 +38,14 @@ namespace MarketPracticingPlatform
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<DataBaseConnection>(options =>
+            services.AddSingleton<IUserDataService, DBConnectService>();
+
+            //services.AddDbContext<DataBaseConnection>(options =>
             
             
-            options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")
+            //options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")
             
-            ));
+            //));
 
 
             services.AddCors(options =>
@@ -92,9 +95,6 @@ namespace MarketPracticingPlatform
                 });
 
             
-
-            services.AddScoped<GetDbData>();
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -1,12 +1,12 @@
 ﻿using DbCotext.DataBaseConnection;
-using MarketServicesDataAccess.Models;
+using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace MarketServicesDataAccess
+namespace MarketPracticingPlatform.Sevice
 {
 
 
@@ -15,18 +15,23 @@ namespace MarketServicesDataAccess
 
         DBConnection _db;
 
-        GetDbData(DBConnection db)
+        public GetDbData(DBConnection db)
         {
             _db = db;
         }
 
+        public GetDbData()
+        {
 
-        public async Task<UserAuthenticationDTO> GetAuthenticationData(UserDTO userDTO)
+        }
+
+
+        public UserAuthenticationDTO GetAuthenticationData(UserDTO userDTO)
         {
             if (string.IsNullOrWhiteSpace(userDTO.Email) || string.IsNullOrWhiteSpace(userDTO.Password))
             {
 
-                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Все поля должны быть заполнены" });
+                return (new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Все поля должны быть заполнены" });
             }
 
 
@@ -36,11 +41,11 @@ namespace MarketServicesDataAccess
             if (identity == null)
             {
 
-                return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Вы неправильно ввели имя пользователя или пароль" });
+                return (new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Вы неправильно ввели имя пользователя или пароль" });
             }
 
 
-            return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = true });
+            return (new UserAuthenticationDTO { IsSuccess = true, UserIdentity = identity });
 
 
         }
