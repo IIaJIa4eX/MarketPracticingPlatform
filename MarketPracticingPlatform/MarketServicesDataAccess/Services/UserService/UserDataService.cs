@@ -1,12 +1,12 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseConnection;
 using MarketPracticingPlatform.Data.DataBaseModels;
-using MarketPracticingPlatform.Sevice;
-using MarketPracticingPlatform.Sevice.ModelsDTO;
+using MarketPracticingPlatform.Service.Interface;
+using MarketPracticingPlatform.Service.ModelsDTO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace MarketPracticingPlatform.Services
+namespace MarketPracticingPlatform.Services.Services
 
 {
     public class UserDataService : IUserDataService

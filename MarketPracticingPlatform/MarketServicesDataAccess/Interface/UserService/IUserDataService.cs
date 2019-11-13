@@ -1,6 +1,6 @@
-﻿using MarketPracticingPlatform.Sevice.ModelsDTO;
+﻿using MarketPracticingPlatform.Service.ModelsDTO;
 
-namespace MarketPracticingPlatform.Services
+namespace MarketPracticingPlatform.Service.Interface
 {
     public interface IUserDataService
     {

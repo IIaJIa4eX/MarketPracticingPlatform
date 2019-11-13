@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarketPracticingPlatform.Sevice.ModelsDTO
+namespace MarketPracticingPlatform.Service.ModelsDTO
 {
         public class ErrorViewModel
         {

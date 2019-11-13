@@ -1,5 +1,5 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
-using MarketPracticingPlatform.Sevice.ModelsDTO;
+using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

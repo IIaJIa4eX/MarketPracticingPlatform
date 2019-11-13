@@ -1,8 +1,6 @@
-﻿using MarketPracticingPlatform.Data.DataBaseModels;
-using MarketPracticingPlatform.Services;
-using MarketPracticingPlatform.Sevice.ModelsDTO;
+﻿using MarketPracticingPlatform.Service.Interface;
+using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace MarketPracticingPlatform.Controllers
 {

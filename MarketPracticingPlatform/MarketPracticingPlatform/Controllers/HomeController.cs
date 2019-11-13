@@ -1,6 +1,6 @@
 ﻿using MarketPracticingPlatform.Authentication_token;
-using MarketPracticingPlatform.Services;
-using MarketPracticingPlatform.Sevice.ModelsDTO;
+using MarketPracticingPlatform.Service.Interface;
+using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

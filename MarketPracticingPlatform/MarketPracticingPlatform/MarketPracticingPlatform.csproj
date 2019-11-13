@@ -28,7 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DbCotext\MarketPracticingPlatform.Data.csproj" />
-    <ProjectReference Include="..\MarketServicesDataAccess\MarketPracticingPlatform.Sevice.csproj" />
+    <ProjectReference Include="..\MarketServicesDataAccess\MarketPracticingPlatform.Service.csproj" />
   </ItemGroup>
 
 </Project>

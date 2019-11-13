@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarketPracticingPlatform.Sevice.Services.MarketService.CategoryService
+namespace MarketPracticingPlatform.Service.Interface
 {
     public interface ICategoryDataService
     {

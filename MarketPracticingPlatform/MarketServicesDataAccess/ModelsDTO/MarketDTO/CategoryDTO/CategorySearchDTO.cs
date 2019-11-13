@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarketPracticingPlatform.Sevice.ModelsDTO.MarketDTO.CategoryDTO
+namespace MarketPracticingPlatform.Service.ModelsDTO
 {
     public class CategorySearchDTO
     {

@@ -1,9 +1,7 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseConnection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MarketPracticingPlatform.Service.Interface;
 
-namespace MarketPracticingPlatform.Sevice.Services.MarketService.CategoryService
+namespace MarketPracticingPlatform.Service.Services
 {
     public class CategoryDataService : ICategoryDataService
     {

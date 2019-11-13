@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace MarketPracticingPlatform.Sevice.ModelsDTO
+namespace MarketPracticingPlatform.Service.ModelsDTO
 {
     public class UserAuthenticationDTO
     {
