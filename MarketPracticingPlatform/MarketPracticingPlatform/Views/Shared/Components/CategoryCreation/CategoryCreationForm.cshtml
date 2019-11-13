@@ -4,15 +4,15 @@
 }
 
 <div class="CategoryCreation">
-
-    <form method="post" asp-controller="Market" asp-action="CategoryCreation">
+    <div id="CategoryCreationErrorView"></div>
+    <form id="CategoryCreationForm" method="post" asp-controller="Market" asp-action="CategoryCreation">
         <label>Название категории</label><br />
         <input type="text" name="Name" /> <br /><br />
         <label>Описание</label><br />
         <input type="text" name="Description" /> <br /><br />
         <label>Принадлежит категории</label><br />
         <input type="text" name="ParentCategoryName" /> <br /><br />
-        <input type="submit" value="Создать" />
+        <input type="button" onclick="SubmitCategoryCreation()" value="Создать" />
     </form>
 
 </div>

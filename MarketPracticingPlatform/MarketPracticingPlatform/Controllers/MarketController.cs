@@ -1,4 +1,5 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
+using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,11 @@ namespace MarketPracticingPlatform.Controllers
     public class MarketController : Controller
     {
         //IProductDataService _prod; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        public MarketController(/*IProductDataService prod*/) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ICategoryDataService _GetCategoryServices;
+        public MarketController(ICategoryDataService GetCategoryServices/*IProductDataService prod*/) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         {
             //_prod = prod;
+            _GetCategoryServices = GetCategoryServices;
         }
 
         public IActionResult Index()
@@ -81,29 +84,13 @@ namespace MarketPracticingPlatform.Controllers
        
 
         [HttpPost]
-        public IActionResult CategoryCreation(CategoryDTO cdh)
+        public CategoryCreationDTO CategoryCreation(CategoryDTO cdh)
         {
-            //Category parentCat = _db.Categories.Where(f => f.Name == cdh.ParentCategoryName).FirstOrDefault();
 
-            //Category cat = new Category
-            //{
-            //    Name = cdh.Name,
-            //    Description = cdh.Description
-            //};
+            CategoryCreationDTO tmp = _GetCategoryServices.CreateCategory(cdh);
 
-            //if (parentCat == null)
-            //{
-            //    cat.ParentCategoryId = 0;
-            //}
-            //else
-            //{
-            //    cat.ParentCategoryId = parentCat.CategoryId;
-            //}
+            return tmp;
 
-            //_db.Categories.Add(cat);
-            //_db.SaveChanges();
-
-            return View("Index");
         }
 
         [HttpPost]

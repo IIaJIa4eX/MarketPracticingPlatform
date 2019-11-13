@@ -33,10 +33,6 @@ namespace MarketPracticingPlatform.Data.DataBaseConnection
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
 
-                modelBuilder.Entity<Category>()
-                .Property(b => b.ParentCategoryId)
-                .HasDefaultValue(null);
-
 
                 modelBuilder.Entity<ProductCategory>()
                     .HasKey(t => new { t.ProductId, t.CategoryId });
@@ -60,7 +56,7 @@ namespace MarketPracticingPlatform.Data.DataBaseConnection
 
             {
 
-                // optionsBuilder.UseMySQL("Server=localhost;Database=productsmarket;Uid=root;Pwd=;CharSet=utf8;");
+                
 
             }
 

@@ -2,8 +2,6 @@
 using MarketPracticingPlatform.Data.DataBaseConnection;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.Services;
-using MarketPracticingPlatform.Services;
-using MarketPracticingPlatform.Services.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,8 +31,10 @@ namespace MarketPracticingPlatform
         {
 
             services.AddScoped<IUserDataService, UserDataService>();
+
             services.AddScoped<IProductDataService, ProductDataService>();
             services.AddScoped<ICategoryDataService, CategoryDataService>();
+
 
             services.AddDbContext<DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
 

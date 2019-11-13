@@ -44,27 +44,27 @@ function SubmitRegistration() {
     });
 
 }
+function SubmitCategoryCreation() {
 
-function SearchByCategory() {
-
-    $.post("", $("#SearchByCategoryForm").serialize(), function (data) {
+    $.post("/Market/CategoryCreation", $("#CategoryCreationForm").serialize(), function (data) {
         if (data.isSuccess === true) {
 
-            document.getElementById("RegistrationErrorView").innerHTML = "Результат по запросу '" + data.errorMessage + "'";
+            document.location.href = "/Market/Index";
 
         } else {
 
-            document.getElementById("RegistrationErrorView").innerHTML = data.errorMessage;
+            document.getElementById("CategoryCreationErrorView").innerHTML = data.errorMessage;
         }
 
     }).fail(function (data) {
 
         if (data.status === 500) {
-            document.getElementById("RegistrationErrorView").innerHTML = "Не удалось подключиться к серверу";
+            document.getElementById("CategoryCreationErrorView").innerHTML = "Не удалось подключиться к серверу";
         }
     });
 
 }
+
 
 
 $("input").click(function () {
