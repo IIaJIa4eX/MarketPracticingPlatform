@@ -10,8 +10,8 @@ namespace MarketPracticingPlatform.Controllers
     [Route("[controller]/[action]")]
     public class MarketController : Controller
     {
-        //IProductService _prod; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        public MarketController(/*IProductService prod*/) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //IProductDataService _prod; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        public MarketController(/*IProductDataService prod*/) //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         {
             //_prod = prod;
         }

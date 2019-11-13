@@ -1,34 +1,71 @@
-﻿
-using MarketPracticingPlatform.Data.DataBaseConnection;
+﻿using MarketPracticingPlatform.Data.DataBaseConnection;
+using MarketPracticingPlatform.Data.DataBaseModels;
+using MarketPracticingPlatform.Sevice;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace MarketPracticingPlatform.Sevice
+namespace MarketPracticingPlatform.Services
+
 {
-
-
-    public class GetDbData
+    public class UserDataService : IUserDataService
     {
 
-        DBConnection _db;
+        readonly DBConnection _db;
 
-        public GetDbData(DBConnection db)
+        public UserDataService(DBConnection db)
         {
             _db = db;
         }
 
-        public GetDbData()
-        {
 
+        public UserRegistrationDTO UserRegistration(UserDTO userDTO)
+        {
+            if (string.IsNullOrWhiteSpace(userDTO.Email))
+            {
+
+                return new UserRegistrationDTO { IsSuccess = false, ErrorMessage = "Эмейл должен быть введён" };
+
+            }
+
+            if (string.IsNullOrWhiteSpace(userDTO.Password))
+            {
+
+                return new UserRegistrationDTO { IsSuccess = false, ErrorMessage = "Пароль должен быть введён" };
+
+            }
+
+            var emlcheck = _db.Users.Where(f => f.Email == userDTO.Email).FirstOrDefault();
+
+            if (emlcheck != null)
+            {
+
+                return new UserRegistrationDTO { IsSuccess = false, ErrorMessage = "Юзер с таким Email уже существует" };
+
+            }
+
+            User us = new User
+            {
+                Email = userDTO.Email,
+                Password = userDTO.Password,
+                Name = userDTO.Name,
+                Number = userDTO.Number
+            };
+
+            _db.Users.Add(us);
+            _db.SaveChanges();
+
+            return new UserRegistrationDTO { IsSuccess = true};
         }
 
 
-        public UserAuthenticationDTO GetAuthenticationData(UserDTO userDTO)
+    
+
+
+        public UserAuthenticationDTO GetUserAuthentication(UserDTO userDTO)
         {
+
             if (string.IsNullOrWhiteSpace(userDTO.Email) || string.IsNullOrWhiteSpace(userDTO.Password))
             {
 
@@ -73,4 +110,6 @@ namespace MarketPracticingPlatform.Sevice
             return null;
         }
     }
+
 }
+

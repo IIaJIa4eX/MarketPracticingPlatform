@@ -1,9 +1,10 @@
 ﻿
 
-<form id="Registrationform" asp-controller="Registration" asp-action="UserCreation" method="post">
 
-    <div id="errorview"></div>
 
+
+<form id="RegistrationForm">
+    <div id="RegistrationErrorView"></div>
     <div class="form-row">
 
         <div class="form-group col-md-6">
@@ -49,7 +50,7 @@
     </div>
     <div style="text-align:center;">
 
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        <button type="button" class="btn btn-primary" onclick="SubmitRegistration();">Зарегистрироваться</button>
 
     </div>
 

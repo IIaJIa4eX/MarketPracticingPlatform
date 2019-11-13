@@ -26,20 +26,14 @@ namespace MarketPracticingPlatform
         public IConfiguration Configuration { get; }
 
 
-        //readonly string MyAllowSpecificOrigins = "_AllowToRequest";
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton<IUserDataService, DBConnectService>();
+            services.AddScoped<IUserDataService, UserDataService>();
+            services.AddScoped<IPoductDataService, ProductDataService>();
+            services.AddScoped<ICategoryDataService, CategoryDataService>();
+
             services.AddDbContext<DBConnection>(options => options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")));
-
-            //services.AddDbContext<DataBaseConnection>(options =>
-
-
-            //options.UseMySQL(Configuration.GetConnectionString("MarketDatabase")
-
-            //));
 
 
             services.AddCors(options =>
@@ -55,7 +49,7 @@ namespace MarketPracticingPlatform
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
@@ -93,7 +87,6 @@ namespace MarketPracticingPlatform
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env , ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())

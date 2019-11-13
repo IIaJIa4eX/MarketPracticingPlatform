@@ -24,6 +24,49 @@ function SubmitAuthentication() {
 
 }
 
+function SubmitRegistration() {
+
+    $.post("/Registration/UserCreation", $("#RegistrationForm").serialize(), function (data) {
+        if (data.isSuccess === true) {
+
+            document.location.href = "/Home";
+
+        } else {
+
+            document.getElementById("RegistrationErrorView").innerHTML = data.errorMessage;
+        }
+
+    }).fail(function (data) {
+
+        if (data.status === 500) {
+            document.getElementById("RegistrationErrorView").innerHTML = "Не удалось подключиться к серверу";
+        }
+    });
+
+}
+
+function SearchByCategory() {
+
+    $.post("", $("#SearchByCategoryForm").serialize(), function (data) {
+        if (data.isSuccess === true) {
+
+            document.getElementById("RegistrationErrorView").innerHTML = "Результат по запросу '" + data.errorMessage + "'";
+
+        } else {
+
+            document.getElementById("RegistrationErrorView").innerHTML = data.errorMessage;
+        }
+
+    }).fail(function (data) {
+
+        if (data.status === 500) {
+            document.getElementById("RegistrationErrorView").innerHTML = "Не удалось подключиться к серверу";
+        }
+    });
+
+}
+
+
 $("input").click(function () {
     $(this).parent().children("small").slideDown();
 }).blur(function () {

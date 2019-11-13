@@ -1,72 +1,38 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
+using MarketPracticingPlatform.Services;
 using MarketPracticingPlatform.Sevice.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace MarketPracticingPlatform.Controllers
 {
+    [Route("Registration")]
     public class RegistrationController : Controller
     {
 
-        Data.DataBaseConnection.DBConnection _db;
+        IUserDataService _GetUserServices;
 
-
-        public RegistrationController(Data.DataBaseConnection.DBConnection db)
+        public RegistrationController(IUserDataService GetUserServices)
         {
-            this._db = db;
+            _GetUserServices = GetUserServices;
         }
 
         public IActionResult Index()
         {
 
-
-
             return View();
+
         }
 
 
         [HttpPost("UserCreation")]
-        public IActionResult UserCreation(UserDTO udh)
+        public UserRegistrationDTO UserCreation(UserDTO userDTO)
         {
-           
+            var tmp = _GetUserServices.UserRegistration(userDTO);
 
-            if (udh.Email == "" || udh.Email == null)
-            {
+            return tmp;
 
-                return View("Index");
-
-            }
-
-            if (udh.Password == "" || udh.Password == null)
-            {
-
-                return View("Index");
-
-            }
-
-            var emlcheck = _db.Users.Where(f => f.Email == udh.Email).FirstOrDefault();
-
-            if (emlcheck != null)
-            {
-
-                return View("Index");
-
-            }
-
-            User us = new User
-            {
-                Email = udh.Email,
-                Password = udh.Password,
-                Name = udh.Name,
-                Number = udh.Number
-            };
-
-            _db.Users.Add(us);
-            _db.SaveChanges();
-            
-            return RedirectToAction("Index", "Home");
         }
-
 
     }
 }

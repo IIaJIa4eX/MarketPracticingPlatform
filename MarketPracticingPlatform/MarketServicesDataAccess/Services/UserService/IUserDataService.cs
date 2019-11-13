@@ -6,7 +6,8 @@ namespace MarketPracticingPlatform.Services
     {
 
         UserAuthenticationDTO GetUserAuthentication(UserDTO userDTO);
-        //IActionResult UserCreation();
+        UserRegistrationDTO UserRegistration(UserDTO userDTO);
+
 
     }
 }
