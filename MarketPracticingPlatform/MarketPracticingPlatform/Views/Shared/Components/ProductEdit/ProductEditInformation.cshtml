@@ -7,7 +7,7 @@
     <div class="ProductEdit">
 
         <div id="EditErrorView"></div>
-        <form method="post" asp-controller="Market" asp-action="EditProduct">
+        <form id="ProductEditingForm" method="post" asp-controller="Market" asp-action="EditProduct">
             <label>Название продукта</label><br />
             <input name="ProductName" type="text" value="@Model.ProductName" /> <br /><br />
             <label>Категория</label><br />
@@ -24,7 +24,7 @@
                 <small hidden class="form-text text-muted">При редактировании вводить через запятую без пробелов (1,2,3)</small> <br /><br />
             </div>
             <input name="ProductId" hidden type="text" value="@Model.ProductId" />
-            <input type="submit" value="Редактировать" />
+            <input type="button" onclick="SubmitProductEdit()" value="Редактировать" />
         </form>
     </div>
 </body>

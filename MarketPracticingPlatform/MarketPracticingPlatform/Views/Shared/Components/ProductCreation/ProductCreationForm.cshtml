@@ -5,19 +5,19 @@
 
 
 <div class="ProductCreation">
-
-    <form method="post" asp-controller="Market" asp-action="ProductCreation">
+    <div id="ProductCreationErrorView"></div>
+    <form id="ProductCreationForm" method="post">
         <label>Название продукта</label><br />
-        <input type="text" name="Name" /> <br /><br />
+        <input type="text" name="ProductName" /> <br /><br />
         <label>Категория</label><br />
         <input type="text" name="CategoryName" /><br /><br />
         <label>Описание</label><br />
-        <input type="text" name="Description" /> <br /><br />
+        <input type="text" name="ProductDescription" /> <br /><br />
         <label>Цена</label><br />
-        <input type="text" name="Price" /> <br /><br />
+        <input type="text" name="ProductPrice" /> <br /><br />
         <label>Производитель</label><br />
-        <input type="text" name="Manufacturer" /> <br /><br />
-        <input type="submit" value="Создать" />
+        <input type="text" name="ProductManufacturerName" /> <br /><br />
+        <input type="button" onclick="SubmitProductCreation()" value="Создать" />
     </form>
 
 </div>

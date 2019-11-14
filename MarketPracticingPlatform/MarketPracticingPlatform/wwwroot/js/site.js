@@ -44,6 +44,7 @@ function SubmitRegistration() {
     });
 
 }
+
 function SubmitCategoryCreation() {
 
     $.post("/Market/CategoryCreation", $("#CategoryCreationForm").serialize(), function (data) {
@@ -65,7 +66,26 @@ function SubmitCategoryCreation() {
 
 }
 
+function SubmitProductCreation() {
 
+    $.post("/Market/ProductCreation", $("#ProductCreationForm").serialize(), function (data) {
+        if (data.isSuccess === true) {
+
+            document.location.href = "/Market/Index";
+
+        } else {
+
+            document.getElementById("ProductCreationErrorView").innerHTML = data.errorMessage;
+        }
+
+    }).fail(function (data) {
+
+        if (data.status === 500) {
+            document.getElementById("ProductCreationErrorView").innerHTML = "Не удалось подключиться к серверу";
+        }
+    });
+
+}
 
 $("input").click(function () {
     $(this).parent().children("small").slideDown();

@@ -8,6 +8,7 @@ namespace MarketPracticingPlatform.Service.Interface
     public interface ICategoryDataService
     {
         CategorySearchDTO SearchByCategoryName(string categoryName);
+
         CategoryCreationDTO CreateCategory(CategoryDTO categoryDTO);
     }
 }
