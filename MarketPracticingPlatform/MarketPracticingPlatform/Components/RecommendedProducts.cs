@@ -1,4 +1,5 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
+using MarketPracticingPlatform.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +9,24 @@ namespace MarketPracticingPlatform.Components
 {
     public class RecommendedProductsViewComponent : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(int id)
+
+        readonly IProductDataService _GetProductServices;
+
+        public RecommendedProductsViewComponent(IProductDataService GetProductServices)
         {
+            _GetProductServices = GetProductServices;
+        }
 
-        //    var additionalproducts = _db.MainSubProducts.Where(f => f.MainProductId == id).Take(5);
+        public async Task<IViewComponentResult> InvokeAsync(int mainPrdId)
+        {
+            var prd = _GetProductServices.GetProductsByMainProductId(mainPrdId, 5);
 
-        //    var prd = new List<Product>();
+            if(prd == null)
+            {
+                return await Task.FromResult(View("Error"));
+            }
 
-        //    foreach(var item in additionalproducts)
-        //    {
-        //        Product prtmp = _db.Products.Where(f => f.ProductId == item.SubProductID).FirstOrDefault();
-        //        if (prtmp != null)
-        //        {
-        //            prd.Add(prtmp);
-        //        }
-        //    }
-
-            return await Task.FromResult(View("RecommendedProducts"/*, prd*/));
+            return await Task.FromResult(View("RecommendedProducts", prd));
         }
     }
 }

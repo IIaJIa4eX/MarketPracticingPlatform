@@ -6,6 +6,7 @@ namespace MarketPracticingPlatform.Service.Interface
     {
 
         UserAuthenticationDTO GetUserAuthentication(UserDTO userDTO);
+
         UserRegistrationDTO UserRegistration(UserDTO userDTO);
 
 
