@@ -12,10 +12,14 @@ namespace MarketPracticingPlatform.Service.Interface
 
         ProductCreationDTO CreatProduct(ProductDTO prdDTO);
 
-        Product GetProductByID(int id);
+        Product GetProductByID(int productId);
 
-        List<Product> GetProductsByMainProductId(int mainPrdId, int productsNumber);
+        List<Product> GetProductsByMainProductId(int mainPrdId, int numberOfProducts);
+
+        List<Product> GetRelativeProductsByProductId(int productId, int numberOfProducts);
 
         void DeleteProduct(int productId);
+
+        ProductDTO GetProductInfoForEdit(int productId);
     }
 }

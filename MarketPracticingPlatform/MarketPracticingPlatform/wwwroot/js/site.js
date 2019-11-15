@@ -87,6 +87,28 @@ function SubmitProductCreation() {
 
 }
 
+
+function SubmitProductEdit() {
+
+    $.post("/Market/EditProduct", $("#ProductEditingForm").serialize(), function (data) {
+        if (data.isSuccess === true) {
+
+            document.location.href = "/Market/Index";
+
+        } else {
+
+            document.getElementById("EditErrorView").innerHTML = data.errorMessage;
+        }
+
+    }).fail(function (data) {
+
+        if (data.status === 500) {
+            document.getElementById("EditErrorView").innerHTML = "Не удалось подключиться к серверу";
+        }
+    });
+
+}
+
 $("input").click(function () {
     $(this).parent().children("small").slideDown();
 }).blur(function () {

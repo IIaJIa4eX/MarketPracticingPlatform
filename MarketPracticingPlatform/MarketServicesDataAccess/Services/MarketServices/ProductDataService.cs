@@ -28,7 +28,7 @@ namespace MarketPracticingPlatform.Service.Services
 
             if(prd == null)
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Этот продукт был удалён, <a href="+"Market/Index>создайте новый</a>" };
+                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Этот продукт был удалён, " + "<a href="+"Index"+"> Создайте новый <a>" };
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.ProductName))
@@ -51,11 +51,16 @@ namespace MarketPracticingPlatform.Service.Services
                 return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели стоимость продукта" };
             }
 
-            var productName = _db.Products.Where(f => f.Name == prdDTO.ProductName).FirstOrDefault();
-
-            if (productName != null)
+            if (string.IsNullOrWhiteSpace(prdDTO.CategoryName))
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Продукт с таким названием уже сущестует" };
+                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название категории продукта" };
+            }
+
+            var prdNameCheck = _db.Products.Where(f => f.Name == prdDTO.ProductName).FirstOrDefault();
+
+            if(prdNameCheck != null && (prdNameCheck.ProductId != prdDTO.ProductId))
+            {
+                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Продукт с таким названием уже существует" };
             }
 
             prd.ProductId = prdDTO.ProductId;
@@ -106,6 +111,7 @@ namespace MarketPracticingPlatform.Service.Services
             return new ProductEditDTO { IsSuccess = true };
 
         }
+
 
         public ProductCreationDTO CreatProduct(ProductDTO prdDTO)
         {
@@ -167,7 +173,7 @@ namespace MarketPracticingPlatform.Service.Services
             _db.SaveChanges();
 
 
-            int parentid = cat.ParentCategoryId;
+            int? parentid = cat.ParentCategoryId;
 
             if (cat.ParentCategoryId == 0) //TODO Заменить на null
             {
@@ -211,10 +217,10 @@ namespace MarketPracticingPlatform.Service.Services
         }
 
 
-        public List<Product> GetProductsByMainProductId(int mainPrdId, int productsNumber)
+        public List<Product> GetProductsByMainProductId(int mainPrdId, int numberOfProducts)
         {
 
-            if(productsNumber == 0)
+            if(numberOfProducts == 0)
             {
                 var allSubProducts = _db.MainSubProducts.Where(f => f.MainProductId == mainPrdId).ToList();
 
@@ -237,7 +243,7 @@ namespace MarketPracticingPlatform.Service.Services
                 return allprd;
             }
 
-            var subProducts = _db.MainSubProducts.Where(f => f.MainProductId == mainPrdId).Take(productsNumber);
+            var subProducts = _db.MainSubProducts.Where(f => f.MainProductId == mainPrdId).Take(numberOfProducts);
 
             if (subProducts == null)
             {
@@ -266,6 +272,64 @@ namespace MarketPracticingPlatform.Service.Services
             _db.Products.Remove(prd);
 
             _db.SaveChanges();
+        }
+
+
+        public ProductDTO GetProductInfoForEdit(int productId)
+        {
+
+            var prd = _db.Products.Where(f => f.ProductId == productId).FirstOrDefault();
+
+
+            if(prd == null)
+            {
+                return null;
+            }
+
+            ProductDTO prdDTO = new ProductDTO
+            {
+                ProductId = prd.ProductId,
+                ProductName = prd.Name,
+                ProductDescription = prd.Description,
+                ProductPrice = prd.Price,
+                ProductManufacturerName = prd.Manufacturer,
+
+                CategoryName = _db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault()
+            };
+
+            var subprods = _db.MainSubProducts.Where(f => f.MainProductId == productId);
+
+            string subproducts = "";
+
+            if (subprods.Count() != 0)
+            {
+
+                foreach (var item in subprods)
+                {
+                    subproducts += item.SubProductID.ToString() + ",";
+
+                }
+
+                prdDTO.Subproducts = subproducts.Substring(0, subproducts.Length - 1);
+            }
+            else
+            {
+
+                prdDTO.Subproducts = subproducts;
+
+            }
+
+            return prdDTO;
+        }
+
+
+        public List<Product> GetRelativeProductsByProductId(int productId, int numberOfProducts)
+        {
+            var prd = _db.Products.Where(f => f.ProductId == productId).FirstOrDefault();
+
+            var relativeProducts = _db.Products.Where(f => f.CategoryId == prd.CategoryId && f.ProductId != prd.ProductId).Take(numberOfProducts).ToList();
+
+            return relativeProducts;
         }
     }
 }

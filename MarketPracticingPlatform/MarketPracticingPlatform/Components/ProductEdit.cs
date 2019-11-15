@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MarketPracticingPlatform.Service.Interface;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Components
@@ -6,50 +7,25 @@ namespace MarketPracticingPlatform.Components
     public class ProductEditViewComponent : ViewComponent
     {
 
-        public async Task<IViewComponentResult> InvokeAsync(int productid)
+        readonly IProductDataService _GetProductServices;
+
+        public ProductEditViewComponent(IProductDataService GetProductServices)
         {
-            //var prd = _db.Products.Where(f => f.ProductId == productid).FirstOrDefault();
+            _GetProductServices = GetProductServices;
+        }
 
-            //if(prd == null)
-            //{
-            //    ViewBag.ErrorMessage = $"Продукта с id {productid} не существует";
-            //    return await Task.FromResult(View("EditError"));
-            //}
+        public async Task<IViewComponentResult> InvokeAsync(int productId)
+        {
+            var tmp = _GetProductServices.GetProductInfoForEdit(productId);
 
 
-            //ProductDTO prdDTO = new ProductDTO
-            //{
-            //    ProductId = prd.ProductId,
-            //    ProductName = prd.Name,
-            //    ProductDescription = prd.Description,
-            //    ProductPrice = prd.Price,
-            //    ProductManufacturerName = prd.Manufacturer,
+            if(tmp == null)
+            {
+                ViewBag.ErrorMessage = $"Продукта с id {productId} не существует";
+                return await Task.FromResult(View("EditError"));
+            }
 
-            //    CategoryName = _db.Categories.Where(f => f.CategoryId == prd.CategoryId).Select(x => x.Name).FirstOrDefault()
-            //};
-
-            //var subprods = _db.MainSubProducts.Where(f => f.MainProductId == productid);
-
-            //string subproducts = "";
-
-            //if (subprods.Count() != 0)
-            //{
-
-            //    foreach (var item in subprods)
-            //    {
-            //        subproducts += item.SubProductID.ToString() + ",";
-
-            //    }
-
-            //    prdDTO.Subproducts = subproducts.Substring(0, subproducts.Length - 1);
-            //}
-            //else
-            //{
-
-            //    prdDTO.Subproducts = subproducts;
-
-            //}
-            return await Task.FromResult(View("ProductEditInformation"/*,prdDTO*/));
+            return await Task.FromResult(View("ProductEditInformation", tmp));
 
         }
     }

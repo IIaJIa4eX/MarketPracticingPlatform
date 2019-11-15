@@ -91,15 +91,18 @@ namespace MarketPracticingPlatform.Service.Services
                     ErrorMessage = "Категория с таким именем уже существует"
                 };
             }
+
             var parentCat = _db.Categories.Where(f => f.Name == categoryDTO.ParentCategoryName).FirstOrDefault();
 
-            if (parentCat == null)
+            if (parentCat == null && !string.IsNullOrWhiteSpace(categoryDTO.ParentCategoryName))
             {
-                return new CategoryCreationDTO
-                {
-                    IsSuccess = false,
-                    ErrorMessage = "Родительской категории с таким названием не существует"
-                };
+                
+                    return new CategoryCreationDTO
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = "Родительской категории с таким названием не существует"
+                    };              
+               
             }
 
             Category cat = new Category
@@ -115,7 +118,7 @@ namespace MarketPracticingPlatform.Service.Services
 
 
             _db.Categories.Add(cat);
-            _db.SaveChanges();
+            _db.SaveChanges(); // ОШИБКА ТУТ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             return new CategoryCreationDTO
             {

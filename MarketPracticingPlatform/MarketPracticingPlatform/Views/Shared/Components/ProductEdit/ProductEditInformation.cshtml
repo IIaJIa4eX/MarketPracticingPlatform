@@ -5,24 +5,30 @@
 
 <body>
     <div class="ProductEdit">
-
+ 
         <div id="EditErrorView"></div>
         <form id="ProductEditingForm" method="post" asp-controller="Market" asp-action="EditProduct">
             <label>Название продукта</label><br />
             <input name="ProductName" type="text" value="@Model.ProductName" /> <br /><br />
+
             <label>Категория</label><br />
-            <input type="text" name="Category" value="@Model.CategoryName" /><br /><br />
+            <input type="text" name="CategoryName" value="@Model.CategoryName" /><br /><br />
+
             <label>Описание</label><br />
-            <textarea rows="5" cols="150" name="Description">@Model.ProductDescription</textarea> <br /><br />
+            <textarea rows="5" cols="150" name="ProductDescription">@Model.ProductDescription</textarea> <br /><br />
+
             <label>Цена</label><br />
-            <input name="Price" type="text" value="@Model.ProductPrice" /> <br /><br />
+            <input name="ProductPrice" type="text" value="@Model.ProductPrice" /> <br /><br />
+
             <label>Производитель</label><br />
-            <input type="text" name="Manufacturer" value="@Model.ProductManufacturerName" /> <br /><br />
+            <input type="text" name="ProductManufacturerName" value="@Model.ProductManufacturerName" /> <br /><br />
+
             <div>
-                <label>Айди дополнительных продуктов к этому продукту</label>
+                <label>Айди дополнительных продукт ов к этому продукту</label>
                 <input name="Subproducts" type="text" value="@Model.Subproducts" /> <br />
                 <small hidden class="form-text text-muted">При редактировании вводить через запятую без пробелов (1,2,3)</small> <br /><br />
             </div>
+
             <input name="ProductId" hidden type="text" value="@Model.ProductId" />
             <input type="button" onclick="SubmitProductEdit()" value="Редактировать" />
         </form>
