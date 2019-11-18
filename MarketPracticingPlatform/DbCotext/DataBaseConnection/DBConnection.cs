@@ -24,7 +24,7 @@ namespace MarketPracticingPlatform.Data.DataBaseConnection
             public DbSet<ProductCategory> ProductCategories { get; set; }
 
             public DbSet<MainSub_Products> MainSubProducts { get; set; }
-
+            
 
       
 

@@ -44,7 +44,7 @@ namespace MarketPracticingPlatform.Controllers
                         signingCredentials: new SigningCredentials(AuthToken.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-
+                
                 var option = new CookieOptions
                 {
                     //option.Expires = DateTime.Now.AddHours(24);

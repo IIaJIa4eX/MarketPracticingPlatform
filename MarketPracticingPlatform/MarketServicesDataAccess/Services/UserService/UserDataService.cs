@@ -98,8 +98,7 @@ namespace MarketPracticingPlatform.Service.Services
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Name)
-
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Name),
                 };
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

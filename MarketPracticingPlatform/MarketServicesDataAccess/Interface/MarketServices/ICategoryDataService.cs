@@ -1,4 +1,5 @@
-﻿using MarketPracticingPlatform.Service.ModelsDTO;
+﻿using MarketPracticingPlatform.Data.DataBaseModels;
+using MarketPracticingPlatform.Service.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +11,7 @@ namespace MarketPracticingPlatform.Service.Interface
         CategorySearchDTO SearchByCategoryName(string categoryName);
 
         CategoryCreationDTO CreateCategory(CategoryDTO categoryDTO);
+
+        List<Category> GetAllCategories();
     }
 }

@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MarketPracticingPlatform.Service.Interface;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace MarketPracticingPlatform.Controllers
 {
     public class MarketSearchController : Controller
     {
-        readonly Data.DataBaseConnection.DBConnection _db;
+        readonly ICategoryDataService _GetCategoryServices;
 
-
-        public MarketSearchController(Data.DataBaseConnection.DBConnection db)
+        public MarketSearchController(ICategoryDataService GetCategoryServices)
         {
-            this._db = db;
+            _GetCategoryServices = GetCategoryServices;
         }
 
 
@@ -23,9 +24,10 @@ namespace MarketPracticingPlatform.Controllers
                 
             }
 
-           // Category cats = db.Categories;
+           var cats = _GetCategoryServices.GetAllCategories();
 
-            return View();
+
+            return View(cats);
 
         }
 
