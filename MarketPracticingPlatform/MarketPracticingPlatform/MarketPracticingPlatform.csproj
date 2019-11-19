@@ -33,4 +33,8 @@
     <ProjectReference Include="..\MarketServicesDataAccess\MarketPracticingPlatform.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\jstree\" />
+  </ItemGroup>
+
 </Project>

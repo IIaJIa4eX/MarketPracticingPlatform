@@ -30,9 +30,9 @@ namespace MarketPracticingPlatform.Controllers
         }
 
         [HttpPost]
-        public ProductCreationDTO ProductCreation(ProductDTO pdh)
+        public ProductRespondDTO ProductCreation(ProductDTO pdh)
         {
-            ProductCreationDTO tmp = _GetProductServices.CreatProduct(pdh);
+            ProductRespondDTO tmp = _GetProductServices.CreatProduct(pdh);
 
             return tmp;
         }
@@ -50,9 +50,9 @@ namespace MarketPracticingPlatform.Controllers
         }
 
         [HttpPost]
-        public ProductEditDTO EditProduct(ProductDTO prdDTO)
+        public ProductRespondDTO EditProduct(ProductDTO prdDTO)
         {
-            ProductEditDTO tmp = _GetProductServices.EditProduct(prdDTO);
+            ProductRespondDTO tmp = _GetProductServices.EditProduct(prdDTO);
 
             return tmp;
         }

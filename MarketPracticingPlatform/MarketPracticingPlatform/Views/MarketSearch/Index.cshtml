@@ -6,44 +6,12 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="~/jstree/dist/jstree.js"></script>
 </head>
     <body>
 
-        <div class="container">         
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    Категории
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    @foreach (var element in @Model)
-                    {
-                        if (@element.ParentCategoryId == null)
-                        {
-                            <li><a tabindex="-1" href="#">@element.Name</a></li>
-                            
+        <div id='treeview'></div>
 
-                        }
-
-                    }
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">New dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-                            <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-                            <li class="dropdown-submenu">
-                                <a class="test" href="#">Another dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">3rd level dropdown</a></li>
-                                    <li><a href="#">3rd level dropdown</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
         <div class="AllProducts">
             <div class="ProductsSearch">
@@ -62,12 +30,27 @@
 
 
     </body>
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-submenu a.test').on("click", function (e) {
-                $(this).next('ul').toggle();
-                e.stopPropagation();
-                e.preventDefault();
-            });
-        });
-    </script>
+<script>
+
+    $('#treeview').jstree({
+        "plugins": ["search", "wholerow"],
+        'core': {
+            'data': {
+                'url': function (node) {
+                    return node.id === '#' ? "/Treeview/GetRoot" : "/Treeview/GetChildren/" + node.id;
+
+                },
+                'data': function (node) {
+                    return { 'id': node.id };
+                }
+            }
+        }
+    });
+
+    $('#treeview').on('changed.jstree', function (e, data) {
+        console.log("=> selected node: " + data.node.id);
+    });
+
+</script>
+
+

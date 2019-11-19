@@ -4,10 +4,11 @@ using System.Text;
 
 namespace MarketPracticingPlatform.Service.ModelsDTO
 {
-    public class ProductEditDTO
+    public class ProductRespondDTO
     {
-        public bool IsSuccess { get; set; } 
+        public bool IsSuccess { get; set; }
 
         public string ErrorMessage { get; set; }
+
     }
 }

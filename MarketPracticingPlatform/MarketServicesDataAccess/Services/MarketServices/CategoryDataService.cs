@@ -10,22 +10,6 @@ using System.Linq;
 namespace MarketPracticingPlatform.Service.Services
 {
 
-    public static class Traversing 
-    {
-        public static IEnumerable<T> Traverse<T>(this IEnumerable<T> items,
-  Func<T, IEnumerable<T>> childSelector)
-        {
-            var stack = new Stack<T>(items);
-            while (stack.Any())
-            {
-                var next = stack.Pop();
-                yield return next;
-                foreach (var child in childSelector(next))
-                    stack.Push(child);
-            }
-        }
-    }
-
 
     public class CategoryDataService : ICategoryDataService
     {
@@ -146,22 +130,13 @@ namespace MarketPracticingPlatform.Service.Services
 
         }
 
-        
-        public class Cat
-        {
-            public string Name { get; set; }
-            public List<Cat> Subcats { get; set; }
-            public Cat ParentCat { get; set; }
-        }
+
 
         public List<Category> GetAllCategories()
         {
-            var  ss = new Cat() {Name = "Root" };
+
 
             var cats = _db.Categories.ToList();
-
-
-            var caats = ss.Subcats.Traverse(f => f.Subcats);
             return cats;
         }
 

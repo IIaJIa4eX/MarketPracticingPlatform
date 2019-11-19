@@ -21,46 +21,46 @@ namespace MarketPracticingPlatform.Service.Services
         }
 
 
-        public ProductEditDTO EditProduct(ProductDTO prdDTO)
+        public ProductRespondDTO EditProduct(ProductDTO prdDTO)
         {
 
             Product prd = _db.Products.Where(f => f.ProductId == prdDTO.ProductId).FirstOrDefault();
 
             if(prd == null)
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Этот продукт был удалён, " + "<a href="+"Index"+"> Создайте новый <a>" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Этот продукт был удалён, " + "<a href="+"Index"+"> Создайте новый <a>" };
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.ProductName))
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название продукта"};
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название продукта"};
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.ProductDescription))
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели описание продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не ввели описание продукта" };
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.ProductManufacturerName))
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название производителя продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название производителя продукта" };
             }
 
             if (prdDTO.ProductPrice == 0)
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели стоимость продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не ввели стоимость продукта" };
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.CategoryName))
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название категории продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не ввели название категории продукта" };
             }
 
             var prdNameCheck = _db.Products.Where(f => f.Name == prdDTO.ProductName).FirstOrDefault();
 
             if(prdNameCheck != null && (prdNameCheck.ProductId != prdDTO.ProductId))
             {
-                return new ProductEditDTO { IsSuccess = false, ErrorMessage = "Продукт с таким названием уже существует" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Продукт с таким названием уже существует" };
             }
 
             prd.ProductId = prdDTO.ProductId;
@@ -87,7 +87,7 @@ namespace MarketPracticingPlatform.Service.Services
 
                 if (ss.SequenceEqual(msp))
                 {
-                    return new ProductEditDTO { IsSuccess = true };
+                    return new ProductRespondDTO { IsSuccess = true };
                 }
                 else
                 {
@@ -108,19 +108,19 @@ namespace MarketPracticingPlatform.Service.Services
 
             _db.SaveChanges();
 
-            return new ProductEditDTO { IsSuccess = true };
+            return new ProductRespondDTO { IsSuccess = true };
 
         }
 
 
-        public ProductCreationDTO CreatProduct(ProductDTO prdDTO)
+        public ProductRespondDTO CreatProduct(ProductDTO prdDTO)
         {
 
            
             if (string.IsNullOrWhiteSpace(prdDTO.ProductName))
             {
 
-                return new ProductCreationDTO { IsSuccess = false, ErrorMessage = "Вы не указали имя продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не указали имя продукта" };
 
             }
 
@@ -128,27 +128,27 @@ namespace MarketPracticingPlatform.Service.Services
 
             if(productName != null)
             {
-                return new ProductCreationDTO { IsSuccess = false, ErrorMessage = "Продукт с таким названием уже сущестует"};
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Продукт с таким названием уже сущестует"};
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.ProductDescription))
             {
 
-                return new ProductCreationDTO { IsSuccess = false, ErrorMessage = "Вы не указали описание продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не указали описание продукта" };
 
             }
 
             if (string.IsNullOrWhiteSpace(prdDTO.ProductManufacturerName))
             {
 
-                return new ProductCreationDTO { IsSuccess = false, ErrorMessage = "Вы не указали производителя продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не указали производителя продукта" };
 
             }
 
             if (prdDTO.ProductPrice == 0)
             {
 
-                return new ProductCreationDTO { IsSuccess = false, ErrorMessage = "Вы не указали цену продукта" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Вы не указали цену продукта" };
 
             }
 
@@ -156,7 +156,7 @@ namespace MarketPracticingPlatform.Service.Services
 
             if (cat == null)
             {
-                return new ProductCreationDTO { IsSuccess = false, ErrorMessage = "Категории с таким названием не существует" };
+                return new ProductRespondDTO { IsSuccess = false, ErrorMessage = "Категории с таким названием не существует" };
             }
 
 
@@ -205,7 +205,7 @@ namespace MarketPracticingPlatform.Service.Services
 
             _db.SaveChanges();
 
-            return new ProductCreationDTO { IsSuccess = true};
+            return new ProductRespondDTO { IsSuccess = true};
         }
 
 

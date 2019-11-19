@@ -8,9 +8,9 @@ namespace MarketPracticingPlatform.Service.Interface
 {
     public interface IProductDataService
     {
-        ProductEditDTO EditProduct(ProductDTO prdDTO);
+        ProductRespondDTO EditProduct(ProductDTO prdDTO);
 
-        ProductCreationDTO CreatProduct(ProductDTO prdDTO);
+        ProductRespondDTO CreatProduct(ProductDTO prdDTO);
 
         Product GetProductByID(int productId);
 
