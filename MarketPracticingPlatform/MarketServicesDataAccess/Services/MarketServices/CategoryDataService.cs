@@ -131,7 +131,6 @@ namespace MarketPracticingPlatform.Service.Services
         }
 
 
-
         public List<Category> GetAllCategories()
         {
 
@@ -140,6 +139,22 @@ namespace MarketPracticingPlatform.Service.Services
             return cats;
         }
 
+
+        public Category GetCategoryById(int categoryId)
+        {
+            var cat = _db.Categories.Where(f => f.CategoryId == categoryId).FirstOrDefault();
+
+            return cat;
+        }
+
+
+        public List<Category> GetChildrenByCategoryId(int categoryId)
+        {
+            var cats = _db.Categories.Where(f => f.ParentCategoryId == categoryId).ToList();
         
+            return cats;
+        }
+
+
     }
 }

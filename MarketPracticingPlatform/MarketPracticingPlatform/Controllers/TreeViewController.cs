@@ -1,59 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MarketPracticingPlatform.Service.Interface;
-using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+
 namespace MarketPracticingPlatform.Controllers
 {
 
-    public class JsTreeModel
+
+    public class Cat
     {
-        public string id { get; set; }
-        public string parent { get; set; }
+        public int id { get; set; }
+
         public string text { get; set; }
-        public bool children { get; set; } // if node has sub-nodes set true or not set false
+
+        public bool children { get; set; }
     }
 
-
+    [Route("TreeView")]
     public class TreeViewController : Controller
     {
-        public JsonResult GetRoot()
+        readonly ICategoryDataService _GetCategoryServices;
+
+
+        public TreeViewController(ICategoryDataService GetCategoryServices)
         {
-            List<JsTreeModel> items = GetTree();
-
-            return new JsonResult { Data = items, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public JsonResult GetChildren(string id)
-        {
-            List<JsTreeModel> items = GetTree(id);
-
-            return new JsonResult { Data = items, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        static List<JsTreeModel> GetTree()
-        {
-            var items = new List<JsTreeModel>();
-
-            // set items in here
-
-            return items;
-        }
-
-        static List<JsTreeModel> GetTree(string id)
-        {
-            var items = new List<JsTreeModel>();
-
-            // set items in here
-
-            return items;
+            _GetCategoryServices = GetCategoryServices;
         }
 
 
+        [HttpGet]
+        [Route("GetChildren")]
+        public  JsonResult GetChildren(int key, bool isRoot)
+        {
 
+            var cat = _GetCategoryServices.GetCategoryById(key);
 
+            var cats = _GetCategoryServices.GetChildrenByCategoryId(key);
+
+            List<Cat> caats = new List<Cat>();
+            
+            foreach(var item in cats)
+            {
+                caats.Add(new Cat { id = item.CategoryId, text = item.Name, children = true});
+            }
+
+            if (isRoot)
+            {
+                var first = new[]
+                {
+            new
+            {
+                id = cat.CategoryId,
+                text = cat.Name,
+                state = new
+                {
+                    opened = false,
+                },
+                children = true
+                
+            }
+        }
+                .ToList(); 
+
+                return Json(first);
+            }
+
+            var next = caats
+            .ToList();
+
+            return new JsonResult (next);
+        }
 
     }
 

@@ -13,5 +13,10 @@ namespace MarketPracticingPlatform.Service.Interface
         CategoryCreationDTO CreateCategory(CategoryDTO categoryDTO);
 
         List<Category> GetAllCategories();
+
+        Category GetCategoryById(int categoryId);
+
+        List<Category> GetChildrenByCategoryId(int categoryId);
+
     }
 }

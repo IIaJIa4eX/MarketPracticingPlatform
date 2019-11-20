@@ -6,12 +6,17 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="~/jstree/dist/jstree.js"></script>
+   
 </head>
     <body>
-
-        <div id='treeview'></div>
-
+        @foreach (var element in @Model)
+        {
+            if (element.ParentCategoryId == null)
+            {
+        <div data-key="@element.CategoryId" id="CategoriesTree">
+        </div>
+            }
+        }
 
         <div class="AllProducts">
             <div class="ProductsSearch">
@@ -32,24 +37,8 @@
     </body>
 <script>
 
-    $('#treeview').jstree({
-        "plugins": ["search", "wholerow"],
-        'core': {
-            'data': {
-                'url': function (node) {
-                    return node.id === '#' ? "/Treeview/GetRoot" : "/Treeview/GetChildren/" + node.id;
+          
 
-                },
-                'data': function (node) {
-                    return { 'id': node.id };
-                }
-            }
-        }
-    });
-
-    $('#treeview').on('changed.jstree', function (e, data) {
-        console.log("=> selected node: " + data.node.id);
-    });
 
 </script>
 

@@ -113,6 +113,38 @@ $("input").click(function () {
     $(this).parent().children("small").slideDown();
 }).blur(function () {
     $(this).parent().children("small").slideUp();
+    });
+
+
+$(function () {
+
+    $('#CategoriesTree').jstree({
+    "core": {
+        "animation": 0,
+        "data": {
+            "url": function (node) {
+                return "/Treeview/GetChildren/";
+            },
+            "data": function (node) {
+                // Each time jstree needs to make an AJAX call this function will be called.
+                // It adds 'key' and 'isRoot' as parameter to ajax call. See signature of 'GetChildren' method.
+                // # is the special ID that the function receives when jstree needs to load the root nodes.
+                var isRoot = false;
+                var key = node.id;
+                if (key === "#") {
+                    isRoot = true;
+                    key = $("#CategoriesTree").data("key");
+                }
+                return { "key": key, "isRoot": isRoot };
+            }
+        }
+    },
+    "plugins": ["wholerow"]
+    });
+});
+
+$('#CategoriesTree').on('changed.jstree', function (e, data) {
+    console.log("=> selected node: " + data.node.id);
 });
 
 
