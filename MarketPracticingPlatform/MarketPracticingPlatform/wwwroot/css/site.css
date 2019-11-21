@@ -41,12 +41,15 @@ body {
     width: 700px;
     height: 80px;
     border: 1px solid;
-    margin: 1px auto;
+    margin: 1px auto auto 0;
 }
 
 .AllProducts {
-    margin: 0 auto;
+    position: absolute;
     width: 1200px;
+    top: 50px;
+    left: 550px;
+    border: 1px solid;
 }
 .central {
     width: 800px;
@@ -104,6 +107,13 @@ body {
     width: 200px;
     height: 400px;
     text-align: center;
+}
+
+.CategoriesTree {
+    left: 0px;
+    width: 150px;
+    height: 400px;
+    border: 1px solid;
 }
 
 .dropdown-submenu {

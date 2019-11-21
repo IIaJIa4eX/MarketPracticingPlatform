@@ -1,5 +1,6 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.ModelsDTO;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,9 @@ namespace MarketPracticingPlatform.Service.Interface
 {
     public interface ICategoryDataService
     {
-        CategorySearchDTO SearchByCategoryName(string categoryName);
+        CategorySearchDTO SearchProductsByCategoryName(string categoryName);
+
+        CategorySearchDTO SearchProductsByCategoryId(int categoryId);
 
         CategoryCreationDTO CreateCategory(CategoryDTO categoryDTO);
 
@@ -16,7 +19,8 @@ namespace MarketPracticingPlatform.Service.Interface
 
         Category GetCategoryById(int categoryId);
 
-        List<Category> GetChildrenByCategoryId(int categoryId);
+        List<Category> GetCategoriesByParentCategoryId(int? parentCategoryId);
 
+        JsonResult GetCategoryTreeNodes(int key, bool isRoot);
     }
 }

@@ -2,6 +2,7 @@
 using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MarketPracticingPlatform.Service.Services
             _db = db;
         }
 
-        public CategorySearchDTO SearchByCategoryName(string categoryName)
+        public CategorySearchDTO SearchProductsByCategoryName(string categoryName)
         {
             if (string.IsNullOrWhiteSpace(categoryName))
             {
@@ -99,13 +100,13 @@ namespace MarketPracticingPlatform.Service.Services
 
             if (parentCat == null && !string.IsNullOrWhiteSpace(categoryDTO.ParentCategoryName))
             {
-                
-                    return new CategoryCreationDTO
-                    {
-                        IsSuccess = false,
-                        ErrorMessage = "Родительской категории с таким названием не существует"
-                    };              
-               
+
+                return new CategoryCreationDTO
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Родительской категории с таким названием не существует"
+                };
+
             }
 
             Category cat = new Category
@@ -148,13 +149,88 @@ namespace MarketPracticingPlatform.Service.Services
         }
 
 
-        public List<Category> GetChildrenByCategoryId(int categoryId)
+        public List<Category> GetCategoriesByParentCategoryId(int? parentCategoryId)
         {
-            var cats = _db.Categories.Where(f => f.ParentCategoryId == categoryId).ToList();
-        
+            var cats = _db.Categories.Where(f => f.ParentCategoryId == parentCategoryId).ToList();
+
             return cats;
         }
 
 
+        public JsonResult GetCategoryTreeNodes(int key, bool isRoot)
+        {
+
+            List<CategoryTreeNodeDTO> catTmp = new List<CategoryTreeNodeDTO>();
+
+            if (isRoot)
+            {
+                var rootcats = GetCategoriesByParentCategoryId(null);
+
+                foreach (var item in rootcats)
+                {
+                    catTmp.Add(new CategoryTreeNodeDTO { id = item.CategoryId, text = item.Name, children = true });
+                }
+
+                var first = catTmp;
+
+                return new JsonResult(first);
+            }
+
+            var cats = GetCategoriesByParentCategoryId(key);
+
+            foreach (var item in cats)
+            {
+                catTmp.Add(new CategoryTreeNodeDTO { id = item.CategoryId, text = item.Name, children = true });
+            }
+
+            var next = catTmp;
+
+            return new JsonResult(next);
+
+        }
+
+
+
+        public CategorySearchDTO SearchProductsByCategoryId(int categoryId)
+        {
+            if (categoryId == 0)
+            {
+                return new CategorySearchDTO
+                {
+                    IsSearchSuccess = false,
+                    BackRequestMessageInfo = "Введите название категории",
+                    Products = null
+                };
+            }
+
+            var cat = _db.Categories.Where(f => f.CategoryId == categoryId).FirstOrDefault();
+
+            if (cat != null)
+            {
+                var prdcat = _db.ProductCategories.Where(f => f.CategoryId == cat.CategoryId).ToList();
+
+                List<Product> prd = new List<Product>();
+
+                foreach (var item in prdcat)
+                {
+                    prd.Add(_db.Products.Where(f => f.ProductId == item.ProductId).FirstOrDefault());
+                }
+
+                return new CategorySearchDTO
+                {
+                    IsSearchSuccess = true,
+                    BackRequestMessageInfo = $"Поиск по запросу {cat.Name}",
+                    Products = prd
+                };
+
+            }
+
+            return new CategorySearchDTO
+            {
+                IsSearchSuccess = false,
+                BackRequestMessageInfo = $"По Вашему запросу ничего не найдено",
+                Products = null
+            };
+        }
     }
 }

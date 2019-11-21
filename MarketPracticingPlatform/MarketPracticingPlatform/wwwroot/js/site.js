@@ -123,7 +123,7 @@ $(function () {
         "animation": 0,
         "data": {
             "url": function (node) {
-                return "/Treeview/GetChildren/";
+                return "/Treeview/GetTreeNodes/";
             },
             "data": function (node) {
                 // Each time jstree needs to make an AJAX call this function will be called.
@@ -144,7 +144,12 @@ $(function () {
 });
 
 $('#CategoriesTree').on('changed.jstree', function (e, data) {
-    console.log("=> selected node: " + data.node.id);
+    //console.log("=> selected node: " + data.node.id);
+    $.ajax({
+        url: "",
+        method: "POST",
+        data: {CategoryId: data.node.id}
+    });
 });
 
 

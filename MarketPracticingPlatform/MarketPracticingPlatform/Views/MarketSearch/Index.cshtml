@@ -9,14 +9,10 @@
    
 </head>
     <body>
-        @foreach (var element in @Model)
-        {
-            if (element.ParentCategoryId == null)
-            {
-        <div data-key="@element.CategoryId" id="CategoriesTree">
+        <div class="CategoriesTree">
+        <div data-key="1" id="CategoriesTree">
         </div>
-            }
-        }
+        </div>
 
         <div class="AllProducts">
             <div class="ProductsSearch">
