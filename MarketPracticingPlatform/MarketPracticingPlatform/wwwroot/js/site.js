@@ -144,12 +144,20 @@ $(function () {
 });
 
 $('#CategoriesTree').on('changed.jstree', function (e, data) {
-    //console.log("=> selected node: " + data.node.id);
-    $.ajax({
-        url: "",
-        method: "POST",
-        data: {CategoryId: data.node.id}
-    });
+
+    var form = document.createElement("form");
+    var element1 = document.createElement("input");
+    form.method = "POST";
+    form.style.visibility = "hidden";
+
+    element1.value = data.node.id;
+    element1.name = "CategoryId";
+    form.appendChild(element1);
+    
+    document.body.appendChild(form);
+
+    form.submit();
+
 });
 
 
