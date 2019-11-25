@@ -15,6 +15,8 @@ namespace MarketPracticingPlatform.Controllers
             _GetUserServices = GetUserServices;
         }
 
+
+        [HttpGet("Index")]
         public IActionResult Index()
         {
 

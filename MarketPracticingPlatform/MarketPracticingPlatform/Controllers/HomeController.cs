@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Controllers
@@ -19,7 +20,6 @@ namespace MarketPracticingPlatform.Controllers
         {
             _GetUserServices = GetUserServices;
         }
-
 
         public IActionResult Index()
         {
@@ -55,7 +55,8 @@ namespace MarketPracticingPlatform.Controllers
                 };
                 Response.Cookies.Append("Token", encodedJwt, option);
                 Response.Cookies.Append("Username", userDTO.Email, option);
-
+               // Response.Headers.Add("Authorization", "Bearer " + encodedJwt);
+                var ss = Request.Headers.ToList();
 
                 Response.ContentType = "application/json";
                 return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = tmp.IsSuccess, UserIdentity = null });

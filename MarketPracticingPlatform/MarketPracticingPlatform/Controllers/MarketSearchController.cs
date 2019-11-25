@@ -1,4 +1,5 @@
 ﻿using MarketPracticingPlatform.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-     
+       //  [Authorize]
         public IActionResult Index()
         {
             if (!Request.Cookies.ContainsKey("Token"))

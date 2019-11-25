@@ -1,6 +1,7 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,8 +21,10 @@ namespace MarketPracticingPlatform.Controllers
             _GetCategoryServices = GetCategoryServices;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
+            var ss = Request.Headers.ToList();
             if (Request.Cookies.ContainsKey("Token"))
             {
                 return View();

@@ -59,7 +59,7 @@ namespace MarketPracticingPlatform
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
-                options.RequireHttpsMetadata = false;
+                options.RequireHttpsMetadata = false ;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     
@@ -79,13 +79,13 @@ namespace MarketPracticingPlatform
                 };
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = new PathString("/Registration/Index");
-                });
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = new PathString("/Registration/Index");
+            //    });
 
-            
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -102,16 +102,24 @@ namespace MarketPracticingPlatform
                 app.UseHsts();
             }
 
+            app.Use((context, next) =>
+            {
+                if (string.IsNullOrWhiteSpace(context.Request.Cookies["Token"]))
+                {
+                    context.Request.Headers["Authorization"] = "";
+                }
 
-
+                context.Request.Headers["Authorization"] = "Bearer " + context.Request.Cookies["Token"];
+                return next.Invoke();
+            });
 
             app.UseCors();
-
             loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthentication();
+           
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
