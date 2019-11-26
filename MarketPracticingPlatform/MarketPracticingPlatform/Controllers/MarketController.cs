@@ -10,6 +10,7 @@ using System.Linq;
 namespace MarketPracticingPlatform.Controllers
 {
     [Route("[controller]/[action]")]
+    [Authorize]
     public class MarketController : Controller
     {
         readonly IProductDataService _GetProductServices;
@@ -21,15 +22,12 @@ namespace MarketPracticingPlatform.Controllers
             _GetCategoryServices = GetCategoryServices;
         }
 
-        [Authorize]
+       
         public IActionResult Index()
         {
-            var ss = Request.Headers.ToList();
-            if (Request.Cookies.ContainsKey("Token"))
-            {
+
                 return View();
-            }
-            return RedirectToAction("Index", "Registration");
+            
         }
 
         [HttpPost]
@@ -68,13 +66,9 @@ namespace MarketPracticingPlatform.Controllers
 
             if (pdh.ProductId != 0)
             {
-                if (Request.Cookies.ContainsKey("Token"))
-                {
+
                     ViewBag.Productid = pdh.ProductId;
                     return View("ProductEditInformation");
-                }
-
-                return RedirectToAction("Index", "Registration");
             }
 
             return View("Index");

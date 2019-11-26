@@ -4,6 +4,7 @@ using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -83,6 +84,7 @@ namespace MarketPracticingPlatform
             //    .AddCookie(options =>
             //    {
             //        options.LoginPath = new PathString("/Registration/Index");
+
             //    });
 
 
@@ -104,6 +106,7 @@ namespace MarketPracticingPlatform
 
             app.Use((context, next) =>
             {
+
                 if (string.IsNullOrWhiteSpace(context.Request.Cookies["Token"]))
                 {
                     context.Request.Headers["Authorization"] = "";
@@ -115,11 +118,14 @@ namespace MarketPracticingPlatform
 
             app.UseCors();
             loggerFactory.AddSerilog();
+
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
            
             app.UseCookiePolicy();
-            app.UseAuthentication();
+            
 
             app.UseMvc(routes =>
             {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace MarketPracticingPlatform.Controllers
 {
@@ -14,34 +15,24 @@ namespace MarketPracticingPlatform.Controllers
             _GetCategoryServices = GetCategoryServices;
         }
 
-
-       //  [Authorize]
+       
         public IActionResult Index()
         {
-            if (!Request.Cookies.ContainsKey("Token"))
-            {
 
-                return RedirectToAction("Index", "Registration");
-                
-            }
-
-           var cats = _GetCategoryServices.GetAllCategories();
+            var cats = _GetCategoryServices.GetAllCategories();
 
 
             return View(cats);
 
         }
 
+       
         public IActionResult ShowProductInfo(int id)
         {
-            if (Request.Cookies.ContainsKey("Token"))
-            {
+
                 ViewBag.Productid = id;
                 return View("ProductInfo");
-            }
-
-            return RedirectToAction("Index", "Registration");
-
+            
 
         }
     }

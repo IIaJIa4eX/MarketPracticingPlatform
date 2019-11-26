@@ -62,6 +62,11 @@ function SubmitCategoryCreation() {
         if (data.status === 500) {
             document.getElementById("CategoryCreationErrorView").innerHTML = "Не удалось подключиться к серверу";
         }
+
+        if (data.status === 401) {
+            document.getElementById("CategoryCreationErrorView").innerHTML = "Вы не авторизованы";
+        }
+
     });
 
 }
@@ -82,6 +87,10 @@ function SubmitProductCreation() {
 
         if (data.status === 500) {
             document.getElementById("ProductCreationErrorView").innerHTML = "Не удалось подключиться к серверу";
+        }
+
+        if (data.status === 401) {
+            document.getElementById("ProductCreationErrorView").innerHTML = "Вы не авторизованы";
         }
     });
 
@@ -104,6 +113,10 @@ function SubmitProductEdit() {
 
         if (data.status === 500) {
             document.getElementById("EditErrorView").innerHTML = "Не удалось подключиться к серверу";
+        }
+
+        if (data.status === 500) {
+            document.getElementById("EditErrorView").innerHTML = "Вы не авторизованы";
         }
     });
 

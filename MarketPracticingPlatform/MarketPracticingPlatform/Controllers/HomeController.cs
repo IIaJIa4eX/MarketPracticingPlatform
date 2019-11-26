@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Controllers
@@ -55,8 +56,16 @@ namespace MarketPracticingPlatform.Controllers
                 };
                 Response.Cookies.Append("Token", encodedJwt, option);
                 Response.Cookies.Append("Username", userDTO.Email, option);
-               // Response.Headers.Add("Authorization", "Bearer " + encodedJwt);
-                var ss = Request.Headers.ToList();
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, "Can9"),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "Admin"),
+                };
+                ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+
 
                 Response.ContentType = "application/json";
                 return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = tmp.IsSuccess, UserIdentity = null });
