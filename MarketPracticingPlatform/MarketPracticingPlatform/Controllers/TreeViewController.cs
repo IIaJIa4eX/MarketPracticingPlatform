@@ -25,7 +25,7 @@ namespace MarketPracticingPlatform.Controllers
 
             var cat = _GetCategoryServices.GetCategoryTreeNodes(key, isRoot);
 
-            return cat;
+            return new JsonResult(cat);
         }
     }
 

@@ -2,8 +2,6 @@
 using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -157,7 +155,7 @@ namespace MarketPracticingPlatform.Service.Services
         }
 
 
-        public JsonResult GetCategoryTreeNodes(int key, bool isRoot)
+        public List<CategoryTreeNodeDTO> GetCategoryTreeNodes(int key, bool isRoot)
         {
 
             List<CategoryTreeNodeDTO> catTmp = new List<CategoryTreeNodeDTO>();
@@ -173,7 +171,7 @@ namespace MarketPracticingPlatform.Service.Services
 
                 var first = catTmp;
 
-                return new JsonResult(first);
+                return first;
             }
 
             var cats = GetCategoriesByParentCategoryId(key);
@@ -185,7 +183,7 @@ namespace MarketPracticingPlatform.Service.Services
 
             var next = catTmp;
 
-            return new JsonResult(next);
+            return next;
 
         }
 

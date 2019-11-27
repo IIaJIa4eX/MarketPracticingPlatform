@@ -1,9 +1,6 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.ModelsDTO;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MarketPracticingPlatform.Service.Interface
 {
@@ -21,6 +18,6 @@ namespace MarketPracticingPlatform.Service.Interface
 
         List<Category> GetCategoriesByParentCategoryId(int? parentCategoryId);
 
-        JsonResult GetCategoryTreeNodes(int key, bool isRoot);
+        List<CategoryTreeNodeDTO> GetCategoryTreeNodes(int key, bool isRoot);
     }
 }
