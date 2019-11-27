@@ -84,7 +84,7 @@ namespace MarketPracticingPlatform
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env , ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -115,15 +115,15 @@ namespace MarketPracticingPlatform
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-           
+
             app.UseCookiePolicy();
 
 
             app.UseMvc(routes =>
-            {
+            { 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                name: "default",
+                 template: "{controller=Home}/{action=Index}/{id?}");
             });
 
         }

@@ -29,7 +29,6 @@ namespace MarketPracticingPlatform.Controllers
         }
 
         [HttpPost]
-        [Route("Home/UserAuthentication")]
         public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
         {
             UserAuthenticationDTO tmp = _GetUserServices.GetUserAuthentication(userDTO);
@@ -68,7 +67,7 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-        [Route("Home/LogOff")]
+
         public IActionResult LogOff()
         {
             Response.Cookies.Delete("Token");
