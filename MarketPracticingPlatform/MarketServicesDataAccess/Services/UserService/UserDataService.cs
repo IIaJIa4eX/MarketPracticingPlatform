@@ -1,5 +1,6 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseConnection;
 using MarketPracticingPlatform.Data.DataBaseModels;
+using MarketPracticingPlatform.Service.Crypto;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
 using System.Collections.Generic;
@@ -45,10 +46,12 @@ namespace MarketPracticingPlatform.Service.Services
 
             }
 
+            var cryptedPassword = DataCrypt.Convert(DataCrypt.Convert(userDTO.Password + "SALT_Dp5BZ9raMdFwAHw_SALT")) + DataCrypt.Convert(userDTO.Password + "SALT_Dp5BZ9raMdFwAHw_SALT");
+
             User us = new User
             {
                 Email = userDTO.Email,
-                Password = userDTO.Password,
+                Password = cryptedPassword,
                 Name = userDTO.Name,
                 Number = userDTO.Number
             };
@@ -72,8 +75,9 @@ namespace MarketPracticingPlatform.Service.Services
                 return (new UserAuthenticationDTO { IsSuccess = false, ErrorMessage = "Все поля должны быть заполнены" });
             }
 
+            var cryptedPassword = DataCrypt.Convert(DataCrypt.Convert(userDTO.Password + "SALT_Dp5BZ9raMdFwAHw_SALT")) + DataCrypt.Convert(userDTO.Password + "SALT_Dp5BZ9raMdFwAHw_SALT");
 
-            var identity = GetIdentity(userDTO.Email, userDTO.Password);
+            var identity = GetIdentity(userDTO.Email, cryptedPassword);
 
 
             if (identity == null)
@@ -90,6 +94,7 @@ namespace MarketPracticingPlatform.Service.Services
 
         private ClaimsIdentity GetIdentity(string email, string password)
         {
+          
 
             var user = _db.Users.Where(f => f.Email == email && f.Password == password).FirstOrDefault();
 

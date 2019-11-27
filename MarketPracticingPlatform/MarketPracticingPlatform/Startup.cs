@@ -80,14 +80,6 @@ namespace MarketPracticingPlatform
                 };
             });
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(options =>
-            //    {
-            //        options.LoginPath = new PathString("/Registration/Index");
-
-            //    });
-
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -125,7 +117,7 @@ namespace MarketPracticingPlatform
             app.UseStaticFiles();
            
             app.UseCookiePolicy();
-            
+
 
             app.UseMvc(routes =>
             {
