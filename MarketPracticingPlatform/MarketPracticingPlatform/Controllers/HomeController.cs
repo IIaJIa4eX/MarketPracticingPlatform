@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Controllers
 {
-    [Route("Home")]
+    
     public class HomeController : Controller
     {
         IUserDataService _GetUserServices;
@@ -22,13 +22,14 @@ namespace MarketPracticingPlatform.Controllers
             _GetUserServices = GetUserServices;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("UserAuthentication")]
+        [Route("Home/UserAuthentication")]
         public async Task<UserAuthenticationDTO> UserAuthentication(UserDTO userDTO)
         {
             UserAuthenticationDTO tmp = _GetUserServices.GetUserAuthentication(userDTO);
@@ -57,15 +58,6 @@ namespace MarketPracticingPlatform.Controllers
                 Response.Cookies.Append("Token", encodedJwt, option);
                 Response.Cookies.Append("Username", userDTO.Email, option);
 
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, "Can9"),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "Admin"),
-                };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-
 
                 Response.ContentType = "application/json";
                 return await Task.FromResult(new UserAuthenticationDTO { IsSuccess = tmp.IsSuccess, UserIdentity = null });
@@ -76,7 +68,7 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-        [Route("LogOff")]
+        [Route("Home/LogOff")]
         public IActionResult LogOff()
         {
             Response.Cookies.Delete("Token");
