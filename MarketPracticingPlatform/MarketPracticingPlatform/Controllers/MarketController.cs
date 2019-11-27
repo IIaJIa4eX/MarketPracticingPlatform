@@ -1,4 +1,5 @@
-﻿using MarketPracticingPlatform.Data.DataBaseModels;
+﻿using MarketPracticingPlatform.Authentication_token;
+using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,7 @@ using System.Linq;
 namespace MarketPracticingPlatform.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize]
+
     public class MarketController : Controller
     {
         readonly IProductDataService _GetProductServices;
@@ -22,7 +23,7 @@ namespace MarketPracticingPlatform.Controllers
             _GetCategoryServices = GetCategoryServices;
         }
 
-       
+        [UnAuthorized]
         public IActionResult Index()
         {
 
@@ -30,6 +31,7 @@ namespace MarketPracticingPlatform.Controllers
             
         }
 
+        [Authorize]
         [HttpPost]
         public ProductRespondDTO ProductCreation(ProductDTO pdh)
         {
@@ -38,8 +40,8 @@ namespace MarketPracticingPlatform.Controllers
             return tmp;
         }
 
-       
 
+        [Authorize]
         [HttpPost]
         public CategoryCreationDTO CategoryCreation(CategoryDTO cdh)
         {
@@ -50,6 +52,7 @@ namespace MarketPracticingPlatform.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public ProductRespondDTO EditProduct(ProductDTO prdDTO)
         {
@@ -59,7 +62,7 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-
+        [UnAuthorized]
         [HttpPost]
         public IActionResult ShowProductEdit(ProductDTO pdh)
         {
@@ -74,7 +77,7 @@ namespace MarketPracticingPlatform.Controllers
             return View("Index");
         }
 
-
+        [UnAuthorized]
         [HttpPost]
         public IActionResult DeleteProduct(int productId)
         {

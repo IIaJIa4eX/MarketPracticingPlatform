@@ -33,7 +33,6 @@ namespace MarketPracticingPlatform.Controllers
                 ViewBag.Productid = id;
                 return View("ProductInfo");
             
-
         }
     }
 }
