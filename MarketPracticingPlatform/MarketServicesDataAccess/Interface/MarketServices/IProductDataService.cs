@@ -1,8 +1,7 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
 using MarketPracticingPlatform.Service.ModelsDTO;
-using System;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace MarketPracticingPlatform.Service.Interface
 {

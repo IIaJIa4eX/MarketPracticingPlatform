@@ -1,8 +1,5 @@
 ﻿using MarketPracticingPlatform.Service.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Net.Http;
 
 namespace MarketPracticingPlatform.Controllers
 {

@@ -2,9 +2,7 @@
 using MarketPracticingPlatform.Data.DataBaseConnection;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

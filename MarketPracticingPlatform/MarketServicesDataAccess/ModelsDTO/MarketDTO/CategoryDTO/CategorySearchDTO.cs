@@ -1,7 +1,6 @@
 ﻿using MarketPracticingPlatform.Data.DataBaseModels;
-using System;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace MarketPracticingPlatform.Service.ModelsDTO
 {

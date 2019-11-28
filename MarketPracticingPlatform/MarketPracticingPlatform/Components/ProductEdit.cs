@@ -21,7 +21,7 @@ namespace MarketPracticingPlatform.Components
 
             if(tmp == null)
             {
-                ViewBag.ErrorMessage = $"Продукта с id {productId} не существует";
+                ViewBag.ErrorMessage = $"Продукта с id: {productId} не существует";
                 return await Task.FromResult(View("EditError"));
             }
 

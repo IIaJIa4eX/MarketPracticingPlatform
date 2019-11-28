@@ -1,12 +1,8 @@
-﻿using MarketPracticingPlatform.Authentication_token;
-using MarketPracticingPlatform.Data.DataBaseModels;
+﻿using MarketPracticingPlatform.Attributes;
 using MarketPracticingPlatform.Service.Interface;
 using MarketPracticingPlatform.Service.ModelsDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace MarketPracticingPlatform.Controllers
 {

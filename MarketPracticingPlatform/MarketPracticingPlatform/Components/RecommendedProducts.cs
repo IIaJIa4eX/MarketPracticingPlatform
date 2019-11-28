@@ -1,8 +1,5 @@
-﻿using MarketPracticingPlatform.Data.DataBaseModels;
-using MarketPracticingPlatform.Service.Interface;
+﻿using MarketPracticingPlatform.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarketPracticingPlatform.Components

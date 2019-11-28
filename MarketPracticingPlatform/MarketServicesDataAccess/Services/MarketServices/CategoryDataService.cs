@@ -21,6 +21,7 @@ namespace MarketPracticingPlatform.Service.Services
 
         public CategorySearchDTO SearchProductsByCategoryName(string categoryName)
         {
+            
             if (string.IsNullOrWhiteSpace(categoryName))
             {
                 return new CategorySearchDTO
@@ -166,7 +167,7 @@ namespace MarketPracticingPlatform.Service.Services
 
                 foreach (var item in rootcats)
                 {
-                    catTmp.Add(new CategoryTreeNodeDTO { id = item.CategoryId, text = item.Name, children = true });
+                    catTmp.Add(new CategoryTreeNodeDTO { Id = item.CategoryId, Text = item.Name, Children = true });
                 }
 
                 var first = catTmp;
@@ -178,7 +179,7 @@ namespace MarketPracticingPlatform.Service.Services
 
             foreach (var item in cats)
             {
-                catTmp.Add(new CategoryTreeNodeDTO { id = item.CategoryId, text = item.Name, children = true });
+                catTmp.Add(new CategoryTreeNodeDTO { Id = item.CategoryId, Text = item.Name, Children = true });
             }
 
             var next = catTmp;

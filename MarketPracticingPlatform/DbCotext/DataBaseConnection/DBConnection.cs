@@ -12,6 +12,7 @@ namespace MarketPracticingPlatform.Data.DataBaseConnection
         public DBConnection(DbContextOptions<DBConnection> option) : base(option)
         {
 
+
         }
 
 
