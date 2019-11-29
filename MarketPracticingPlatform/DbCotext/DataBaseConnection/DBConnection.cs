@@ -54,10 +54,8 @@ namespace MarketPracticingPlatform.Data.DataBaseConnection
 
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-
             {
 
-                
 
             }
 

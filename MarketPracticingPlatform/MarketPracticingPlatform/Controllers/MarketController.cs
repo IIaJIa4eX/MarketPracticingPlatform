@@ -19,7 +19,7 @@ namespace MarketPracticingPlatform.Controllers
             _GetCategoryServices = GetCategoryServices;
         }
 
-        [UnAuthorized]
+        [UnAuthorizedRedirect]
         public IActionResult Index()
         {
 
@@ -58,7 +58,7 @@ namespace MarketPracticingPlatform.Controllers
         }
 
 
-        [UnAuthorized]
+        [UnAuthorizedRedirect]
         [HttpPost]
         public IActionResult ShowProductEdit(ProductDTO pdh)
         {
@@ -73,7 +73,7 @@ namespace MarketPracticingPlatform.Controllers
             return View("Index");
         }
 
-        [UnAuthorized]
+        [UnAuthorizedRedirect]
         [HttpPost]
         public IActionResult DeleteProduct(int productId)
         {

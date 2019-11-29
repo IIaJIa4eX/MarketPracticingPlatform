@@ -79,6 +79,9 @@ namespace MarketPracticingPlatform
             });
 
 
+
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -110,6 +113,8 @@ namespace MarketPracticingPlatform
             loggerFactory.AddSerilog();
 
             app.UseAuthentication();
+
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

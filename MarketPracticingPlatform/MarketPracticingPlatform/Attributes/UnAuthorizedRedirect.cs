@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace MarketPracticingPlatform.Attributes
 {
  
-        public class UnAuthorizedAttribute : TypeFilterAttribute
+        public class UnAuthorizedRedirectAttribute : TypeFilterAttribute
         {
-            public UnAuthorizedAttribute() : base(typeof(UnauthorizedFilter))
+            public UnAuthorizedRedirectAttribute() : base(typeof(UnAuthorizedRedirectFilter))
             {
 
             }
         }
-        public class UnauthorizedFilter : IAuthorizationFilter
+        public class UnAuthorizedRedirectFilter : IAuthorizationFilter
         {
             public void OnAuthorization(AuthorizationFilterContext context)
             {
